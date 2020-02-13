@@ -8,9 +8,9 @@ import {
 import { Icon } from 'react-native-elements';
 import MainTab from './MainTabs';
 // import MainTab from './MainTabClass';
-import AccountManagement from './SideMenu/smAccountManagement';
+import AccountStack from './SideMenu/smAccountStack';
 import ContactUs from './SideMenu/smContactUs';
-import DataManager from './SideMenu/smDataManager';
+import DataStack from './SideMenu/smDataStack';
 import Settings from './SideMenu/smSettings';
 import SystemInfo from './SideMenu/smSystemInfo';
 
@@ -36,7 +36,7 @@ export default function TopDrawer() {
       />
       <Drawer.Screen
         name="Account"
-        component={AccountManagement}
+        component={AccountStack}
         options={() => ({
           drawerIcon: ({ focused, color, size }) => {
             return (
@@ -58,7 +58,7 @@ export default function TopDrawer() {
       />
       <Drawer.Screen
         name="DataManager"
-        component={DataManager}
+        component={DataStack}
         options={() => ({
           drawerIcon: ({ focused, color, size }) => {
             return (

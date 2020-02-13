@@ -23,7 +23,7 @@ import aActivate from '../Account/aActivate';
 
 const Stack = createStackNavigator();
 
-function AccountManagement() {
+function AccountStack() {
   return (
     <Stack.Navigator initialRouteName="aAccount">
       <Stack.Screen
@@ -422,5 +422,5 @@ const styles = StyleSheet.create({
   }
 });
 
-export default AccountManagement;
+export default AccountStack;
 
