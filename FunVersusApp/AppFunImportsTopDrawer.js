@@ -10,17 +10,15 @@ YellowBox.ignoreWarnings([
   'Require cycles are allowed, but can result in uninitialized values',
 ])
 
-// uses separate TopDrawer.js to import navigation
-export default class App extends React.Component {
+export default function App() {
+  return (
 
-  render() {
-    return (
-      <NavigationContainer>
-        <StatusBar
-          barStyle='light-content'
-        />
-        <TopDrawer />
-      </NavigationContainer>
-    );
-  }
+    <NavigationContainer>
+      <StatusBar
+        barStyle='light-content'
+      />
+      <TopDrawer />
+    </NavigationContainer>
+
+  );
 }
