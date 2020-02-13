@@ -8,12 +8,13 @@ import {
 import { Icon } from 'react-native-elements';
 import { createStackNavigator } from '@react-navigation/stack';
 
-function aLogin() {
+export default class aLogin extends React.Component {
 
-  return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text>Login</Text>
-    </View>)
+  render() {
+
+    return (
+      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+        <Text>Login</Text>
+      </View>)
+  }
 }
-
-export default aLogin;
