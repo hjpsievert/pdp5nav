@@ -3,41 +3,42 @@ import {
   View,
   Text,
   StyleSheet,
-  TouchableHighlight
+  TouchableHighlight,
+  Button
 } from 'react-native';
 import { Icon } from 'react-native-elements';
 import { createStackNavigator } from '@react-navigation/stack';
 
-function DrugScreen() {
+function HomeScreen() {
 
   return (
     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text>Drugs</Text>
-    </View>)
+      <Text>This is the Home Screen</Text>
+ </View>)
 }
 
 const Stack = createStackNavigator();
 
-function Drugs() {
+function pHome() {
   return (
     <Stack.Navigator>
       <Stack.Screen
-        name="DrugScreen"
-        component={DrugScreen}
+        name="HomeScreen"
+        component={HomeScreen}
         options={({ navigation, route }) => ({
-          title: 'My Drugs',
-          headerTitle: "Drugs Header",
+          title: 'My Home',
+          headerTitle: "Home Header",
           headerStyle: { backgroundColor: '#405ce8' },
           headerTitleStyle: { fontWeight: 'normal' },
           headerTintColor: 'white',
           headerRight: () => (
             <View style={styles.innerContainer}>
               <TouchableHighlight
-                onPress={() => navigation.navigate('HomeScreen')}
+                onPress={() => navigation.openDrawer()}
               >
-                <View style={[styles.touch, { justifyContent: "right" }]}>
+                <View style={[styles.touch, { justifyContent: 'right' }]}>
                   <Icon
-                    name={'ios-arrow-forward'}
+                    name={'ios-menu'}
                     type={'ionicon'}
                     color={'white'}
                     size={24}
@@ -68,5 +69,5 @@ const styles = StyleSheet.create({
   }
 });
 
-export default Drugs;
+export default pHome;
 

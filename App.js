@@ -7,12 +7,13 @@ import {
   DrawerItemList,
   DrawerItem,
 } from '@react-navigation/drawer';
-import Main from './Screens/Main';
-import AccountManagement from './Screens/smAccountManagement';
-import ContactUs from './Screens/smContactUs';
-import DataManager from './Screens/smDataManager';
-import Settings from './Screens/smSettings';
-import SystemInfo from './Screens/smSystemInfo';
+import { Icon } from 'react-native-elements';
+import MainTab from './Screens/MainTabs';
+import AccountManagement from './Screens/SideMenu/smAccountManagement';
+import ContactUs from './Screens/SideMenu/smContactUs';
+import DataManager from './Screens/SideMenu/smDataManager';
+import Settings from './Screens/SideMenu/smSettings';
+import SystemInfo from './Screens/SideMenu/smSystemInfo';
 import { render } from 'react-dom';
 
 import { YellowBox } from 'react-native'
@@ -33,14 +34,73 @@ function MyDrawer() {
       }}
     >
       <Drawer.Screen
-        name="Main"
-        component={Main}
+        name="Top"
+        component={MainTab}
+        options={() => ({
+          drawerIcon: ({ focused, color, size }) => {
+            return (
+              <Icon name={'home'} type={'material-community'} size={size} color={color} />
+            )
+          }
+        })}
       />
-      <Drawer.Screen name="AccountManagement" component={AccountManagement} />
-      <Drawer.Screen name="ContactUs" component={ContactUs} />
-      <Drawer.Screen name="DataManager" component={DataManager} />
-      <Drawer.Screen name="Settings" component={Settings} />
-      <Drawer.Screen name="SystemInfo" component={SystemInfo} />
+      <Drawer.Screen
+        name="Account"
+        component={AccountManagement}
+        options={() => ({
+          drawerIcon: ({ focused, color, size }) => {
+            return (
+              <Icon name={'account-details'} type={'material-community'} size={size} color={color} />
+            )
+          }
+        })}
+      />
+      <Drawer.Screen
+        name="Settings"
+        component={Settings}
+        options={() => ({
+          drawerIcon: ({ focused, color, size }) => {
+            return (
+              <Icon name={'settings'} type={'material'} size={size} color={color} />
+            )
+          }
+        })}
+      />
+      <Drawer.Screen
+        name="DataManager"
+        component={DataManager}
+        options={() => ({
+          drawerIcon: ({ focused, color, size }) => {
+            return (
+              <Icon name={'database'} type={'material-community'} size={size} color={color} />
+            )
+          }
+        })}
+      />
+      <Drawer.Screen
+        name="ContactUs"
+        component={ContactUs}
+        options={() => ({
+          drawerIcon: ({ focused, color, size }) => {
+            return (
+              <Icon name={'email'} type={'material'} size={size} color={color} />
+            )
+          }
+        })}
+      />
+
+      <Drawer.Screen
+        name="SystemInfo"
+        component={SystemInfo}
+        options={() => ({
+          drawerIcon: ({ focused, color, size }) => {
+            return (
+              <Icon name={'devices'} type={'material'} size={size} color={color} />
+            )
+          }
+        })}
+
+      />
     </Drawer.Navigator>
   );
 }

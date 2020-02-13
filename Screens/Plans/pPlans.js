@@ -8,34 +8,34 @@ import {
 import { Icon } from 'react-native-elements';
 import { createStackNavigator } from '@react-navigation/stack';
 
-function HomeScreen() {
+function PlanScreen() {
 
   return (
     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text>Home</Text>
+      <Text>Plans</Text>
     </View>)
 }
 
 const Stack = createStackNavigator();
 
-function Home() {
+function Plans() {
   return (
     <Stack.Navigator>
       <Stack.Screen
-        name="HomeScreen"
-        component={HomeScreen}
+        name="PlanScreen"
+        component={PlanScreen}
         options={({ navigation, route }) => ({
-          title: 'My Home',
-          headerTitle: "Home Header",
+          title: 'My Plans',
+          headerTitle: "Plans Header",
           headerStyle: { backgroundColor: '#405ce8' },
           headerTitleStyle: { fontWeight: 'normal' },
           headerTintColor: 'white',
           headerRight: () => (
             <View style={styles.innerContainer}>
               <TouchableHighlight
-                onPress={() => navigation.popToTop}
+                onPress={() => navigation.navigate('HomeScreen')}
               >
-                <View style={[styles.touch, { justifyContent: "right" }]}>
+                <View style={[styles.touch, { justifyContent: 'right' }]}>
                   <Icon
                     name={'ios-arrow-forward'}
                     type={'ionicon'}
@@ -68,5 +68,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default Home;
-
+export default Plans;
