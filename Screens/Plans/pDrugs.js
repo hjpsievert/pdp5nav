@@ -6,9 +6,9 @@ import {
   TouchableHighlight
 } from 'react-native';
 import { Icon } from 'react-native-elements';
-import pSearch from '../Plans/pSearch';
-import pSelect from '../Plans/pSelect';
-import pPick from '../Plans/pPick';
+import pSearch from './pSearch';
+import pSelect from './pSelect';
+import pPick from './pPick';
 import { createStackNavigator } from '@react-navigation/stack';
 
 function DrugScreen() {
