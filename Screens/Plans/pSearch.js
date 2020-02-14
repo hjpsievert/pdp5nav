@@ -5,14 +5,32 @@ import {
   StyleSheet,
   TouchableHighlight
 } from 'react-native';
-import { Icon } from 'react-native-elements';
+import { Icon, Button } from 'react-native-elements';
 
-function pSearch() {
+function pSearch({navigation}) {
 
   return (
     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
       <Text>Drug Search</Text>
-    </View>)
+      <Button
+        raised={true}
+        icon={{ name: 'ios-arrow-dropright', type: 'ionicon' }}
+        iconRight
+        backgroundColor={'green'}
+        color={'white'}
+        title={'Pick Base Drugs'}
+        onPress={() => navigation.navigate('pPick')}
+      />
+      <Button
+        raised={true}
+        icon={{ name: 'ios-arrow-dropright', type: 'ionicon' }}
+        iconRight
+        backgroundColor={'green'}
+        color={'white'}
+        title={'Select final Drugs'}
+        onPress={() => navigation.navigate('pSelect')}
+      />
+          </View>)
 }
 
 export default pSearch;
