@@ -5,7 +5,8 @@ import {
   PixelRatio,
   Platform,
   StyleSheet,
-  ScrollView
+  ScrollView,
+  Dimensions
 } from 'react-native';
 import NetInfo from '@react-native-community/netinfo';
 import Constants from 'expo-constants';
@@ -21,23 +22,27 @@ export default class SystemInfo extends React.Component {
   }
 
   componentDidMount() {
+
+    if (Platform.OS !== 'web')
     // Subscribe
-    const unsubscribe = NetInfo.addEventListener(state => {
-      this.setState({
-        type: state.type,
-        connected: state.isConnected ? 'connected' : 'disconnected',
+    {
+      const unsubscribe = NetInfo.addEventListener(state => {
+        this.setState({
+          type: state.type,
+          connected: state.isConnected ? 'connected' : 'disconnected',
+        });
       });
-    });
 
-    // Unsubscribe
-    unsubscribe();
+      // Unsubscribe
+      unsubscribe();
 
-    NetInfo.fetch().then(state => {
-      this.setState({
-        type: state.type,
-        connected: state.isConnected ? 'connected' : 'disconnected',
+      NetInfo.fetch().then(state => {
+        this.setState({
+          type: state.type,
+          connected: state.isConnected ? 'connected' : 'disconnected',
+        });
       });
-    });
+    }
 
     this.setState({
       hasHardware: false,
@@ -55,21 +60,25 @@ export default class SystemInfo extends React.Component {
       isTablet: isTablet,
     });
 
-    if(Platform.OS !== 'web')
-    {this._authFunction;}
+    if (Platform.OS !== 'web') { this._authFunction(); }
   }
 
   _authFunction = async () => {
-    let hasHardware = false;
-    let isEnrolled = false;
-    hasHardware = await LocalAuthentication.hasHardwareAsync();
-    if (hasHardware) {
-      isEnrolled = await LocalAuthentication.isEnrolledAsync();
+    let hasFPHardware = false;
+    let isFPEnrolled = false;
+
+    hasFPHardware = await LocalAuthentication.hasHardwareAsync();
+    if (hasFPHardware) {
+      this.setState({
+        hasFPHardware: true,
+      });
+      isFPEnrolled = await LocalAuthentication.isEnrolledAsync();
+      if (isFPEnrolled) {
+        this.setState({
+          isFPEnrolled: true,
+        });
+      }
     }
-    this.setState({
-      hasHardware: hasHardware,
-      isEnrolled: isEnrolled,
-    });
   }
 
   render() {
@@ -83,10 +92,14 @@ export default class SystemInfo extends React.Component {
     sysInfo.push({ key: i++, title: 'Device ID', subtitle: installationId });
     sysInfo.push({ key: i++, title: 'Device Type', subtitle: tablet ? 'Tablet' : 'Phone' });
     sysInfo.push({ key: i++, title: 'Device State', subtitle: isDevice ? 'Real' : 'Emulator' });
-    sysInfo.push({ key: i++, title: 'Connection', subtitle: connected });
-    sysInfo.push({ key: i++, title: 'Connection Type', subtitle: type });
-    sysInfo.push({ key: i++, title: 'Fingerprint Support', subtitle: hasFPHardware ? 'yes' : 'no' });
-    sysInfo.push({ key: i++, title: 'Fingerprint stored', subtitle: isFPEnrolled ? 'yes' : 'no' });
+    sysInfo.push({ key: i++, title: 'Window dimensions', subtitle: Dimensions.get('window').width + ' x ' + Dimensions.get('window').height });
+    sysInfo.push({ key: i++, title: 'Screen dimensions', subtitle: Dimensions.get('window').width * PixelRatio.get() + ' x ' + Dimensions.get('window').height * PixelRatio.get() });
+    if (Platform.OS !== 'web') {
+      sysInfo.push({ key: i++, title: 'Connection', subtitle: connected });
+      sysInfo.push({ key: i++, title: 'Connection Type', subtitle: type });
+      sysInfo.push({ key: i++, title: 'Fingerprint Support', subtitle: hasFPHardware ? 'yes' : 'no' });
+      sysInfo.push({ key: i++, title: 'Fingerprint stored', subtitle: isFPEnrolled ? 'yes' : 'no' });
+    }
     sysInfo.push({ key: i++, title: 'Operating System', subtitle: OS });
     if (OS === 'ios') {
       sysInfo.push({ key: i++, title: 'System Name', subtitle: platform.ios.platform });
