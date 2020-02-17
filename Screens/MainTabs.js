@@ -6,7 +6,7 @@ import {
 } from 'react-native';
 import { Icon } from 'react-native-elements';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import pHome from './Plans/pHome';
+import pHomeStack from './Plans/pHomeStack';
 import Drugs from './Plans/pDrugs';
 import Plans from './Plans/pPlans';
 
@@ -32,7 +32,7 @@ export default function MainTab() {
     >
       <Tab.Screen
         name="Home"
-        component={pHome}
+        component={pHomeStack}
         options={() => ({
           tabBarIcon: ({ focused, color, size }) => {
             return (

@@ -7,7 +7,6 @@ import {
 } from '@react-navigation/drawer';
 import { Icon } from 'react-native-elements';
 import MainTab from './MainTabs';
-// import MainTab from './MainTabClass';
 import AccountStack from './SideMenu/smAccountStack';
 import ContactUs from './SideMenu/smContactUs';
 import DataStack from './SideMenu/smDataStack';
