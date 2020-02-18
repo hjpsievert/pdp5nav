@@ -60,7 +60,7 @@ export default class App extends React.Component {
     return (
       <Provider store={store}>
         <NavigationContainer>
-        <View style={Platform.OS === 'web' ? [styles.WebContainer, {width: WindowWidth, height: WindowHeight}] : styles.AppContainer }>
+        <View style={Platform.OS === 'web' ? [styles.WebContainer, {width: WindowWidth, height: WindowHeight}] : styles.AppContainer}>
           <StatusBar
             barStyle='light-content'
           />
