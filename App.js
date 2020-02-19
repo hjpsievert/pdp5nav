@@ -23,23 +23,42 @@ export default class App extends React.Component {
     this.state = {
       WindowWidth: Dimensions.get('window').width,
       WindowHeight: Dimensions.get('window').height,
+      screenOrientation: 'PORTRAIT',
       LayoutDirty: false
     }
   }
 
   componentDidMount() {
-    Dimensions.addEventListener('change', this._handleDimChange)
+    Dimensions.addEventListener('change', this._handleDimChange);
+    ScreenOrientation.addOrientationChangeListener(this._myListener);
   }
 
   shouldComponentUpdate() {
     const { LayoutDirty } = this.state;
-    console.log('Should Update ',LayoutDirty);
-    return LayoutDirty;
+    //console.log('Should Update ', LayoutDirty);
+    if (LayoutDirty) {
+      this.setState({
+        LayoutDirty: false
+      });
+      return true;
+    }
+    else return false;
+  }
+
+  componentDidUpdate() {
   }
 
   componentWillUnmount() {
-    Dimensions.removeEventListener('change', this._handleDimChange)
+    Dimensions.removeEventListener('change', this._handleDimChange);
+    ScreenOrientation.removeOrientationChangeListeners();
   }
+
+  _myListener = ({orientationInfo}) => {
+    console.log('_myListener info = ', orientationInfo.orientation);
+    this.setState({
+      screenOrientation: orientationInfo.orientation,
+      LayoutDirty: true
+    });  }
 
   _handleDimChange = ({ window }) => {
     console.log('App _handleDimChange event, new width = ', window.width);
@@ -54,17 +73,17 @@ export default class App extends React.Component {
     if (Platform.OS !== 'web') {
       ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.ALL_BUT_UPSIDE_DOWN);
     }
-    const { LayoutDirty, WindowWidth, WindowHeight } = this.state;
+    const { LayoutDirty, WindowWidth, WindowHeight, screenOrientation } = this.state;
     console.log('App render LayoutDirty = ', LayoutDirty);
 
     return (
       <Provider store={store}>
         <NavigationContainer>
-        <View style={Platform.OS === 'web' ? [styles.WebContainer, {width: WindowWidth, height: WindowHeight}] : styles.AppContainer}>
-          <StatusBar
-            barStyle='light-content'
-          />
-          <TopDrawer />
+          <View style={Platform.OS === 'web' ? [styles.WebContainer, { width: WindowWidth, height: WindowHeight }] : [styles.AppContainer, {width: screenOrientation === 'PORTRAIT' ? 375 : 667, height: screenOrientation === 'PORTRAIT' ? 667 : 375}]}>
+            <StatusBar
+              barStyle='light-content'
+            />
+            <TopDrawer />
           </View>
         </NavigationContainer>
       </Provider>
