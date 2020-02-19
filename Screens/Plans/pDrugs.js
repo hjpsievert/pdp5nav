@@ -15,7 +15,7 @@ function DrugScreen() {
 
   return (
     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text>Drugs Main</Text>
+      <Text>{'Drugs Main'}</Text>
     </View>)
 }
 
@@ -67,7 +67,8 @@ function Drugs() {
               </TouchableHighlight>
             </View>
           ),
-        })} />
+        })}
+      />
 
       <Stack.Screen
         name="pSearch"
