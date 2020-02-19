@@ -1,5 +1,5 @@
 import React from 'react';
-import { StatusBar, StyleSheet, View, Platform, Dimensions } from 'react-native'
+import { StatusBar, View, Platform, Dimensions } from 'react-native'
 import { NavigationContainer } from '@react-navigation/native';
 import TopDrawer from './Screens/TopDrawer';
 import { Provider } from 'react-redux'
@@ -7,7 +7,6 @@ import configureStore from './Redux/Store';
 import { ScreenOrientation } from 'expo';
 
 import { YellowBox } from 'react-native'
-
 YellowBox.ignoreWarnings([
   'VirtualizedLists should never be nested', // TODO: Remove when fixed
   'Require cycles are allowed, but can result in uninitialized values',
@@ -16,7 +15,6 @@ YellowBox.ignoreWarnings([
 
 export const store = configureStore()
 
-// uses separate TopDrawer.js to import navigation
 export default class App extends React.Component {
   constructor(props, context) {
     super(props, context);
@@ -45,20 +43,18 @@ export default class App extends React.Component {
     else return false;
   }
 
-  componentDidUpdate() {
-  }
-
   componentWillUnmount() {
     Dimensions.removeEventListener('change', this._handleDimChange);
     ScreenOrientation.removeOrientationChangeListeners();
   }
 
-  _myListener = ({orientationInfo}) => {
+  _myListener = ({ orientationInfo }) => {
     console.log('_myListener info = ', orientationInfo.orientation);
     this.setState({
       screenOrientation: orientationInfo.orientation,
       LayoutDirty: true
-    });  }
+    });
+  }
 
   _handleDimChange = ({ window }) => {
     console.log('App _handleDimChange event, new width = ', window.width);
@@ -73,13 +69,13 @@ export default class App extends React.Component {
     if (Platform.OS !== 'web') {
       ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.ALL_BUT_UPSIDE_DOWN);
     }
-    const { LayoutDirty, WindowWidth, WindowHeight, screenOrientation } = this.state;
-    console.log('App render LayoutDirty = ', LayoutDirty);
+    const { WindowWidth, WindowHeight, screenOrientation } = this.state;
+    console.log('App render Orientation = ', screenOrientation);
 
     return (
       <Provider store={store}>
         <NavigationContainer>
-          <View style={Platform.OS === 'web' ? [styles.WebContainer, { width: WindowWidth, height: WindowHeight }] : [styles.AppContainer, {width: screenOrientation === 'PORTRAIT' ? 375 : 667, height: screenOrientation === 'PORTRAIT' ? 667 : 375}]}>
+          <View style={{ width: WindowWidth, height: WindowHeight, backgroundColor: '#fff' }}>
             <StatusBar
               barStyle='light-content'
             />
@@ -90,16 +86,3 @@ export default class App extends React.Component {
     );
   }
 }
-
-const styles = StyleSheet.create({
-  AppContainer: {
-    width: 375,
-    height: 667,
-    backgroundColor: '#fff',
-  },
-  WebContainer: {
-    width: Dimensions.get('window').width,
-    height: Dimensions.get('window').height,
-    backgroundColor: '#fff',
-  }
-})
