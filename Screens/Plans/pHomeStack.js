@@ -1,12 +1,8 @@
 import React from 'react'
 import {
   View,
-  Text,
   StyleSheet,
   TouchableHighlight,
-  Platform,
-  Dimensions,
-  Button
 } from 'react-native';
 import { Icon } from 'react-native-elements';
 import { createStackNavigator } from '@react-navigation/stack';
@@ -22,7 +18,7 @@ function pHomeStack() {
         component={pHome}
         options={({ navigation, route }) => ({
           title: 'My Home',
-          headerTitle: "Home Header",
+          headerTitle: "EZPartD Plan Finder",
           headerStyle: { backgroundColor: '#405ce8' },
           headerTitleStyle: { fontWeight: 'normal' },
           headerTintColor: 'white',
@@ -62,16 +58,6 @@ const styles = StyleSheet.create({
     // borderColor: 'red',
     // borderWidth: 1,
   },
-  AppContainer: {
-    width: 375,
-    height: 667,
-    backgroundColor: '#fff',
-  },
-  WebContainer: {
-    width: Dimensions.get('window').width,
-    height: Dimensions.get('window').height - 105,
-    backgroundColor: '#fff',
-  }
 });
 
 export default pHomeStack;

@@ -40,7 +40,7 @@ function AccountStack() {
               <TouchableHighlight
                 onPress={() => navigation.navigate('Top')}
               >
-                <View style={[styles.touch, { justifyContent: 'left' }]}>
+                <View style={[styles.touch, { justifyContent: 'flex-start' }]}>
                   <Icon
                     name={'ios-arrow-back'}
                     type={'ionicon'}
@@ -68,7 +68,7 @@ function AccountStack() {
               <TouchableHighlight
                 onPress={() => navigation.navigate('aAccount')}
               >
-                <View style={[styles.touch, { justifyContent: 'left' }]}>
+                <View style={[styles.touch, { justifyContent: 'flex-start' }]}>
                   <Icon
                     name={'ios-arrow-back'}
                     type={'ionicon'}
@@ -97,7 +97,7 @@ function AccountStack() {
               <TouchableHighlight
                 onPress={() => navigation.navigate('aAccount')}
               >
-                <View style={[styles.touch, { justifyContent: 'left' }]}>
+                <View style={[styles.touch, { justifyContent: 'flex-start' }]}>
                   <Icon
                     name={'ios-arrow-back'}
                     type={'ionicon'}
@@ -126,7 +126,7 @@ function AccountStack() {
               <TouchableHighlight
                 onPress={() => navigation.navigate('aAccount')}
               >
-                <View style={[styles.touch, { justifyContent: 'left' }]}>
+                <View style={[styles.touch, { justifyContent: 'flex-start' }]}>
                   <Icon
                     name={'ios-arrow-back'}
                     type={'ionicon'}
@@ -155,7 +155,7 @@ function AccountStack() {
               <TouchableHighlight
                 onPress={() => navigation.navigate('aAccount')}
               >
-                <View style={[styles.touch, { justifyContent: 'left' }]}>
+                <View style={[styles.touch, { justifyContent: 'flex-start' }]}>
                   <Icon
                     name={'ios-arrow-back'}
                     type={'ionicon'}
@@ -184,7 +184,7 @@ function AccountStack() {
               <TouchableHighlight
                 onPress={() => navigation.navigate('aAccount')}
               >
-                <View style={[styles.touch, { justifyContent: 'left' }]}>
+                <View style={[styles.touch, { justifyContent: 'flex-start' }]}>
                   <Icon
                     name={'ios-arrow-back'}
                     type={'ionicon'}
@@ -213,7 +213,7 @@ function AccountStack() {
               <TouchableHighlight
                 onPress={() => navigation.navigate('aAccount')}
               >
-                <View style={[styles.touch, { justifyContent: 'left' }]}>
+                <View style={[styles.touch, { justifyContent: 'flex-start' }]}>
                   <Icon
                     name={'ios-arrow-back'}
                     type={'ionicon'}
@@ -242,7 +242,7 @@ function AccountStack() {
               <TouchableHighlight
                 onPress={() => navigation.navigate('aAccount')}
               >
-                <View style={[styles.touch, { justifyContent: 'left' }]}>
+                <View style={[styles.touch, { justifyContent: 'flex-start' }]}>
                   <Icon
                     name={'ios-arrow-back'}
                     type={'ionicon'}
@@ -271,7 +271,7 @@ function AccountStack() {
               <TouchableHighlight
                 onPress={() => navigation.navigate('aAccount')}
               >
-                <View style={[styles.touch, { justifyContent: 'left' }]}>
+                <View style={[styles.touch, { justifyContent: 'flex-start' }]}>
                   <Icon
                     name={'ios-arrow-back'}
                     type={'ionicon'}
@@ -300,7 +300,7 @@ function AccountStack() {
               <TouchableHighlight
                 onPress={() => navigation.navigate('aAccount')}
               >
-                <View style={[styles.touch, { justifyContent: 'left' }]}>
+                <View style={[styles.touch, { justifyContent: 'flex-start' }]}>
                   <Icon
                     name={'ios-arrow-back'}
                     type={'ionicon'}
@@ -329,7 +329,7 @@ function AccountStack() {
               <TouchableHighlight
                 onPress={() => navigation.navigate('aAccount')}
               >
-                <View style={[styles.touch, { justifyContent: 'left' }]}>
+                <View style={[styles.touch, { justifyContent: 'flex-start' }]}>
                   <Icon
                     name={'ios-arrow-back'}
                     type={'ionicon'}
@@ -358,7 +358,7 @@ function AccountStack() {
               <TouchableHighlight
                 onPress={() => navigation.navigate('aAccount')}
               >
-                <View style={[styles.touch, { justifyContent: 'left' }]}>
+                <View style={[styles.touch, { justifyContent: 'flex-start' }]}>
                   <Icon
                     name={'ios-arrow-back'}
                     type={'ionicon'}
@@ -387,7 +387,7 @@ function AccountStack() {
               <TouchableHighlight
                 onPress={() => navigation.navigate('aAccount')}
               >
-                <View style={[styles.touch, { justifyContent: 'left' }]}>
+                <View style={[styles.touch, { justifyContent: 'flex-start' }]}>
                   <Icon
                     name={'ios-arrow-back'}
                     type={'ionicon'}

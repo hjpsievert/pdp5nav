@@ -1,14 +1,13 @@
 import React from 'react';
 import {
-  Button,
   View,
   Text, Platform
 } from 'react-native';
 import { Icon } from 'react-native-elements';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import pHomeStack from './Plans/pHomeStack';
-import Drugs from './Plans/pDrugs';
-import Plans from './Plans/pPlans';
+import pDrugStack from './Plans/pDrugStack';
+import pPlanStack from './Plans/pPlanStack';
 
 export default function MainTab() {
 
@@ -17,6 +16,7 @@ export default function MainTab() {
   return (
     <Tab.Navigator
       showIcon={true}
+      // lazy={false}
       labelStyle={{
         fontSize: 10,
         fontWeight: 'bold',
@@ -48,7 +48,7 @@ export default function MainTab() {
       />
       <Tab.Screen
         name="Drugs"
-        component={Drugs}
+        component={pDrugStack}
         options={() => ({
           tabBarIcon: ({ focused, color, size }) => {
             return (
@@ -85,7 +85,7 @@ export default function MainTab() {
       />
       <Tab.Screen
         name="Plans"
-        component={Plans}
+        component={pPlanStack}
         options={() => ({
           tabBarIcon: ({ focused, color, size }) => {
             return (
@@ -121,6 +121,5 @@ export default function MainTab() {
         })}
       />
     </Tab.Navigator >
-  ); { }
-
+  ); 
 }

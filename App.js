@@ -19,49 +19,34 @@ export default class App extends React.Component {
   constructor(props, context) {
     super(props, context);
     this.state = {
-      WindowWidth: Dimensions.get('window').width,
-      WindowHeight: Dimensions.get('window').height,
+      windowWidth: Dimensions.get('window').width,
+      windowHeight: Dimensions.get('window').height,
       screenOrientation: 'PORTRAIT',
-      LayoutDirty: false
     }
   }
 
   componentDidMount() {
     Dimensions.addEventListener('change', this._handleDimChange);
-    ScreenOrientation.addOrientationChangeListener(this._myListener);
-  }
-
-  shouldComponentUpdate() {
-    const { LayoutDirty } = this.state;
-    //console.log('Should Update ', LayoutDirty);
-    if (LayoutDirty) {
-      this.setState({
-        LayoutDirty: false
-      });
-      return true;
-    }
-    else return false;
+    // ScreenOrientation.addOrientationChangeListener(this._myListener);
   }
 
   componentWillUnmount() {
     Dimensions.removeEventListener('change', this._handleDimChange);
-    ScreenOrientation.removeOrientationChangeListeners();
+    // ScreenOrientation.removeOrientationChangeListeners();
   }
 
-  _myListener = ({ orientationInfo }) => {
-    console.log('_myListener info = ', orientationInfo.orientation);
-    this.setState({
-      screenOrientation: orientationInfo.orientation,
-      LayoutDirty: true
-    });
-  }
+  // _myListener = ({ orientationInfo }) => {
+  //   console.log('_myListener info = ', orientationInfo.orientation);
+  //   this.setState({
+  //     screenOrientation: orientationInfo.orientation,
+  //   });
+  // }
 
   _handleDimChange = ({ window }) => {
-    console.log('App _handleDimChange event, new width = ', window.width);
+    // console.log('App _handleDimChange event, new width = ', window.width);
     this.setState({
-      WindowWidth: window.width,
-      WindowHeight: window.height,
-      LayoutDirty: true
+      windowWidth: window.width,
+      windowHeight: window.height,
     })
   }
 
@@ -69,13 +54,13 @@ export default class App extends React.Component {
     if (Platform.OS !== 'web') {
       ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.ALL_BUT_UPSIDE_DOWN);
     }
-    const { WindowWidth, WindowHeight, screenOrientation } = this.state;
-    console.log('App render Orientation = ', screenOrientation);
+    const { screenOrientation,  windowWidth, windowHeight} = this.state;
+    console.log('App render dim = ', windowWidth, 'x', windowHeight);
 
     return (
       <Provider store={store}>
         <NavigationContainer>
-          <View style={{ width: WindowWidth, height: WindowHeight, backgroundColor: '#fff' }}>
+          <View style={{ width: windowWidth, height: windowHeight, backgroundColor: '#fff' }}>
             <StatusBar
               barStyle='light-content'
             />

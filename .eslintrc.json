@@ -314,7 +314,7 @@
     "react/no-unused-prop-types": "warn",
     "react/prefer-es6-class": "warn",
     "react/prefer-stateless-function": "off",
-    "react/prop-types": "warn",
+    "react/prop-types": "off",
     "react/react-in-jsx-scope": "warn",
     "react/require-default-props": "off",
     "react/require-optimization": "off",

@@ -7,34 +7,33 @@ import {
 } from 'react-native';
 import { Icon } from 'react-native-elements';
 import { createStackNavigator } from '@react-navigation/stack';
-import dManager from '../Data/dManager';
-import dSave from '../Data/dSave';
-import dLoad from '../Data/dLoad';
-import dStore from '../Data/dStore';
-import dClear from '../Data/dClear';
+import pDrugs from './pDrugs';
+import pSearch from './pSearch';
+import pSelect from './pSelect';
+import pPick from './pPick';
 
 const Stack = createStackNavigator();
 
-function DataStack() {
+function pDrugStack() {
   return (
-    <Stack.Navigator initialRouteName="aAccount">
+    <Stack.Navigator>
       <Stack.Screen
-        name="dManager"
-        component={dManager}
+        name="pDrugs"
+        component={pDrugs}
         options={({ navigation, route }) => ({
-          title: 'Data Management',
-          headerTitle: 'Data Management',
+          title: 'My Drugs',
+          headerTitle: "Drugs Header",
           headerStyle: { backgroundColor: '#405ce8' },
           headerTitleStyle: { fontWeight: 'normal' },
           headerTintColor: 'white',
-          headerLeft: () => (
+          headerRight: () => (
             <View style={styles.innerContainer}>
               <TouchableHighlight
-                onPress={() => navigation.navigate('Top')}
+                onPress={() => navigation.navigate('pSearch')}
               >
-                <View style={[styles.touch, { justifyContent: 'flex-start' }]}>
+                <View style={[styles.touch, { justifyContent: 'flex-end' }]}>
                   <Icon
-                    name={'ios-arrow-back'}
+                    name={'ios-arrow-forward'}
                     type={'ionicon'}
                     color={'white'}
                     size={24}
@@ -44,50 +43,10 @@ function DataStack() {
               </TouchableHighlight>
             </View>
           ),
-        })}
-      />
-      <Stack.Screen
-        name="dSave"
-        component={dSave}
-        options={({ navigation, route }) => ({
-          title: 'Save Data',
-          headerTitle: 'Save Data',
-          headerStyle: { backgroundColor: '#405ce8' },
-          headerTitleStyle: { fontWeight: 'normal' },
-          headerTintColor: 'white',
           headerLeft: () => (
             <View style={styles.innerContainer}>
               <TouchableHighlight
-                onPress={() => navigation.navigate('dManager')}
-              >
-                <View style={[styles.touch, { justifyContent: 'flex-start' }]}>
-                  <Icon
-                    name={'ios-arrow-back'}
-                    type={'ionicon'}
-                    color={'white'}
-                    size={24}
-                    style={{ padding: 5 }}
-                  />
-                </View>
-              </TouchableHighlight>
-            </View>
-          ),
-        })}
-      />
-
-      <Stack.Screen
-        name="dLoad"
-        component={dLoad}
-        options={({ navigation, route }) => ({
-          title: 'Load Data',
-          headerTitle: 'Load Data',
-          headerStyle: { backgroundColor: '#405ce8' },
-          headerTitleStyle: { fontWeight: 'normal' },
-          headerTintColor: 'white',
-          headerLeft: () => (
-            <View style={styles.innerContainer}>
-              <TouchableHighlight
-                onPress={() => navigation.navigate('dManager')}
+                onPress={() => navigation.navigate('HomeScreen')}
               >
                 <View style={[styles.touch, { justifyContent: 'flex-start' }]}>
                   <Icon
@@ -105,18 +64,35 @@ function DataStack() {
       />
 
       <Stack.Screen
-        name="dStore"
-        component={dStore}
+        name="pSearch"
+        component={pSearch}
         options={({ navigation, route }) => ({
-          title: 'Storage',
-          headerTitle: 'Storage',
+          title: 'Search Drugs',
+          headerTitle: "Drug Search",
           headerStyle: { backgroundColor: '#405ce8' },
           headerTitleStyle: { fontWeight: 'normal' },
           headerTintColor: 'white',
+          headerRight: () => (
+            <View style={styles.innerContainer}>
+              <TouchableHighlight
+                onPress={() => navigation.navigate('pPick')}
+              >
+                <View style={[styles.touch, { justifyContent: 'flex-end' }]}>
+                  <Icon
+                    name={'ios-arrow-forward'}
+                    type={'ionicon'}
+                    color={'white'}
+                    size={24}
+                    style={{ padding: 5 }}
+                  />
+                </View>
+              </TouchableHighlight>
+            </View>
+          ),
           headerLeft: () => (
             <View style={styles.innerContainer}>
               <TouchableHighlight
-                onPress={() => navigation.navigate('dManager')}
+                onPress={() => navigation.navigate('DrugScreen')}
               >
                 <View style={[styles.touch, { justifyContent: 'flex-start' }]}>
                   <Icon
@@ -134,20 +110,20 @@ function DataStack() {
       />
 
       <Stack.Screen
-        name="dClear"
-        component={dClear}
+        name="pSelect"
+        component={pSelect}
         options={({ navigation, route }) => ({
-          title: 'Clear Data',
-          headerTitle: 'Clear Data',
+          title: 'Select Drugs',
+          headerTitle: "Drug Selection",
           headerStyle: { backgroundColor: '#405ce8' },
           headerTitleStyle: { fontWeight: 'normal' },
           headerTintColor: 'white',
           headerLeft: () => (
             <View style={styles.innerContainer}>
               <TouchableHighlight
-                onPress={() => navigation.navigate('dManager')}
+                onPress={() => navigation.navigate('DrugScreen')}
               >
-                <View style={[styles.touch, { justifyContent: 'flex-start' }]}>
+                <View style={[styles.touch, { justifyContent: 'flex-end' }]}>
                   <Icon
                     name={'ios-arrow-back'}
                     type={'ionicon'}
@@ -161,6 +137,53 @@ function DataStack() {
           ),
         })}
       />
+
+      <Stack.Screen
+        name="pPick"
+        component={pPick}
+        options={({ navigation, route }) => ({
+          title: 'Pick Base Drugs',
+          headerTitle: "Drug Picker",
+          headerStyle: { backgroundColor: '#405ce8' },
+          headerTitleStyle: { fontWeight: 'normal' },
+          headerTintColor: 'white',
+          headerLeft: () => (
+            <View style={styles.innerContainer}>
+              <TouchableHighlight
+                onPress={() => navigation.navigate('DrugScreen')}
+              >
+                <View style={[styles.touch, { justifyContent: 'flex-start' }]}>
+                  <Icon
+                    name={'ios-arrow-back'}
+                    type={'ionicon'}
+                    color={'white'}
+                    size={24}
+                    style={{ padding: 5 }}
+                  />
+                </View>
+              </TouchableHighlight>
+            </View>
+          ),
+          headerRight: () => (
+            <View style={styles.innerContainer}>
+              <TouchableHighlight
+                onPress={() => navigation.navigate('pSelect')}
+              >
+                <View style={[styles.touch, { justifyContent: 'flex-end' }]}>
+                  <Icon
+                    name={'ios-arrow-forward'}
+                    type={'ionicon'}
+                    color={'white'}
+                    size={24}
+                    style={{ padding: 5 }}
+                  />
+                </View>
+              </TouchableHighlight>
+            </View>
+          ),
+        })}
+      />
+
     </Stack.Navigator>
   );
 }
@@ -181,5 +204,5 @@ const styles = StyleSheet.create({
   }
 });
 
-export default DataStack;
+export default pDrugStack;
 

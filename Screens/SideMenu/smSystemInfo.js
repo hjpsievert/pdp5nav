@@ -8,7 +8,7 @@ import {
   ScrollView,
   Dimensions
 } from 'react-native';
-import NetInfo from '@react-native-community/netinfo';
+// import NetInfo from '@react-native-community/netinfo';
 import Constants from 'expo-constants';
 import { ListItem } from 'react-native-elements';
 import * as LocalAuthentication from 'expo-local-authentication';
@@ -23,26 +23,26 @@ export default class SystemInfo extends React.Component {
 
   componentDidMount() {
 
-    if (Platform.OS !== 'web')
-    // Subscribe
-    {
-      const unsubscribe = NetInfo.addEventListener(state => {
-        this.setState({
-          type: state.type,
-          connected: state.isConnected ? 'connected' : 'disconnected',
-        });
-      });
+    // if (Platform.OS !== 'web')
+    // // Subscribe
+    // {
+    //   const unsubscribe = NetInfo.addEventListener(state => {
+    //     this.setState({
+    //       type: state.type,
+    //       connected: state.isConnected ? 'connected' : 'disconnected',
+    //     });
+    //   });
 
-      // Unsubscribe
-      unsubscribe();
+    //   // Unsubscribe
+    //   unsubscribe();
 
-      NetInfo.fetch().then(state => {
-        this.setState({
-          type: state.type,
-          connected: state.isConnected ? 'connected' : 'disconnected',
-        });
-      });
-    }
+    //   NetInfo.fetch().then(state => {
+    //     this.setState({
+    //       type: state.type,
+    //       connected: state.isConnected ? 'connected' : 'disconnected',
+    //     });
+    //   });
+    // }
 
     this.setState({
       hasHardware: false,
