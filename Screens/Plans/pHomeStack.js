@@ -22,6 +22,7 @@ function pHomeStack() {
           headerStyle: { backgroundColor: '#405ce8' },
           headerTitleStyle: { fontWeight: 'normal' },
           headerTintColor: 'white',
+          headerTitleAlign: 'center',
           headerRight: () => (
             <View style={styles.innerContainer}>
               <TouchableHighlight
