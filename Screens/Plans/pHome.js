@@ -3,7 +3,8 @@ import {
   View,
   Text,
   FlatList,
-  Dimensions
+  Dimensions,
+  Platform
 } from 'react-native';
 
 export default class pHome extends React.Component {
