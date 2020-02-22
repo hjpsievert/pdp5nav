@@ -5,8 +5,8 @@ import {
   createDrawerNavigator,
 } from '@react-navigation/drawer';
 import { Icon } from 'react-native-elements';
-// import MainTab from './Screens/MainTabs';
-import MainTab from './Screens/MainTabClass';
+// import MainTabs from './Screens/MainTabs';
+import MainTabs from './Screens/MainTabsClass';
 import AccountStack from './Screens/SideMenu/smAccountStack';
 import ContactUs from './Screens/SideMenu/smContactUs';
 import DataManager from './Screens/SideMenu/smDataStack';
@@ -33,7 +33,7 @@ export default class App extends React.Component {
       >
         <Drawer.Screen
           name="Top"
-          component={MainTab}
+          component={MainTabs}
           options={() => ({
             drawerIcon: ({ focused, color, size }) => {
               return (
