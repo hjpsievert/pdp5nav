@@ -7,7 +7,6 @@ import {
 } from 'react-native';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import * as Dispatch from '../Redux/Dispatches';
 import { Icon } from 'react-native-elements';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import size from 'lodash/size';
@@ -152,7 +151,4 @@ const mapStateToProps = (state) => {
   }
 }
 
-const mapDispatchToProps = {
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(MainTabs);
+export default connect(mapStateToProps)(MainTabs);
