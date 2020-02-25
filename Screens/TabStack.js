@@ -30,7 +30,7 @@ export class TabStack extends React.Component {
     return (
       <Tab.Navigator
         showIcon={true}
-        lazy={false}
+        lazy={true}
         labelStyle={{
           fontSize: 10,
           fontWeight: 'bold',

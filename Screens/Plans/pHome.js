@@ -22,9 +22,6 @@ import { updateDevice, ContentInfo } from '../../Utils/Api';
 import size from 'lodash/size';
 import flatMap from 'lodash/flatMap';
 import sortBy from 'lodash/sortBy';
-import reduce from 'lodash/reduce';
-import isEqual from 'lodash/isEqual';
-
 import lowerCase from 'lodash/lowerCase';
 
 export class pHome extends React.Component {
@@ -192,7 +189,7 @@ export class pHome extends React.Component {
   }
 
   _findPlans = () => {
-    const { myConfigList, drugCount, updateFlowState, doMailState, startDate, navigation, userProfile } = this.props;
+    const { myConfigList, drugCount, doMailState, startDate, navigation, userProfile } = this.props;
     const { planListDirty } = this.state;
     const { emailVerified, userStateId, userMode } = userProfile;
     const stateId = userStateId;
@@ -239,7 +236,7 @@ export class pHome extends React.Component {
 
   _handleAdd = () => {
     const { navigation } = this.props;
-    navigation.navigate('pDrugs');
+    navigation.navigate('Top', {screen: 'Drugs', params: { screen: 'pSearch'}});
   }
 
   _renderDrugItem = (item, index) => {
