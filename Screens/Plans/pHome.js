@@ -4,31 +4,93 @@ import {
   Text,
   FlatList,
   Dimensions,
-  Platform
+  Platform,
+  TouchableHighlight,
+  StyleSheet,
+  ActivityIndicator
 } from 'react-native';
+import { Icon } from 'react-native-elements';
+import * as LocalAuthentication from 'expo-local-authentication';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import * as Dispatch from '../../Redux/Dispatches';
+import { loadAllData } from '../../Utils/InitialLoad';
+import { findPlans } from '../../Utils/Api';
+import { usrMode, Defaults } from '../../Utils/Constants';
+import Constants from 'expo-constants';
+import { updateDevice, ContentInfo } from '../../Utils/Api';
+import size from 'lodash/size';
+import flatMap from 'lodash/flatMap';
+import sortBy from 'lodash/sortBy';
+import reduce from 'lodash/reduce';
+import isEqual from 'lodash/isEqual';
 
-export default class pHome extends React.Component {
+import lowerCase from 'lodash/lowerCase';
+
+export class pHome extends React.Component {
   constructor(props, context) {
     super(props, context);
     this.state = {
+      drugsLoaded: false,
+      showPlans: false,
+      showActive: true,
+      showGreeting: true,
+      animating: false,
+      planListDirty: false,
       flag: Dimensions.get('window').width * 1000 + Dimensions.get('window').height,
-      adjust: Dimensions.get('window').width > Dimensions.get('window').height && Platform.OS !== 'web'
+      adjust: Dimensions.get('window').width > Dimensions.get('window').height && Platform.OS !== 'web',
     }
   }
 
   componentDidMount() {
     Dimensions.addEventListener('change', this._handleDimChange);
-    // ScreenOrientation.addOrientationChangeListener(this._myListener);
+
+    const { userProfile, isStarted } = this.props;
+    console.log('pHome componentDidMount isStarted = ', isStarted, ', profile = ', JSON.stringify(userProfile));
+
+    this._authFunction();
+
+    // removeAllKeys(this._handleSaveActive, 'activeFindDrugs');
+    // removeAllKeys(this._handleSaveActive, 'activePlanDrugs');
+    // removeAllKeys(this._handleSaveActive, 'savedPlanDrugs');
+    // removeAllKeys(this._handleSaveActive, 'backupActivePlanDrugs');
+    // removeAllKeys(this._handleSaveActive, 'userProfile');
+
+    loadAllData((profile, drugList) => {
+      this._finishDataLoad(profile, drugList)
+    });
+  }
+
+  // shouldComponentUpdate(nextProps, nextState) {
+  //   //return true;
+  //   const before = { ...this.props, ...this.state}; 
+  //   const after = { ...nextProps, ...nextState}; 
+  //   const diff = reduce(before, function (result, value, key) { return isEqual(value, after[key]) ? result : result.concat(key); }, []);
+  //   console.log('pHome Update diff = ', diff);
+  //   if (isEqual(before, after)) {
+  //     console.log('pHome will not update, no change');
+  //     return false;
+  //   }
+  //   else {
+  //     console.log('pHome will update');
+  //     return true;
+  //   }
+  // }
+
+  componentDidUpdate() {
+    const { drugCount } = this.props;
+    const { planListDirty } = this.state;
+    console.log('pHome component did update, drugCount = ', drugCount, ', planListDirty = ', planListDirty);
   }
 
   componentWillUnmount() {
+    console.log('pHome unmounting');
     Dimensions.removeEventListener('change', this._handleDimChange);
-    // ScreenOrientation.removeOrientationChangeListeners();
   }
 
   _handleDimChange = ({ window }) => {
     let flag = window.width * 1000 + window.height;
-    let adjust = window.width > window.height  && Platform.OS !== 'web';
+    let adjust = window.width > window.height && Platform.OS !== 'web';
     console.log('pDrugs _handleDimChange event, new flag  = ', flag);
     this.setState({
       flag: flag,
@@ -36,19 +98,182 @@ export default class pHome extends React.Component {
     })
   }
 
-_createTestData = (size) => {
-    let testData = [];
-    for (let index = 0; index < size; index++) {
-      testData.push({ key: index, title: 'Title ' + index, subtitle: 'Subtitle ' + index });
+  _authFunction = async () => {
+    const { isStarted, updatePlatformValue } = this.props;
+    if (!isStarted) {
+      const updateLogin = true;
+      updateDevice((response) => { this._finishUpdateDevice(response) }
+        , Constants.installationId, null, null, updateLogin);
+      ContentInfo((response) => {
+        const { success, payLoad, code, err } = response;
+        console.log('pHome _authFunction installationId = ', Constants.installationId);
+        this.props.updateContent(payLoad)
+      });
     }
-    return testData;
+    let hasHardware = false;
+    let isEnrolled = false;
+    hasHardware = await LocalAuthentication.hasHardwareAsync();
+    if (hasHardware) {
+      isEnrolled = await LocalAuthentication.isEnrolledAsync();
+    }
+    updatePlatformValue({
+      hasFPHardware: hasHardware,
+      isFPEnrolled: isEnrolled,
+    })
   }
 
-  _renderItem = (item, index) => {
+  _finishUpdateDevice = (response) => {
+    const { success, payLoad, code, err } = response;
+    console.log('pHome _finishUpdateDevice success = ', success, ', prev login = ', payLoad.previousLogin);
+    this.props.updateFlowState({
+      isStarted: true,
+      previousLogin: payLoad.previousLogin,
+    })
+  }
+
+  _handleSaveActive = (response) => {
+    console.log('pHome saveActive completed ' + response);
+  }
+
+  _finishDataLoad = (profile, drugList) => {
+    const { addSelectionToMyDrugs, addSelectionToMyFDDrugs, updateFlowState } = this.props;
+    console.log('pHome _finishDataLoad, drugCount = ', size(drugList));
+    const { userIsSubscribed } = profile;
+    const doClear = true;
+
+    if (size(drugList) > 0) {
+      if (userIsSubscribed) {
+        addSelectionToMyFDDrugs(drugList, doClear);
+        updateFlowState({
+          fdPlanListDirty: true,
+          fdActiveListDirty: false,
+          // fdAnimating: true,
+          fdAnimating: false,
+          doMailState: Defaults.doMailState,
+          startDate: new Date().toLocaleDateString('en-US'),
+          reloadMain: false,
+        });
+      }
+      else {
+        addSelectionToMyDrugs(drugList, doClear);
+        updateFlowState({
+          activeListDirty: false,
+          plansToShow: Defaults.plansToShow,
+          doMailState: Defaults.doMailState,
+          startDate: new Date().toLocaleDateString('en-US'),
+          reloadMain: false,
+        });
+        this.setState({
+          animating: true,
+          planListDirty: true,
+        });
+      }
+    }
+    else {
+      updateFlowState({
+        activeListDirty: false,
+        fdPlanListDirty: false,
+        fdActiveListDirty: false,
+        fdAnimating: false,
+        plansToShow: Defaults.plansToShow,
+        doMailState: Defaults.doMailState,
+        startDate: new Date().toLocaleDateString('en-US'),
+        reloadMain: false,
+      });
+      this.setState({
+        animating: false,
+        planListDirty: false,
+      });
+    }
+    this.setState({
+      drugsLoaded: true,
+    });
+    this._findPlans();
+  }
+
+  _findPlans = () => {
+    const { myConfigList, drugCount, updateFlowState, doMailState, startDate, navigation, userProfile } = this.props;
+    const { planListDirty } = this.state;
+    const { emailVerified, userStateId, userMode } = userProfile;
+    const stateId = userStateId;
+    console.log('pHome _findPlans, drugCount ', drugCount, ', planListDirty = ', planListDirty, ', doMailState = ', doMailState); // , ', userProfile = ' , JSON.stringify(userProfile));
+
+    if (drugCount > 0 && planListDirty && stateId) {
+      this.setState({ animating: true });
+      // console.log('pHome _findPlans config = ', myConfigList);
+      findPlans((response) => {
+        this.onFindPlansComplete(response, doMailState);
+      }, JSON.stringify(myConfigList), stateId, doMailState, startDate);
+    }
+    if (!emailVerified && userMode != usrMode.anon) {
+      navigation.navigate('regState');
+    }
+  }
+
+  onFindPlansComplete = (response, doMail) => {
+    const { success, payLoad, code, err } = response;
+    console.log('pHome onFindPlansComplete planList size = ', code);
+    const { handleUpdatePlanList, updateFlowState } = this.props;
+    handleUpdatePlanList(payLoad);
+    updateFlowState({
+      doMailState: doMail,
+    });
+    this.setState({
+      planListDirty: false,
+      animating: false,
+    });
+  }
+
+  _toggleShowGreeting = () => {
+    this.setState({
+      showGreeting: !this.state.showGreeting,
+    });
+  }
+
+  _toggleShowActive = () => {
+    this.setState({
+      showActive: !this.state.showActive,
+      showGreeting: this.state.showActive ? this.state.showGreeting : false,
+    });
+  }
+
+  _handleAdd = () => {
+    const { navigation } = this.props;
+    navigation.navigate('pDrugs');
+  }
+
+  _renderDrugItem = (item, index) => {
     return (
-      <View style={{ backgroundColor: '#eee', borderBottomColor: '#bbb', borderBottomWidth: 1 }}>
+      <View style={{ flex: 1, backgroundColor: '#eee', borderBottomColor: '#bbb', borderBottomWidth: 1 }}>
         <Text style={{ paddingLeft: 35, fontSize: 12, paddingTop: 5, paddingBottom: 5 }}>
-          {(index + ' (' + item.subtitle + ') ' + item.title)}
+          {(item.isBrand ? item.brandName + ' (' + item.baseName + ')' : item.baseName) + ', ' + item.rxStrength + ' ' + item.units + ' ' + lowerCase(item.dosage || item.fullRoute)}
+        </Text>
+      </View>
+    );
+  }
+
+  _toggleShowPlans = () => {
+    this.setState({
+      showPlans: !this.state.showPlans,
+      showGreeting: this.state.showPlans ? this.state.showGreeting : false,
+    });
+  }
+
+  _renderPlanItem = (item) => {
+    const { planName, totalCost } = item;
+
+    const { planNumerator, planDenominator } = this.props;
+    const range = (totalCost - planNumerator) / planDenominator;
+    const cutoff = 0.8;
+    const green = range > 1 - cutoff ? (1 - range) / cutoff * 255 : 255;
+    const red = range < 1 - cutoff ? 255 * range / (1 - cutoff) : 255;
+    const bcColor = '#' + ((1 << 24) + (red << 16) + (green << 8)).toString(16).slice(1);
+    const myTitle = planName + ' $' + totalCost.toFixed(0);
+
+    return (
+      <View style={{ borderBottomColor: '#bbb', borderBottomWidth: 1 }}>
+        <Text style={{ fontSize: 12, paddingLeft: 35, paddingTop: 5, paddingBottom: 5, backgroundColor: bcColor }}>
+          {myTitle}
         </Text>
       </View>
     );
@@ -56,51 +281,231 @@ _createTestData = (size) => {
 
   render() {
     // console.log('pHome render');
-    const {adjust} = this.state;
-    const testData = this._createTestData(15);
+    const { showActive, showPlans, showGreeting, adjust, drugsLoaded, animating } = this.state;
+    const { drugCount, planCount, myPlans, activeDrugs, userProfile, previousLogin } = this.props;
+    let currDate;
+    if (previousLogin) {
+      currDate = new Date(previousLogin);
+    }
+    const prevLogin = previousLogin ? (currDate.getMonth() + 1) + '/' + (currDate.getDate()) + '/' + currDate.getFullYear() + ' ' + (currDate.getHours()) + ':' + (currDate.getMinutes() + 1) : 'retrieving ...';
+    const { displayName, userMode, userStateName } = userProfile;
+
     return (
-      <View style={{ height: Dimensions.get('window').height - 75 - (adjust ? 0 : 35) }} >
-        <View style={{ flexDirection: 'row', justifyContent: 'center', padding: 5, height: 50, borderWidth: 1, borderColor: 'black' }}>
-          <Text style={{ borderWidth: 1, borderColor: 'red' }}>
-            {'Welcome Section'}
-          </Text>
-        </View>
-        <View style={{ flexDirection: 'column', justifyContent: 'center', padding: 5, borderWidth: 1, borderColor: 'black' }}>
-          <Text style={{ borderWidth: 1, borderColor: 'red' }}>
-            {'Message Section'}
-          </Text>
-          <Text style={{ borderWidth: 1, borderColor: 'red' }}>
-            {'More text'}
-          </Text>
-          <Text style={{ borderWidth: 1, borderColor: 'red' }}>
-            {'Even more text'}
-          </Text>
-        </View>
-        <View style={{ flex: 1, flexDirection: 'column', justifyContent: 'center', padding: 5, height: 200, borderWidth: 1, borderColor: 'blue' }}>
-          <Text style={{ borderWidth: 1, borderColor: 'red' }}>
-            {'Drug Section'}
-          </Text>
-          <FlatList
-            data={testData}
-            renderItem={({ item, index }) => this._renderItem(item, index)}
-            keyExtractor={(item) => item.key.toString()}
-            horizontal={false}
-            extraData={this.state.flag}
-          />
-        </View>
-        <View style={{ flex: 1, flexDirection: 'column', justifyContent: 'center', padding: 5, borderWidth: 1, borderColor: 'blue' }}>
-          <Text style={{ borderWidth: 1, borderColor: 'red' }}>
-            {'Plan Section'}
-          </Text>
-          <FlatList
-            data={testData}
-            renderItem={({ item, index }) => this._renderItem(item, index)}
-            keyExtractor={(item) => item.key.toString()}
-            horizontal={false}
-            extraData={this.state.flag}
-          />
-        </View>
+      <View>
+        {!drugsLoaded ?
+          <View>
+            <Text style={{ paddingTop: 50, textAlign: 'center' }}>{'Loading data ...'}</Text>
+            <ActivityIndicator
+              animating={true}
+              style={styles.progress}
+              size="large"
+            />
+          </View>
+          :
+          <View style={{ height: Dimensions.get('window').height - 75 - (adjust ? 0 : 35) }} >
+            <TouchableHighlight
+              onPress={this._toggleShowGreeting}
+            >
+              <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingLeft: 10, paddingTop: 5, paddingBottom: 5, backgroundColor: '#75aaff', borderBottomColor: '#bbb', borderBottomWidth: 1 }}>
+                <Text style={{ fontSize: 18, color: 'black', textAlign: 'left', paddingLeft: 5, paddingTop: 3, paddingBottom: 3 }}>
+                  {'Welcome to EZPartD'}
+                </Text>
+                <Text style={{ fontSize: 10, color: 'black', textAlign: 'right', paddingRight: 10, paddingTop: 3, paddingBottom: 3 }}>
+                  {showGreeting ? 'hide ...' : 'more ...'}
+                </Text>
+              </View>
+            </TouchableHighlight>
+            {showGreeting &&
+              <View style={{ paddingBottom: 5, backgroundColor: '#a4c6fc' }}>
+                <Text style={[styles.body, { textAlign: 'center', paddingBottom: 3 }]}>{(displayName ? displayName : 'Mode') + ': ' + userMode + ', last access ' + prevLogin}</Text>
+                <Text style={styles.body}>{'You are currently not subscribed to any plan. You can use '}<Text style={styles.textBold}>{'Add Drug'}</Text>{' to ' + (drugCount > 0 ? 'extend your list' : 'build a list') + '. The plans available for your state will be updated as your drugs are updated.'}</Text>
+                <Text style={styles.body}>{'You can configure the list for various "what if" scenarios switching to '}<Text style={styles.textBold}>{'Drugs'}</Text>{' and analyze your plans to identify the most cost efficient choice for your needs from '}<Text style={styles.textBold}>{'Plans'}</Text>{'.'}</Text>
+              </View>
+            }
+
+            <View style={{ flexShrink: 1, flexDirection: 'column', justifyContent: 'center' }}>
+              <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingLeft: 10, backgroundColor: '#ddd', borderBottomColor: '#bbb', paddingTop: 5, paddingBottom: 5, borderBottomWidth: 1 }}>
+                <TouchableHighlight
+                  onPress={this._toggleShowActive}
+                >
+                  <View style={{ flexDirection: 'row', justifyContent: 'flex-start', alignItems: 'center' }}>
+                    <Icon
+                      name={showActive ? 'triangle-down' : 'triangle-right'}
+                      type={'entypo'}
+                      color={'black'}
+                      size={20}
+                    />
+                    <Text style={{ fontSize: 14, color: 'black', textAlign: 'left', paddingLeft: 5, paddingTop: 3, paddingBottom: 3 }}>
+                      {'Active List, ' + drugCount + ' drug' + (drugCount != 1 ? 's' : '')}</Text>
+                  </View>
+                </TouchableHighlight>
+                {showActive &&
+                  <TouchableHighlight
+                    onPress={this._handleAdd}
+                  >
+                    <View style={{ flexDirection: 'column', paddingRight: 10 }}>
+                      <Icon
+                        name={'add'}
+                        type={'material'}
+                        color={'black'}
+                        size={20}
+                      />
+                      <Text style={styles.topTabText}>
+                        {'Add Drug'}
+                      </Text>
+                    </View>
+                  </TouchableHighlight>
+                }
+              </View>
+
+              {showActive &&
+                <FlatList
+                  data={activeDrugs}
+                  renderItem={({ item, index }) => this._renderDrugItem(item, index)}
+                  keyExtractor={(item) => item.drugId.toString()}
+                  horizontal={false}
+                  extraData={this.state.flag}
+                />
+              }
+            </View>
+
+            {animating &&
+              <View >
+                <Text style={styles.planLoading}>{'Processing your drug configurations and finding best plans'}</Text>
+                <ActivityIndicator
+                  animating={true}
+                  style={styles.progress}
+                  size="large"
+                />
+              </View>
+            }
+
+            {planCount > 0 &&
+              <View style={{ flexShrink: 1, flexDirection: 'column', justifyContent: 'center' }}>
+                <TouchableHighlight
+                  onPress={this._toggleShowPlans}
+                >
+                  <View style={{ flexDirection: 'row', justifyContent: 'flex-start', alignItems: 'center', paddingLeft: 10, backgroundColor: '#ddd', borderBottomColor: '#bbb', paddingTop: 5, paddingBottom: 5, borderBottomWidth: 1 }}>
+                    <Icon
+                      name={showPlans ? 'triangle-down' : 'triangle-right'}
+                      type={'entypo'}
+                      color={'black'}
+                      size={20}
+                    />
+                    <Text style={{ fontSize: 14, color: 'black', textAlign: 'left', paddingLeft: 5, paddingTop: 3, paddingBottom: 3, flex: 1 }}>
+                      {planCount + ' Plan' + (planCount > 1 ? 's' : '') + ' for your drugs in ' + userStateName + (showPlans ? ', showing top 10' : '')}</Text>
+                  </View>
+                </TouchableHighlight>
+                {showPlans &&
+                  <FlatList
+                    data={myPlans}
+                    renderItem={({ item }) => this._renderPlanItem(item)}
+                    keyExtractor={(item) => item.planId.toString()}
+                    extraData={this.state.flag}
+                  />
+                }
+              </View>
+            }
+          </View>
+        }
       </View>
     )
   }
 }
+
+pHome.propTypes = {
+  activeDrugs: PropTypes.array.isRequired,
+  addSelectionToMyDrugs: PropTypes.func.isRequired,
+  addSelectionToMyFDDrugs: PropTypes.func.isRequired,
+  doMailState: PropTypes.bool.isRequired,
+  drugCount: PropTypes.number.isRequired,
+  handleUpdatePlanList: PropTypes.func.isRequired,
+  isStarted: PropTypes.bool.isRequired,
+  myConfigList: PropTypes.array.isRequired,
+  myPlans: PropTypes.array.isRequired,
+  navigation: PropTypes.object.isRequired,
+  planCount: PropTypes.number.isRequired,
+  planDenominator: PropTypes.number.isRequired,
+  planNumerator: PropTypes.number.isRequired,
+  previousLogin: PropTypes.string.isRequired,
+  startDate: PropTypes.string.isRequired,
+  updateContent: PropTypes.func.isRequired,
+  updateFlowState: PropTypes.func.isRequired,
+  updatePlatformValue: PropTypes.func.isRequired,
+  userProfile: PropTypes.object.isRequired,
+};
+
+const mapStateToProps = (state) => {
+  return {
+    userProfile: state.profile,
+    isStarted: state.flowState['isStarted'] ?? false,
+    doMailState: state.flowState['doMailState'] ?? false,
+    startDate: state.flowState['startDate'] ?? new Date().toLocaleDateString('en-US'),
+    previousLogin: state.flowState['previousLogin'] ?? '',
+    activeDrugs: flatMap(state.myDrugs, (d) => d.drugDetail),
+    drugCount: size(state.myDrugs) ?? 0,
+    myConfigList: flatMap(state.myDrugs, (d) => d.configDetail),
+    myPlans: size(state.myPlans) ? sortBy(flatMap(state.myPlans, (d) => d), 'totalCost').slice(0, 10) : [],
+    planCount: size(state.myPlans) ?? 0,
+    planDenominator: size(state.myPlans) ? sortBy(flatMap(state.myPlans, (d) => d), 'totalCost')[size(state.myPlans) - 1].totalCost - sortBy(flatMap(state.myPlans, (d) => d), 'totalCost')[0].totalCost : 1,
+    planNumerator: size(state.myPlans) ? sortBy(flatMap(state.myPlans, (d) => d), 'totalCost')[0].totalCost : 0,
+  }
+}
+
+const mapDispatchToProps = {
+  addSelectionToMyDrugs: Dispatch.addSelectionToMyDrugs,
+  addSelectionToMyFDDrugs: Dispatch.addSelectionToMyFDDrugs,
+  handleUpdatePlanList: Dispatch.handleUpdatePlanList,
+  updateContent: Dispatch.updateContent,
+  updateFlowState: Dispatch.updateFlowState,
+  updatePlatformValue: Dispatch.updatePlatformValue,
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(pHome);
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#fff',
+    alignItems: 'center',
+    justifyContent: 'flex-start',
+    // borderWidth: 3,
+    // borderColor: 'red',
+  },
+  main: {
+    flex: 1,
+    backgroundColor: '#FFFFFF',
+    //marginLeft: 10,
+    //marginRight: 10,
+    // borderWidth: 3,
+    // borderColor: 'black',
+  },
+  body: {
+    marginTop: 3,
+    // marginLeft: 15,
+    marginLeft: 15,
+    marginRight: 15,
+    fontSize: 12,
+    // borderWidth: 3,
+    // borderColor: 'yellow',
+  },
+  textBold: {
+    fontWeight: 'bold',
+  },
+  topTabText: {
+    fontSize: 8,
+    fontWeight: 'bold',
+    textAlign: 'center',
+    color: 'black',
+    paddingTop: 2,
+  },
+  planLoading: {
+    fontSize: 10,
+    textAlign: 'center',
+    margin: 5,
+  },
+  progress: {
+    height: 40,
+  },
+
+})
