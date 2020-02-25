@@ -27,7 +27,7 @@ function pPlanStack() {
           headerLeft: () => (
             <View style={styles.innerContainer}>
               <TouchableHighlight
-                onPress={() => navigation.navigate('HomeScreen')}
+                onPress={() => navigation.navigate('pHome')}
               >
                 <View style={[styles.touch, { justifyContent: 'flex-start' }]}>
                   <Icon
@@ -58,7 +58,8 @@ function pPlanStack() {
               </TouchableHighlight>
             </View>
           ),
-        })} />
+        })}
+      />
 
       <Stack.Screen
         name="pBreakdown"
@@ -73,7 +74,7 @@ function pPlanStack() {
           headerLeft: () => (
             <View style={styles.innerContainer}>
               <TouchableHighlight
-                onPress={() => navigation.navigate('PlanScreen')}
+                onPress={() => navigation.navigate('pPlans')}
               >
                 <View style={[styles.touch, { justifyContent: 'flex-start' }]}>
                   <Icon

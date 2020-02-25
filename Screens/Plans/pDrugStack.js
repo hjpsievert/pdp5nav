@@ -47,7 +47,7 @@ function pDrugStack() {
           headerLeft: () => (
             <View style={styles.innerContainer}>
               <TouchableHighlight
-                onPress={() => navigation.navigate('HomeScreen')}
+                onPress={() => navigation.navigate('pHome')}
               >
                 <View style={[styles.touch, { justifyContent: 'flex-start' }]}>
                   <Icon
@@ -94,7 +94,7 @@ function pDrugStack() {
           headerLeft: () => (
             <View style={styles.innerContainer}>
               <TouchableHighlight
-                onPress={() => navigation.navigate('DrugScreen')}
+                onPress={() => navigation.navigate('pDrugs')}
               >
                 <View style={[styles.touch, { justifyContent: 'flex-start' }]}>
                   <Icon
@@ -124,7 +124,7 @@ function pDrugStack() {
           headerLeft: () => (
             <View style={styles.innerContainer}>
               <TouchableHighlight
-                onPress={() => navigation.navigate('DrugScreen')}
+                onPress={() => navigation.navigate('pDrugs')}
               >
                 <View style={[styles.touch, { justifyContent: 'flex-end' }]}>
                   <Icon
@@ -154,7 +154,7 @@ function pDrugStack() {
           headerLeft: () => (
             <View style={styles.innerContainer}>
               <TouchableHighlight
-                onPress={() => navigation.navigate('DrugScreen')}
+                onPress={() => navigation.navigate('pDrugs')}
               >
                 <View style={[styles.touch, { justifyContent: 'flex-start' }]}>
                   <Icon
