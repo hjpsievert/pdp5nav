@@ -6,7 +6,7 @@ import {
   createDrawerNavigator,
 } from '@react-navigation/drawer';
 import { Icon } from 'react-native-elements';
-import MainTabs from './MainTabs';
+import TabStack from './TabStack';
 import AccountStack from './SideMenu/smAccountStack';
 import ContactUs from './SideMenu/smContactUs';
 import DataStack from './SideMenu/smDataStack';
@@ -24,7 +24,7 @@ export default function TopDrawer() {
     >
       <Drawer.Screen
         name="Top"
-        component={MainTabs}
+        component={TabStack}
         options={() => ({
           drawerIcon: ({ focused, color, size }) => {
             return (
