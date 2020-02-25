@@ -14,7 +14,7 @@ import pHomeStack from './Plans/pHomeStack';
 import pDrugStack from './Plans/pDrugStack';
 import pPlanStack from './Plans/pPlanStack';
 
-export class MainTabs extends React.Component {
+export class TabStack extends React.Component {
   constructor(props, context) {
     super(props, context);
     this.state = {
@@ -30,7 +30,7 @@ export class MainTabs extends React.Component {
     return (
       <Tab.Navigator
         showIcon={true}
-        // lazy={false}
+        lazy={false}
         labelStyle={{
           fontSize: 10,
           fontWeight: 'bold',
@@ -139,16 +139,16 @@ export class MainTabs extends React.Component {
   }
 }
 
-MainTabs.propTypes = {
+TabStack.propTypes = {
   drugCount: PropTypes.number.isRequired,
   planCount: PropTypes.number.isRequired,
 };
 
 const mapStateToProps = (state) => {
   return {
-    drugCount: size(state.myDrugs) ? size(state.myDrugs) : 7,
-    planCount: size(state.myPlans) ? size(state.myPlans) : 11,
+    drugCount: size(state.myDrugs) ?? 0,
+    planCount: size(state.myPlans) ?? 0,
   }
 }
 
-export default connect(mapStateToProps)(MainTabs);
+export default connect(mapStateToProps)(TabStack);
