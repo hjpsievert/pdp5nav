@@ -29,7 +29,6 @@ export class pPlans extends React.Component {
       adjust: Dimensions.get('window').width > Dimensions.get('window').height && Platform.OS !== 'web',
       showPhases: true,
       compareSelected: [],
-      compareFlag: false,
       dataSource: take(sortBy(flatMap(props.myPlans, (d) => d), 'totalCost'), props.plansToShow),
       maxCompare: 5,
     }
@@ -185,7 +184,7 @@ export class pPlans extends React.Component {
   }
 
   _handlePlanSelect = (item) => {
-    const { compareSelected, compareFlag, maxCompare } = this.state;
+    const { compareSelected, maxCompare } = this.state;
     let index = compareSelected.indexOf(item.planId);
     if (index > -1) {
       this.setState({
@@ -217,9 +216,6 @@ export class pPlans extends React.Component {
         })
       }
     }
-    this.setState({
-      compareFlag: !compareFlag
-    });
   }
 
   _handlePlanCompare = () => {
@@ -382,7 +378,7 @@ export class pPlans extends React.Component {
   }
 
   render() {
-    const { adjust, animating, showPhases, dataSource, compareSelected, compareFlag, flag } = this.state;
+    const { adjust, animating, showPhases, dataSource, compareSelected, flag } = this.state;
     const { startDate, plansToShow, planCount, doMailState, planFullNumerator, planFullDenominator, planMax } = this.props;
     console.log('pPlans render dataSource size = ', size(dataSource));
     if (size(dataSource) === 0) return null;
@@ -492,7 +488,7 @@ export class pPlans extends React.Component {
         <View style={{ flexShrink: 1, flexDirection: 'column', justifyContent: 'center', padding: 5, borderWidth: 1, borderColor: 'blue' }}>
           <FlatList
             data={dataSource}
-            extraData={{ compareFlag, flag, showPhases }}
+            extraData={{ compareSelected, flag, showPhases }}
             keyExtractor={(item) => item.planId.toString()}
             initialNumToRender={30}
             renderItem={({ item }) => this._renderRow(item, scale, planFullNumerator, planFullDenominator, doMailState)}
