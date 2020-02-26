@@ -146,19 +146,12 @@ export class pHome extends React.Component {
           fdActiveListDirty: false,
           // fdAnimating: true,
           fdAnimating: false,
-          doMailState: Defaults.doMailState,
-          startDate: new Date().toLocaleDateString('en-US'),
-          reloadMain: false,
         });
       }
       else {
         addSelectionToMyDrugs(drugList, doClear);
         updateFlowState({
           activeListDirty: false,
-          plansToShow: Defaults.plansToShow,
-          doMailState: Defaults.doMailState,
-          startDate: new Date().toLocaleDateString('en-US'),
-          reloadMain: false,
         });
         this.setState({
           animating: true,
@@ -172,16 +165,19 @@ export class pHome extends React.Component {
         fdPlanListDirty: false,
         fdActiveListDirty: false,
         fdAnimating: false,
-        plansToShow: Defaults.plansToShow,
-        doMailState: Defaults.doMailState,
-        startDate: new Date().toLocaleDateString('en-US'),
-        reloadMain: false,
       });
       this.setState({
         animating: false,
         planListDirty: false,
       });
     }
+    // common flowState settings across all cases
+    updateFlowState({
+      doMailState: Defaults.doMailState,
+      startDate: new Date().toLocaleDateString('en-US'),
+      plansToShow: Defaults.plansToShow,
+      reloadMain: false,
+    })
     this.setState({
       drugsLoaded: true,
     });
@@ -193,13 +189,13 @@ export class pHome extends React.Component {
     const { planListDirty } = this.state;
     const { emailVerified, userStateId, userMode } = userProfile;
     const stateId = userStateId;
-    console.log('pHome _findPlans, drugCount ', drugCount, ', planListDirty = ', planListDirty, ', doMailState = ', doMailState); // , ', userProfile = ' , JSON.stringify(userProfile));
+    console.log('pHome _findPlans, drugCount ', drugCount, ', planListDirty = ', planListDirty); // , ', userProfile = ' , JSON.stringify(userProfile));
 
     if (drugCount > 0 && planListDirty && stateId) {
       this.setState({ animating: true });
       // console.log('pHome _findPlans config = ', myConfigList);
       findPlans((response) => {
-        this.onFindPlansComplete(response, doMailState);
+        this.onFindPlansComplete(response);
       }, JSON.stringify(myConfigList), stateId, doMailState, startDate);
     }
     if (!emailVerified && userMode != usrMode.anon) {
@@ -207,14 +203,15 @@ export class pHome extends React.Component {
     }
   }
 
-  onFindPlansComplete = (response, doMail) => {
+  // ToDo: make this a utility function across components??
+  onFindPlansComplete = (response) => {
     const { success, payLoad, code, err } = response;
     console.log('pHome onFindPlansComplete planList size = ', code);
     const { handleUpdatePlanList, updateFlowState } = this.props;
     handleUpdatePlanList(payLoad);
     updateFlowState({
-      doMailState: doMail,
     });
+    // setState in pHome, updateFlowState elsewhere
     this.setState({
       planListDirty: false,
       animating: false,
@@ -236,7 +233,7 @@ export class pHome extends React.Component {
 
   _handleAdd = () => {
     const { navigation } = this.props;
-    navigation.navigate('Top', {screen: 'Drugs', params: { screen: 'pSearch'}});
+    navigation.navigate('Top', { screen: 'Drugs', params: { screen: 'pSearch' } });
   }
 
   _renderDrugItem = (item, index) => {

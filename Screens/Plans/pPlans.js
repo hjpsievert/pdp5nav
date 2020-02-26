@@ -48,7 +48,7 @@ export class pPlans extends React.Component {
     if (planListDirty && !animating) {
       updateFlowState({ animating: true });
       findPlans((response) => {
-        this.onFindPlansComplete(response, doMailState, startDate);
+        this.onFindPlansComplete(response);
       }, JSON.stringify(myConfigList), userStateId, doMailState, startDate);
     }
     if (planCount > 0 && size(dataSource) === 0) {
@@ -68,7 +68,7 @@ export class pPlans extends React.Component {
     if (planListDirty && !animating) {
       updateFlowState({ animating: true });
       findPlans((response) => {
-        this.onFindPlansComplete(response, doMailState, startDate);
+        this.onFindPlansComplete(response);
       }, JSON.stringify(myConfigList), userStateId, doMailState, startDate);
     }
     if (planCount > 0 && size(dataSource) === 0) {
@@ -93,18 +93,18 @@ export class pPlans extends React.Component {
     })
   }
 
-  onFindPlansComplete = (response, doMailState, startDate) => {
+  // ToDo: make this a utility function across components??
+  onFindPlansComplete = (response) => {
     const { success, payLoad, code, err } = response;
     const { handleUpdatePlanList, updateFlowState, myPlans, plansToShow } = this.props;
     console.log('pPlans onFindPlansComplete planList size = ', code);
     handleUpdatePlanList(payLoad);
-    updateFlowState({
-      startDate: startDate,
-    });
+    // only in pPlans
     this.setState({
       dataSource: take(sortBy(flatMap(myPlans, (d) => d), 'totalCost'), plansToShow),
     });
-    updateFlowState({
+        // setState in pHome, updateFlowState elsewhere
+updateFlowState({
       planListDirty: false,
       animating: false,
     });
@@ -392,7 +392,6 @@ export class pPlans extends React.Component {
             <Text>{'Processing your configuration and finding best plans'}</Text>
             <ActivityIndicator
               animating={true}
-              // style={styles.progress}
               size="large"
             />
           </View>}
@@ -491,7 +490,7 @@ export class pPlans extends React.Component {
             extraData={{ compareSelected, flag, showPhases }}
             keyExtractor={(item) => item.planId.toString()}
             initialNumToRender={30}
-            renderItem={({ item }) => this._renderRow(item, scale, planFullNumerator, planFullDenominator, doMailState)}
+            renderItem={({ item }) => this._renderRow(item, scale, planFullNumerator, planFullDenominator)}
           />
         </View>
       </View>
