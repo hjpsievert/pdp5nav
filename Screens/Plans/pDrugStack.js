@@ -22,6 +22,7 @@ function pDrugStack() {
         component={pDrugs}
         options={({ navigation, route }) => ({
           title: 'My Drugs',
+          initialParams: {...{refresh: true}},
           headerTitle: "Drugs Header",
           headerStyle: { backgroundColor: '#405ce8' },
           headerTitleStyle: { fontWeight: 'normal' },
@@ -94,7 +95,7 @@ function pDrugStack() {
           headerLeft: () => (
             <View style={styles.innerContainer}>
               <TouchableHighlight
-                onPress={() => navigation.navigate('pDrugs')}
+                onPress={() => navigation.navigate('pDrugs', {refresh: true})}
               >
                 <View style={[styles.touch, { justifyContent: 'flex-start' }]}>
                   <Icon
@@ -124,7 +125,7 @@ function pDrugStack() {
           headerLeft: () => (
             <View style={styles.innerContainer}>
               <TouchableHighlight
-                onPress={() => navigation.navigate('pDrugs')}
+                onPress={() => navigation.navigate('pDrugs', {refresh: true})}
               >
                 <View style={[styles.touch, { justifyContent: 'flex-end' }]}>
                   <Icon
@@ -154,7 +155,7 @@ function pDrugStack() {
           headerLeft: () => (
             <View style={styles.innerContainer}>
               <TouchableHighlight
-                onPress={() => navigation.navigate('pDrugs')}
+                onPress={() => navigation.navigate('pDrugs', {refresh: true})}
               >
                 <View style={[styles.touch, { justifyContent: 'flex-start' }]}>
                   <Icon

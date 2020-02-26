@@ -15,14 +15,17 @@ import {
   ScrollView
 } from 'react-native';
 import { Button } from 'react-native-elements';
+import capitalize from 'lodash/capitalize';
 
 
-export class DrugDosage extends Component {
+export class DrugDelete extends Component {
   constructor(props, context) {
     super(props, context);
-    this.state = {
+    const { drugToDelete } = props;
+        this.state = {
       flag: Dimensions.get('window').width * 1000 + Dimensions.get('window').height,
-      adjust: Dimensions.get('window').width > Dimensions.get('window').height && Platform.OS !== 'web'
+      adjust: Dimensions.get('window').width > Dimensions.get('window').height && Platform.OS !== 'web',
+      drugDetail: drugToDelete.drugDetail
     }
   }
 
@@ -45,24 +48,27 @@ export class DrugDosage extends Component {
     })
   }
 
-  _handleExitDosage = () => {
+  _handleExitDelete = (doDelete) => {
     this.props.updateFlowState({
-      showDosage: false,
+      askDelete: false,
+      doDelete: doDelete
     })
   }
 
   render() {
-    const { adjust } = this.state;
+    const { adjust, drugDetail } = this.state;
+    const titleText = (drugDetail.isBrand ? capitalize(drugDetail.brandName) + ' (Brand)' : drugDetail.baseName + ' (Generic)') + ', ' + drugDetail.rxStrength + ' ' + drugDetail.units + ' ' + capitalize(drugDetail.pckUnit);    const delWidth = Math.min(Dimensions.get('window').width, 500);
     return (
       <SlideInView
+      style={{width: delWidth}}
         sideStart={Dimensions.get('window').width}
-        sideEnd={0}
+        sideEnd={(Dimensions.get('window').width - delWidth)/2}
         upStart={0}
         upEnd={0}
         duration={this.state.duration}
         slideTop={false}
       >
-        <View style={{ width: Dimensions.get('window').width, height: Dimensions.get('window').height - 75 - (adjust ? 0 : 35), backgroundColor: 'rgb(255,255,255)' }}>
+        <View style={{ width: delWidth, height: Dimensions.get('window').height - 75 - (adjust ? 0 : 35), backgroundColor: 'rgb(255,255,255)' }}>
           <View
             style={{
               flex: 1,
@@ -80,16 +86,29 @@ export class DrugDosage extends Component {
               borderWidth: 1,
             }}
             >
-              <Text style={{flex: 1}}>{'This is the Drug Dosage Screen'}</Text>
+              <Text style={{ flex: 1 }}>{'This is the Drug Delete Screen'}</Text>
+              <Text style={{ flex: 1 }}>{'Are you sure you want to delete ' + titleText}</Text>
+            </View>
+            <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
               <Button
                 raised={true}
-                containerStyle={{width: 200, marginTop: 10, marginBottom: 10, }}
+                containerStyle={{ width: 200, marginTop: 10, marginBottom: 10, marginRight: 25 }}
                 icon={{ name: 'ios-arrow-dropright', type: 'ionicon', color: 'white' }}
                 iconRight
                 backgroundColor={'green'}
                 color={'white'}
-                title={'Exit'}
-                onPress={() =>this._handleExitDosage()}
+                title={'Delete'}
+                onPress={() => this._handleExitDelete(true)}
+              />
+              <Button
+                raised={true}
+                containerStyle={{ width: 200, marginLeft: 25, marginTop: 10, marginBottom: 10, }}
+                icon={{ name: 'ios-arrow-dropright', type: 'ionicon', color: 'white' }}
+                iconRight
+                backgroundColor={'green'}
+                color={'white'}
+                title={'Cancel'}
+                onPress={() => this._handleExitDelete(false)}
               />
             </View>
           </View>
@@ -99,7 +118,8 @@ export class DrugDosage extends Component {
   }
 }
 
-DrugDosage.propTypes = {
+DrugDelete.propTypes = {
+  drugToDelete: PropTypes.object.isRequired,
   updateFlowState: PropTypes.func.isRequired,
 };
 
@@ -114,4 +134,4 @@ const mapDispatchToProps = {
 }
 // export default withNavigation(ErrorHandler);
 
-export default connect(mapStateToProps, mapDispatchToProps)(DrugDosage);
+export default connect(mapStateToProps, mapDispatchToProps)(DrugDelete);

@@ -17,7 +17,7 @@ import {
 import { Button } from 'react-native-elements';
 
 
-export class DrugDosage extends Component {
+export class DrugOptimization extends Component {
   constructor(props, context) {
     super(props, context);
     this.state = {
@@ -47,7 +47,7 @@ export class DrugDosage extends Component {
 
   _handleExitDosage = () => {
     this.props.updateFlowState({
-      showDosage: false,
+      showOptimize: false,
     })
   }
 
@@ -80,7 +80,7 @@ export class DrugDosage extends Component {
               borderWidth: 1,
             }}
             >
-              <Text style={{flex: 1}}>{'This is the Drug Dosage Screen'}</Text>
+              <Text style={{flex: 1}}>{'This is the Drug Optimization Screen'}</Text>
               <Button
                 raised={true}
                 containerStyle={{width: 200, marginTop: 10, marginBottom: 10, }}
@@ -99,7 +99,7 @@ export class DrugDosage extends Component {
   }
 }
 
-DrugDosage.propTypes = {
+DrugOptimization.propTypes = {
   updateFlowState: PropTypes.func.isRequired,
 };
 
@@ -114,4 +114,4 @@ const mapDispatchToProps = {
 }
 // export default withNavigation(ErrorHandler);
 
-export default connect(mapStateToProps, mapDispatchToProps)(DrugDosage);
+export default connect(mapStateToProps, mapDispatchToProps)(DrugOptimization);
