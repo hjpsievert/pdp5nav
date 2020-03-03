@@ -80,9 +80,7 @@ export class pDrugs extends React.Component {
     }
     // const { key } = navigation.state;
 
-    //const { refresh } = navigation.getParam('refresh', false);
-    let refresh = false;
-    refresh = route.params?.refresh ?? false;
+    const refresh = route.params?.refresh ?? false;
     console.log('pDrugs Update refresh = ', refresh);
     if (refresh) {
       this.props.updateFlowState({
@@ -433,6 +431,9 @@ export class pDrugs extends React.Component {
         <View style={{ flexDirection: 'row', justifyContent: 'flex-start', alignItems: 'center', paddingLeft: 10, paddingRight: 10, backgroundColor: '#ddd' }}>
           <Text style={{ flex: 1, fontSize: 16, color: 'black', textAlign: 'left', paddingTop: 10, paddingBottom: 10 }}>
             {'Active List - ' + drugCount + ' drug' + (drugCount != 1 ? 's' : '')}
+          </Text>          
+          <Text style={{ fontSize: 16, color: 'black', textAlign: 'right', paddingTop: 10, paddingBottom: 10, paddingRight: 5 }}>
+            {'Add'}
           </Text>
           <Icon
             name='add'
@@ -450,7 +451,8 @@ export class pDrugs extends React.Component {
             keyExtractor={(item) => item.drugId.toString()}
             renderItem={({ item }) => this._renderActiveItem(item)}
             horizontal={false}
-            extraData={this.state.flag} />
+            extraData={this.state.flag}
+          />
 
         </View>
 
