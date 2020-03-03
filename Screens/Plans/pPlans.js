@@ -183,7 +183,14 @@ updateFlowState({
     );
   }
 
-  _handlePlanSelect = (item) => {
+  _handlePlanClick = (item) => {
+    const { navigation } = this.props;
+    console.log('pPlans _handlePlanClick item.planId = ', item.planId)
+    // navigation.navigate('fpBreak', { planSelected: [item.planId, 55, 217] });
+    navigation.navigate('pBreakdown', { planSelected: [item.planId] });
+  }
+
+_handlePlanSelect = (item) => {
     const { compareSelected, maxCompare } = this.state;
     let index = compareSelected.indexOf(item.planId);
     if (index > -1) {
