@@ -231,10 +231,10 @@ export class pHome extends React.Component {
     });
   }
 
-  _handleAdd = () => {
-    const { navigation } = this.props;
-    navigation.navigate('Top', { screen: 'Drugs', params: { screen: 'pSearch' } });
-  }
+  // _handleAdd = () => {
+  //   const { navigation } = this.props;
+  //   navigation.navigate('Top', { screen: 'Drugs', params: { screen: 'pSearch' } });
+  // }
 
   _renderDrugItem = (item, index) => {
     return (
@@ -333,7 +333,7 @@ export class pHome extends React.Component {
                       {'Active List, ' + drugCount + ' drug' + (drugCount != 1 ? 's' : '')}</Text>
                   </View>
                 </TouchableHighlight>
-                {showActive &&
+                {/* {showActive &&
                   <TouchableHighlight
                     onPress={this._handleAdd}
                   >
@@ -349,7 +349,7 @@ export class pHome extends React.Component {
                       </Text>
                     </View>
                   </TouchableHighlight>
-                }
+                } */}
               </View>
 
               {showActive &&
