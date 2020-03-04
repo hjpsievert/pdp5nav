@@ -20,8 +20,6 @@ import { Button, Icon } from 'react-native-elements';
 import { findPlans } from '../../Utils/Api';
 import { saveDrugList } from '../../Utils/SaveData';
 import flatMap from 'lodash/flatMap';
-import sortBy from 'lodash/sortBy';
-import take from 'lodash/take';
 import size from 'lodash/size';
 import capitalize from 'lodash/capitalize';
 import lowerCase from 'lodash/lowerCase';
@@ -33,9 +31,10 @@ export class pDrugs extends React.Component {
     this.state = {
       flag: Dimensions.get('window').width * 1000 + Dimensions.get('window').height,
       adjust: Dimensions.get('window').width > Dimensions.get('window').height && Platform.OS !== 'web',
-      upStart: -props.windowHeight,
+      upStart: -Dimensions.get('window').height,
       upEnd: 0,
       duration: 500,
+      deletePending: false,
       drugToDelete: {},
       selectedDrug: 0,
     }
@@ -138,27 +137,6 @@ export class pDrugs extends React.Component {
     });
   }
 
-  _showDosage = () => {
-    this.props.updateFlowState({
-      showDosage: true,
-    })
-  }
-
-  _renderItem = (item, index) => {
-    const newText = item.subtitle + '\n' + item.line + '\n' + item.finalLine;
-    return (
-      <View style={{ backgroundColor: '#eee', borderBottomColor: '#bbb', borderBottomWidth: 1, paddingBottom: 5 }}>
-        <Text style={{ paddingLeft: 35, fontSize: 14, paddingTop: 5, paddingBottom: 5 }}>
-          {(index + ': ' + item.title)}
-        </Text>
-        <Text style={{ paddingLeft: 35, fontSize: 10 }}>
-          {(newText)}
-        </Text>
-
-      </View>
-    );
-  }
-
   _confirmDeleteDrug = (drug) => {
     const { updateFlowState } = this.props;
     updateFlowState({
@@ -168,17 +146,6 @@ export class pDrugs extends React.Component {
     this.setState({
       drugToDelete: drug
     })
-    // console.log('Delete Saved?');
-    // Alert.alert(
-    //   'Delete Drug',
-    //   'Are you sure you want to delete this drug?',
-    //   [
-    //     {
-    //       text: 'Cancel', style: 'cancel'
-    //     },
-    //     { text: 'Delete', onPress: () => this._handleDeleteFromMyDrugs(drug) },
-    //   ]
-    // );
   }
 
   _handleDeleteFromMyDrugs = (drug) => {
@@ -232,7 +199,7 @@ export class pDrugs extends React.Component {
     });
   }
 
-  _renderActiveItem = (item) => {
+_renderActiveItem = (item) => {
     const { drugDetail, planDetail, configDetail, isSelected, ndc } = item;
     // console.log('pDrugs render item, drugId = ', item.drugId); //, ' drugDetail = ', drugDetail);
 
@@ -510,7 +477,6 @@ pDrugs.propTypes = {
   showOptimize: PropTypes.bool.isRequired,
   updateFlowState: PropTypes.func.isRequired,
   userProfile: PropTypes.object.isRequired,
-  windowHeight: PropTypes.number.isRequired,
 };
 
 const mapStateToProps = (state) => {
@@ -520,24 +486,23 @@ const mapStateToProps = (state) => {
     askDelete: state.flowState['askDelete'] ?? false,
     doDelete: state.flowState['doDelete'] ?? false,
     doMailState: state.flowState['doMailState'] ?? false,
+    drugCount: size(state.myDrugs),
+    myConfigList: flatMap(state.myDrugs, (d) => d.configDetail),
+    myDrugs: flatMap(state.myDrugs, (d) => d),
+    planCount: size(state.myPlans) ?? 0,
     planListDirty: state.flowState['planListDirty'] ?? false,
     showDosage: state.flowState['showDosage'] ?? false,
     showMode: state.flowState['showMode'] ?? false,
     showOptimize: state.flowState['showOptimize'] ?? false,
-    drugCount: size(state.myDrugs),
-    myDrugs: flatMap(state.myDrugs, (d) => d),
-    myConfigList: flatMap(state.myDrugs, (d) => d.configDetail),
-    windowHeight: state.platform['WindowHeight'] ? state.platform['WindowHeight'] / state.platform['PixelRatio'] : 0,
     userProfile: state.profile,
-    planCount: size(state.myPlans) ?? 0,
   }
 }
 
 const mapDispatchToProps = {
   handleDeleteFromMyDrugs: Dispatch.handleDeleteFromMyDrugs,
   handleToggleSelectedDrug: Dispatch.handleToggleSelectedDrug,
-  updateFlowState: Dispatch.updateFlowState,
   handleUpdatePlanList: Dispatch.handleUpdatePlanList,
+  updateFlowState: Dispatch.updateFlowState,
 }
 
 
