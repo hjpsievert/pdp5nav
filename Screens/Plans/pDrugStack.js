@@ -23,7 +23,7 @@ function pDrugStack() {
         initialParams={{refresh: true}}
         options={({ navigation, route }) => ({
           title: 'My Drugs',
-          headerTitle: "Drugs Header",
+          headerTitle: "Your Drug List",
           headerStyle: { backgroundColor: '#405ce8' },
           headerTitleStyle: { fontWeight: 'normal' },
           headerTintColor: 'white',
