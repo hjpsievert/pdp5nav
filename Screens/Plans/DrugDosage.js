@@ -5,20 +5,16 @@ import {
   Text,
   View,
   FlatList,
-  Alert,
   Dimensions,
   Platform,
-  Modal
 } from 'react-native';
-import { Button, Icon } from 'react-native-elements';
+import { Icon } from 'react-native-elements';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import * as Dispatch from '../../Redux/Dispatches';
 import SlideInView from '../../Components/SlideInView';
 import { loadDrugsByBaseName } from '../../Utils/Api';
-import reduce from 'lodash/reduce';
 import capitalize from 'lodash/capitalize';
-import isEqual from 'lodash/isEqual';
 
 
 export class DrugDosage extends Component {

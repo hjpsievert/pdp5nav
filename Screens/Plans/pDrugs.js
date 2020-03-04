@@ -6,7 +6,6 @@ import {
   Dimensions,
   Platform,
   TouchableHighlight,
-  Alert,
   ActivityIndicator
 } from 'react-native';
 import { connect } from 'react-redux';
@@ -16,7 +15,7 @@ import DrugDosage from './DrugDosage';
 import DrugMode from './DrugMode';
 import DrugDelete from './DrugDelete';
 import DrugOptimization from './DrugOptimization';
-import { Button, Icon } from 'react-native-elements';
+import { Icon } from 'react-native-elements';
 import { findPlans } from '../../Utils/Api';
 import { saveDrugList } from '../../Utils/SaveData';
 import flatMap from 'lodash/flatMap';

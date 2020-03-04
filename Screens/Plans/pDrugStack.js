@@ -1,7 +1,6 @@
 import React from 'react'
 import {
   View,
-  Text,
   StyleSheet,
   TouchableHighlight
 } from 'react-native';
@@ -21,30 +20,13 @@ function pDrugStack() {
         name="pDrugs"
         component={pDrugs}
         initialParams={{refresh: true}}
-        options={({ navigation, route }) => ({
+        options={({ navigation }) => ({
           title: 'My Drugs',
           headerTitle: "Your Drug List",
           headerStyle: { backgroundColor: '#405ce8' },
           headerTitleStyle: { fontWeight: 'normal' },
           headerTintColor: 'white',
           headerTitleAlign: 'center',
-          // headerRight: () => (
-          //   <View style={styles.innerContainer}>
-          //     <TouchableHighlight
-          //       onPress={() => navigation.navigate('pSearch')}
-          //     >
-          //       <View style={[styles.touch, { justifyContent: 'flex-end' }]}>
-          //         <Icon
-          //           name={'ios-arrow-forward'}
-          //           type={'ionicon'}
-          //           color={'white'}
-          //           size={24}
-          //           style={{ padding: 5 }}
-          //         />
-          //       </View>
-          //     </TouchableHighlight>
-          //   </View>
-          // ),
           headerLeft: () => (
             <View style={styles.innerContainer}>
               <TouchableHighlight
@@ -68,7 +50,7 @@ function pDrugStack() {
       <Stack.Screen
         name="pSearch"
         component={pSearch}
-        options={({ navigation, route }) => ({
+        options={({ navigation }) => ({
           title: 'Search Drugs',
           headerTitle: "Drug Search",
           headerStyle: { backgroundColor: '#405ce8' },
@@ -115,7 +97,7 @@ function pDrugStack() {
       <Stack.Screen
         name="pSelect"
         component={pSelect}
-        options={({ navigation, route }) => ({
+        options={({ navigation }) => ({
           title: 'Select Drugs',
           headerTitle: "Drug Selection",
           headerStyle: { backgroundColor: '#405ce8' },
@@ -145,7 +127,7 @@ function pDrugStack() {
       <Stack.Screen
         name="pPick"
         component={pPick}
-        options={({ navigation, route }) => ({
+        options={({ navigation }) => ({
           title: 'Pick Base Drugs',
           headerTitle: "Drug Picker",
           headerStyle: { backgroundColor: '#405ce8' },

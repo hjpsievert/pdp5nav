@@ -236,7 +236,7 @@ export class pHome extends React.Component {
   //   navigation.navigate('Top', { screen: 'Drugs', params: { screen: 'pSearch' } });
   // }
 
-  _renderDrugItem = (item, index) => {
+  _renderDrugItem = (item) => {
     return (
       <View style={{ flex: 1, backgroundColor: '#eee', borderBottomColor: '#bbb', borderBottomWidth: 1 }}>
         <Text style={{ paddingLeft: 35, fontSize: 12, paddingTop: 5, paddingBottom: 5 }}>
@@ -458,22 +458,6 @@ const mapDispatchToProps = {
 export default connect(mapStateToProps, mapDispatchToProps)(pHome);
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'flex-start',
-    // borderWidth: 3,
-    // borderColor: 'red',
-  },
-  main: {
-    flex: 1,
-    backgroundColor: '#FFFFFF',
-    //marginLeft: 10,
-    //marginRight: 10,
-    // borderWidth: 3,
-    // borderColor: 'black',
-  },
   body: {
     marginTop: 3,
     // marginLeft: 15,
@@ -485,13 +469,6 @@ const styles = StyleSheet.create({
   },
   textBold: {
     fontWeight: 'bold',
-  },
-  topTabText: {
-    fontSize: 8,
-    fontWeight: 'bold',
-    textAlign: 'center',
-    color: 'black',
-    paddingTop: 2,
   },
   planLoading: {
     fontSize: 10,
