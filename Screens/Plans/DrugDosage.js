@@ -300,21 +300,7 @@ export class DrugDosage extends Component {
     console.log('DrugDosage render, drugPicked = ', drugPicked, ', selectionMade = ' + selectionMade, ', windowWid = ', Dimensions.get('window').width, ', height = ', Dimensions.get('window').height - 70 - 50);
     const titleText = (drugDetail.isBrand ? capitalize(drugDetail.brandName + (discontinued ? ' (Brand)' : '')) : drugDetail.baseName + (discontinued ? ' (Generic)' : '')) + ' ' + drugDetail.rxStrength + ' ' + drugDetail.units + ' ' + capitalize(drugDetail.pckUnit);
     const titleText2 = (discontinued ? 'Select new' : 'Change') + ' Dosage or Manufacturer';
-    let alertBox = [styles.alertView];
-    let alertButton = [styles.alertButton];
-    if (Platform.OS === 'web') {
-      alertBox.push({
-        width: Dimensions.get('window').width / 2,
-      });
-      alertButton.push({
-        width: Dimensions.get('window').width / 2 - 2,
-      });
-    }
-    else {
-      alertButton.push({
-        flex: 1,
-      });
-    }
+
     return (
       <SlideInView
         sideStart={Dimensions.get('window').width}
@@ -343,62 +329,59 @@ export class DrugDosage extends Component {
               borderWidth: !showAlert ? 1 : 0,
             }}
             >
-              <View style={{ flex: 1, flexDirection: 'column' }}>
+              <View style={{ flex: 1, flexDirection: 'column', alignItems: 'stretch' }}>
 
                 {showAlert &&
-                  <View style={alertBox}>
-                    <View style={{ flex: 1, flexDirection: 'column', alignItems: 'center' }}>
-
-                      <Text style={{ fontSize: 18, paddingLeft: 10, paddingRight: 10, paddingTop: 5, paddingBottom: 10, textAlign: 'center' }}>{'Update Dosage'}</Text>
-                      <Text style={{ flex: 1, fontSize: 14, paddingLeft: 10, paddingRight: 10, paddingTop: 5, paddingBottom: 10, textAlign: 'left' }}>{'Are you sure you want to update the dosage for this drug? The optimization settings for the drug you replace will be lost.'}</Text>
-
-                      <View style={{ flexDirection: 'row', alignItems: 'flex-end' }}>
-                        <View style={alertButton}>
-                          <TouchableHighlight
-                            onPress={() => this._setAlert(false)}
+                  <View style={{ backgroundColor: 'rgb(183, 211, 255)', borderColor: 'black', borderWidth: 1, }}>
+                    <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'stretch' }}>
+                      <Text style={{ fontSize: 18, paddingLeft: 10, paddingRight: 10, paddingTop: 5, paddingBottom: 10 }}>{'Update Dosage'}</Text>
+                    </View>
+                    <View style={{ flexDirection: 'row', justifyContent: 'flex-start', alignItems: 'stretch', backgroundColor: 'rgb(204, 223, 255)' }}>
+                      <Text style={{ fontSize: 14, paddingLeft: 10, paddingRight: 10, paddingTop: 5, paddingBottom: 10, textAlign: 'left' }}>{'Are you sure you want to update the dosage for this drug? \n\nThe optimization settings for the drug you replace will be lost.'}</Text>
+                    </View>
+                    <View style={{ flexDirection: 'row', justifyContent: 'space-around', alignItems: 'stretch', paddingTop: 5, borderTopWidth: 1, borderTopColor: '#bbb' }}>
+                      <TouchableHighlight
+                        onPress={() => this._setAlert(false)}
+                      >
+                        <View style={{ flexDirection: 'column', justifyContent: 'space-between', paddingBottom: 5 }}>
+                          <Icon
+                            name={'ios-close-circle-outline'}
+                            type={'ionicon'}
+                            color={'black'}
+                            size={25}
+                            containerStyle={{
+                              paddingLeft: 10,
+                              paddingRight: 10,
+                            }}
+                          />
+                          <Text
+                            style={styles.topTabText}
                           >
-                            <View style={{ flexDirection: 'column', justifyContent: 'space-between', paddingBottom: 5 }}>
-                              <Icon
-                                name={'ios-close-circle-outline'}
-                                type={'ionicon'}
-                                color={'black'}
-                                size={25}
-                                containerStyle={{
-                                  paddingLeft: 10,
-                                  paddingRight: 10,
-                                }}
-                              />
-                              <Text
-                                style={styles.topTabText}
-                              >
-                                {'CANCEL'}
-                              </Text>
-                            </View>
-                          </TouchableHighlight>
-                          <TouchableHighlight
-                            onPress={() => this._handleUpdateDosage()}
-                          >
-                            <View style={{ flexDirection: 'column', justifyContent: 'space-between' }}>
-                              <Icon
-                                name={'ios-arrow-dropright'}
-                                type={'ionicon'}
-                                color={'black'}
-                                size={25}
-                                containerStyle={{
-                                  paddingLeft: 10,
-                                  paddingRight: 10,
-                                }}
-                              />
-                              <Text
-                                style={styles.topTabText}
-                              >
-                                {'UPDATE'}
-                              </Text>
-                            </View>
-                          </TouchableHighlight>
+                            {'CANCEL'}
+                          </Text>
                         </View>
-                      </View>
-
+                      </TouchableHighlight>
+                      <TouchableHighlight
+                        onPress={() => this._handleUpdateDosage()}
+                      >
+                        <View style={{ flexDirection: 'column', justifyContent: 'space-between' }}>
+                          <Icon
+                            name={'ios-arrow-dropright'}
+                            type={'ionicon'}
+                            color={'black'}
+                            size={25}
+                            containerStyle={{
+                              paddingLeft: 10,
+                              paddingRight: 10,
+                            }}
+                          />
+                          <Text
+                            style={styles.topTabText}
+                          >
+                            {'UPDATE'}
+                          </Text>
+                        </View>
+                      </TouchableHighlight>
                     </View>
                   </View>
                 }
@@ -607,21 +590,4 @@ const styles = StyleSheet.create({
     color: 'black',
     paddingTop: 2,
   },
-  alertView: {
-    flexDirection: 'row',
-    marginTop: 50,
-    height: Dimensions.get('window').height / 3,
-    backgroundColor: 'rgb(rgb(204, 223, 255)',
-    borderColor: 'black',
-    borderWidth: 1,
-    alignSelf: 'center'
-  },
-  alertButton: {
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-    backgroundColor: 'rgb(183, 211, 255)',
-    borderTopWidth: 1,
-    borderTopColor: '#bbb',
-    paddingTop: 5
-  }
 });
