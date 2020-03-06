@@ -13,6 +13,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import * as Dispatch from '../../Redux/Dispatches';
 import SlideInView from '../../Components/SlideInView';
+import AlertBox from '../../Components/AlertBox';
 import { loadDrugsByBaseName } from '../../Utils/Api';
 import capitalize from 'lodash/capitalize';
 
@@ -107,6 +108,15 @@ export class DrugDosage extends Component {
   _confirmUpdateDosage = () => {
     // console.log('Update Dosage?');
     this._setAlert(true);
+  }
+
+  _handleCallback = (mode) => {
+    if (mode) {
+     this._handleUpdateDosage();
+    }
+    else {
+      this._setAlert(false);
+    }
   }
 
   _handleUpdateDosage = () => {
@@ -300,6 +310,7 @@ export class DrugDosage extends Component {
     console.log('DrugDosage render, drugPicked = ', drugPicked, ', selectionMade = ' + selectionMade, ', windowWid = ', Dimensions.get('window').width, ', height = ', Dimensions.get('window').height - 70 - 50);
     const titleText = (drugDetail.isBrand ? capitalize(drugDetail.brandName + (discontinued ? ' (Brand)' : '')) : drugDetail.baseName + (discontinued ? ' (Generic)' : '')) + ' ' + drugDetail.rxStrength + ' ' + drugDetail.units + ' ' + capitalize(drugDetail.pckUnit);
     const titleText2 = (discontinued ? 'Select new' : 'Change') + ' Dosage or Manufacturer';
+    const alertMessage = 'Are you sure you want to update the dosage for this drug? \n\nThe optimization settings for the drug you replace will be lost.';
 
     return (
       <SlideInView
@@ -332,59 +343,15 @@ export class DrugDosage extends Component {
               <View style={{ flex: 1, flexDirection: 'column', alignItems: 'stretch' }}>
 
                 {showAlert &&
-                  <View style={{ backgroundColor: 'rgb(183, 211, 255)', borderColor: 'black', borderWidth: 1, }}>
-                    <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'stretch' }}>
-                      <Text style={{ fontSize: 18, paddingLeft: 10, paddingRight: 10, paddingTop: 5, paddingBottom: 10 }}>{'Update Dosage'}</Text>
-                    </View>
-                    <View style={{ flexDirection: 'row', justifyContent: 'flex-start', alignItems: 'stretch', backgroundColor: 'rgb(204, 223, 255)' }}>
-                      <Text style={{ fontSize: 14, paddingLeft: 10, paddingRight: 10, paddingTop: 5, paddingBottom: 10, textAlign: 'left' }}>{'Are you sure you want to update the dosage for this drug? \n\nThe optimization settings for the drug you replace will be lost.'}</Text>
-                    </View>
-                    <View style={{ flexDirection: 'row', justifyContent: 'space-around', alignItems: 'stretch', paddingTop: 5, borderTopWidth: 1, borderTopColor: '#bbb' }}>
-                      <TouchableHighlight
-                        onPress={() => this._setAlert(false)}
-                      >
-                        <View style={{ flexDirection: 'column', justifyContent: 'space-between', paddingBottom: 5 }}>
-                          <Icon
-                            name={'ios-close-circle-outline'}
-                            type={'ionicon'}
-                            color={'black'}
-                            size={25}
-                            containerStyle={{
-                              paddingLeft: 10,
-                              paddingRight: 10,
-                            }}
-                          />
-                          <Text
-                            style={styles.topTabText}
-                          >
-                            {'CANCEL'}
-                          </Text>
-                        </View>
-                      </TouchableHighlight>
-                      <TouchableHighlight
-                        onPress={() => this._handleUpdateDosage()}
-                      >
-                        <View style={{ flexDirection: 'column', justifyContent: 'space-between' }}>
-                          <Icon
-                            name={'ios-arrow-dropright'}
-                            type={'ionicon'}
-                            color={'black'}
-                            size={25}
-                            containerStyle={{
-                              paddingLeft: 10,
-                              paddingRight: 10,
-                            }}
-                          />
-                          <Text
-                            style={styles.topTabText}
-                          >
-                            {'UPDATE'}
-                          </Text>
-                        </View>
-                      </TouchableHighlight>
-                    </View>
-                  </View>
+                  <AlertBox
+                    alertTitle={'Update Dosage'}
+                    alertMessage={alertMessage}
+                    executeLabel={'APPLY'}
+                    cancelLabel={'CANCEL'}
+                    callbackFunction={this._handleCallback}
+                  />
                 }
+                
                 {!showAlert &&
                   <View>
                     <Text style={{ fontSize: 18, paddingLeft: 10, paddingRight: 10, paddingTop: 5, paddingBottom: 10, backgroundColor: 'rgb(183, 211, 255)', textAlign: 'center' }}>
