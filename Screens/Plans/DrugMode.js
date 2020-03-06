@@ -20,9 +20,17 @@ import { Button } from 'react-native-elements';
 export class DrugMode extends Component {
   constructor(props, context) {
     super(props, context);
+    const { myDrugs, selectedDrug } = props;
+    const { configDetail } = myDrugs[selectedDrug];
     this.state = {
       flag: Dimensions.get('window').width * 1000 + Dimensions.get('window').height,
-      adjust: Dimensions.get('window').width > Dimensions.get('window').height && Platform.OS !== 'web'
+      adjust: Dimensions.get('window').width > Dimensions.get('window').height && Platform.OS !== 'web',
+      dataSource: myDrugs,
+      duration: 500,
+      isAcute: configDetail.isAcute,
+      episodeDays: configDetail.episodeDays,
+      numEpisodes: configDetail.numEpisodes,
+      dosesPerDay: configDetail.dosesPerDay,
     }
   }
 
