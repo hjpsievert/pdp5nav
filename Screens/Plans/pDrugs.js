@@ -13,7 +13,7 @@ import PropTypes from 'prop-types';
 import * as Dispatch from '../../Redux/Dispatches';
 import DrugDosage from './DrugDosage';
 import DrugMode from './DrugMode';
-import DrugDelete from './DrugDelete';
+import AlertBox from '../../Components/AlertBox';
 import DrugOptimization from './DrugOptimization';
 import { Icon } from 'react-native-elements';
 import { findPlans } from '../../Utils/Api';
@@ -33,7 +33,7 @@ export class pDrugs extends React.Component {
       upStart: -Dimensions.get('window').height,
       upEnd: 0,
       duration: 500,
-      deletePending: false,
+      askDelete: false,
       drugToDelete: {},
       selectedDrug: 0,
     }
@@ -51,7 +51,6 @@ export class pDrugs extends React.Component {
         showOptimize: false,
         showMode: false,
         askDelete: false,
-        doDelete: false,
       });
       navigation.dispatch(CommonActions.setParams({ refresh: false }));
     }
@@ -72,10 +71,10 @@ export class pDrugs extends React.Component {
       saveDrugList(this._handleSaveActive, userProfile, 'Active List', 'Saved on every change', 'System', myDrugs, 'activePlanDrugs')
     }
 
-    if (doDelete) {
-      const { drugToDelete } = this.state;
-      this.handleDeleteFromMyDrugs(drugToDelete);
-    }
+    // if (doDelete) {
+    //   const { drugToDelete } = this.state;
+    //   this._handleDeleteFromMyDrugs(drugToDelete);
+    // }
     // const { key } = navigation.state;
 
     const refresh = route.params?.refresh ?? false;
@@ -137,25 +136,34 @@ export class pDrugs extends React.Component {
   }
 
   _confirmDeleteDrug = (drug) => {
-    const { updateFlowState } = this.props;
-    updateFlowState({
-      askDelete: true,
-      doDelete: false
-    });
+    console.log('Delete Saved?');
     this.setState({
+      askDelete: true,
       drugToDelete: drug
     })
+  }
+
+  _handleCallback = (mode) => {
+    if (mode) {
+      this._handleUpdateDosage(this.state.drugToDelete);
+    }
+    else {
+      this.setState({
+        askDelete: false,
+      })
+    }
   }
 
   _handleDeleteFromMyDrugs = (drug) => {
     const { updateFlowState, handleDeleteFromMyDrugs } = this.props;
     handleDeleteFromMyDrugs(drug);
     console.log('pDrugs _handleDeleteFromMyDrugs finishing up');
+
     this.setState({
-      deletePending: true,
-    });
+      askDelete: false,
+    })
+
     updateFlowState({
-      doDelete: false,
       planListDirty: true,
       activeListDirty: true,
     });
@@ -198,7 +206,7 @@ export class pDrugs extends React.Component {
     });
   }
 
-_renderActiveItem = (item) => {
+  _renderActiveItem = (item) => {
     const { drugDetail, planDetail, configDetail, isSelected, ndc } = item;
     // console.log('pDrugs render item, drugId = ', item.drugId); //, ' drugDetail = ', drugDetail);
 
@@ -378,8 +386,13 @@ _renderActiveItem = (item) => {
   }
 
   render() {
-    const { navigation, drugCount, showDosage, showOptimize, showMode, planListDirty, planCount, animating, askDelete, myDrugs } = this.props;
-    const { adjust, selectedDrug, baseName, drugToDelete } = this.state;
+    const { navigation, drugCount, showDosage, showOptimize, showMode, planListDirty, planCount, animating, myDrugs } = this.props;
+    const { adjust, selectedDrug, baseName, askDelete, drugToDelete } = this.state;
+    let alertMessage;
+    if (askDelete) {
+      const { drugDetail } = drugToDelete;
+      alertMessage = 'Are you sure you want to delete ' + (drugDetail.isBrand ? capitalize(drugDetail.brandName) + ' (Brand)' : drugDetail.baseName + ' (Generic)') + ', ' + drugDetail.rxStrength + ' ' + drugDetail.units + ' ' + capitalize(drugDetail.pckUnit + '?');
+    }
     console.log('pDrugs render planListDirty = ', planListDirty, ', animating = ', animating, ', planCount = ', planCount, ", drugCount = ", drugCount, ', showDosage = ', showDosage, ', selectedDrug = ', selectedDrug);
 
     return (
@@ -394,33 +407,46 @@ _renderActiveItem = (item) => {
             />
           </View>}
 
-        <View style={{ flexDirection: 'row', justifyContent: 'flex-start', alignItems: 'center', paddingLeft: 10, paddingRight: 10, backgroundColor: '#ddd' }}>
-          <Text style={{ flex: 1, fontSize: 16, color: 'black', textAlign: 'left', paddingTop: 10, paddingBottom: 10 }}>
-            {'Active List - ' + drugCount + ' drug' + (drugCount != 1 ? 's' : '')}
-          </Text>          
-          <Text style={{ fontSize: 16, color: 'black', textAlign: 'right', paddingTop: 10, paddingBottom: 10, paddingRight: 5 }}>
-            {'Add'}
-          </Text>
-          <Icon
-            name='add'
-            type={'material'}
-            color={'black'}
-            size={20}
-            onPress={() => navigation.navigate('pSearch')}
-            containerStyle={{ width: 30 }}
-          />
-        </View>
-        <View style={{ flex: 1, flexDirection: 'column', justifyContent: 'center' }}>
-          <FlatList
-            style={{ flexShrink: 1 }}
-            data={myDrugs}
-            keyExtractor={(item) => item.drugId.toString()}
-            renderItem={({ item }) => this._renderActiveItem(item)}
-            horizontal={false}
-            extraData={this.state.flag}
-          />
+        {
+          askDelete ?
+            <AlertBox
+              alertTitle={'Delete Drug'}
+              alertMessage={alertMessage}
+              executeLabel={'APPLY'}
+              cancelLabel={'CANCEL'}
+              callbackFunction={this._handleCallback}
+            />
+            :
+            <View style={{ flex: 1 }}>
+              <View style={{ flexDirection: 'row', justifyContent: 'flex-start', alignItems: 'center', paddingLeft: 10, paddingRight: 10, backgroundColor: '#ddd' }}>
+                <Text style={{ flex: 1, fontSize: 16, color: 'black', textAlign: 'left', paddingTop: 10, paddingBottom: 10 }}>
+                  {'Active List - ' + drugCount + ' drug' + (drugCount != 1 ? 's' : '')}
+                </Text>
+                <Text style={{ fontSize: 16, color: 'black', textAlign: 'right', paddingTop: 10, paddingBottom: 10, paddingRight: 5 }}>
+                  {'Add'}
+                </Text>
+                <Icon
+                  name='add'
+                  type={'material'}
+                  color={'black'}
+                  size={20}
+                  onPress={() => navigation.navigate('pSearch')}
+                  containerStyle={{ width: 30 }}
+                />
+              </View>
 
-        </View>
+              <View style={{ flex: 1, flexDirection: 'column', justifyContent: 'center' }}>
+                <FlatList
+                  style={{ flexShrink: 1 }}
+                  data={myDrugs}
+                  keyExtractor={(item) => item.drugId.toString()}
+                  renderItem={({ item }) => this._renderActiveItem(item)}
+                  horizontal={false}
+                  extraData={this.state.flag}
+                />
+              </View>
+            </View>
+        }
 
         {
           (showOptimize && selectedDrug >= 0) &&
@@ -441,13 +467,6 @@ _renderActiveItem = (item) => {
           (showMode && selectedDrug >= 0) &&
           <DrugMode
             selectedDrug={selectedDrug}
-          />
-        }
-
-        {
-          askDelete &&
-          <DrugDelete
-            drugToDelete={drugToDelete}
           />
         }
 
