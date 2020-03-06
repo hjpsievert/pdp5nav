@@ -57,7 +57,8 @@ export class DrugDelete extends Component {
 
   render() {
     const { adjust, drugDetail } = this.state;
-    const titleText = (drugDetail.isBrand ? capitalize(drugDetail.brandName) + ' (Brand)' : drugDetail.baseName + ' (Generic)') + ', ' + drugDetail.rxStrength + ' ' + drugDetail.units + ' ' + capitalize(drugDetail.pckUnit);    const delWidth = Math.min(Dimensions.get('window').width, 500);
+    const titleText = (drugDetail.isBrand ? capitalize(drugDetail.brandName) + ' (Brand)' : drugDetail.baseName + ' (Generic)') + ', ' + drugDetail.rxStrength + ' ' + drugDetail.units + ' ' + capitalize(drugDetail.pckUnit);    
+    const delWidth = Math.min(Dimensions.get('window').width, 500);
     return (
       <SlideInView
       style={{width: delWidth}}
