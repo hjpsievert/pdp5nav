@@ -5,7 +5,7 @@ import React from 'react';
 import {
   createDrawerNavigator,
 } from '@react-navigation/drawer';
-import { Icon } from 'react-native-elements';
+import { Dimensions, Platform } from 'react-native'; import { Icon } from 'react-native-elements';
 import TabStack from './TabStack';
 import AccountStack from './SideMenu/smAccountStack';
 import ContactUs from './SideMenu/smContactUs';
@@ -17,9 +17,12 @@ const Drawer = createDrawerNavigator();
 export default function TopDrawer() {
   return (
     <Drawer.Navigator
+      drawerType={'back'}
+      edgeWidth={Platform.OS === 'web' ? 5 : 25}
+      minSwipeDistance={Platform.OS === 'web' ? Dimensions.get('window').width : Dimensions.get('window').width / 2}
       drawerStyle={{
         backgroundColor: '#c6cbef',
-        width: 240,
+        width: Platform.OS === 'web' ? Dimensions.get('window').width / 2 : 240,
       }}
     >
       <Drawer.Screen
