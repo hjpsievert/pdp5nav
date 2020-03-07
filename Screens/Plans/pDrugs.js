@@ -145,7 +145,7 @@ export class pDrugs extends React.Component {
 
   _handleCallback = (mode) => {
     if (mode) {
-      this._handleUpdateDosage(this.state.drugToDelete);
+      this._handleDeleteFromMyDrugs(this.state.drugToDelete);
     }
     else {
       this.setState({
@@ -412,7 +412,7 @@ export class pDrugs extends React.Component {
             <AlertBox
               alertTitle={'Delete Drug'}
               alertMessage={alertMessage}
-              executeLabel={'APPLY'}
+              executeLabel={'DELETE'}
               cancelLabel={'CANCEL'}
               callbackFunction={this._handleCallback}
             />
@@ -422,17 +422,23 @@ export class pDrugs extends React.Component {
                 <Text style={{ flex: 1, fontSize: 16, color: 'black', textAlign: 'left', paddingTop: 10, paddingBottom: 10 }}>
                   {'Active List - ' + drugCount + ' drug' + (drugCount != 1 ? 's' : '')}
                 </Text>
-                <Text style={{ fontSize: 16, color: 'black', textAlign: 'right', paddingTop: 10, paddingBottom: 10, paddingRight: 5 }}>
-                  {'Add'}
-                </Text>
-                <Icon
-                  name='add'
-                  type={'material'}
-                  color={'black'}
-                  size={20}
-                  onPress={() => navigation.navigate('pSearch')}
-                  containerStyle={{ width: 30 }}
-                />
+                <TouchableHighlight
+                  onPress={() => navigation.navigate('pDrugSearch')}
+                >
+                  <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                    <Text style={{ fontSize: 16, color: 'black', textAlign: 'right', paddingTop: 10, paddingBottom: 10, paddingRight: 5}}>
+                      {'Add'}
+                    </Text>
+                    <Icon
+                      name='add'
+                      type={'material'}
+                      color={'black'}
+                      size={20}
+                      containerStyle={{ width: 20 }}
+                    />
+                  </View>
+                </TouchableHighlight>
+
               </View>
 
               <View style={{ flex: 1, flexDirection: 'column', justifyContent: 'center' }}>
