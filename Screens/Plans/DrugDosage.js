@@ -340,7 +340,7 @@ export class DrugDosage extends Component {
               borderWidth: !showAlert ? 1 : 0,
             }}
             >
-              <View style={{ flex: 1, flexDirection: 'column', alignItems: 'stretch' }}>
+              <View style={{ flex: 1, flexDirection: 'column', alignItems: 'stretch', borderTopColor: '#black', borderTopWidth: Platform.OS === 'web' && !showAlert ? 1 : 0 }}>
 
                 {showAlert &&
                   <AlertBox

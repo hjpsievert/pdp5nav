@@ -189,7 +189,7 @@ export class DrugOptimization extends Component {
             }}
             >
 
-              <View style={{ flex: 1, flexDirection: 'column', alignItems: 'stretch' }}>
+              <View style={{ flex: 1, flexDirection: 'column', alignItems: 'stretch', borderTopColor: '#black', borderTopWidth: Platform.OS === 'web' ? 1 : 0 }}>
 
 
                 <View style={{ borderBottomColor: '#bbb', borderBottomWidth: 1 }}>
