@@ -306,7 +306,7 @@ export class aActivate extends React.Component {
             }}
             >
               <TouchableHighlight
-                onPress={navigation.popToTop()}
+                onPress={navigation.popToTop}
               //onPress={() => navigation.popToTop()}
               // onPress={() => navigation.navigate('Top', { screen: 'Home', params: { screen: 'pHome' } })}
 
