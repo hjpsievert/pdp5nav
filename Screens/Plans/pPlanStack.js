@@ -41,23 +41,6 @@ function pPlanStack() {
               </TouchableHighlight>
             </View>
           ),
-          headerRight: () => (
-            <View style={styles.innerContainer}>
-              <TouchableHighlight
-                onPress={() => navigation.navigate('pBreakdown')}
-              >
-                <View style={[styles.touch, { justifyContent: 'flex-end' }]}>
-                  <Icon
-                    name={'ios-arrow-forward'}
-                    type={'ionicon'}
-                    color={'white'}
-                    size={24}
-                    style={{ padding: 5 }}
-                  />
-                </View>
-              </TouchableHighlight>
-            </View>
-          ),
         })}
       />
 
