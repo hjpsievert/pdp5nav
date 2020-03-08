@@ -69,14 +69,14 @@ export class pDrugSearch extends React.Component {
         lastSearch: searchString,
       });
       searchBaseDrugs((response) => {
-        this.onBaseDrugSearchComplete(response);
+        this._onBaseDrugSearchComplete(response);
       }, searchString, stateId, this.state.useWildcard);
     }
   }
 
-  onBaseDrugSearchComplete = (response) => {
+  _onBaseDrugSearchComplete = (response) => {
     const { success, payLoad, code, err } = response;
-    console.log('pDrugSearch onBaseDrugSearchComplete resultList = ', payLoad, ', code = ', code);
+    console.log('pDrugSearch _onBaseDrugSearchComplete resultList = ', payLoad, ', code = ', code);
     const { handleBaseDrugSearchComplete, navigation } = this.props;
     if (code === 0) {
       this.setState({
@@ -250,6 +250,11 @@ export class pDrugSearch extends React.Component {
               loadingicon={{ name: 'hourglass-empty', color: 'black' }}
               showLoading={entryComplete}
             />
+            {Platform.OS === 'web' &&
+            <Text style={{paddingTop: 10, paddingLeft: 20, fontSize: 16}}>
+              {'Hit \'Enter\' to search'}
+            </Text>
+  }
           </View>
         }
       </View>)
