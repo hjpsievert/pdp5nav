@@ -43,7 +43,7 @@ export class DrugOptimization extends Component {
   _handleDimChange = ({ window }) => {
     let flag = window.width * 1000 + window.height;
     let adjust = window.width > window.height && Platform.OS !== 'web';
-    console.log('pDrugs _handleDimChange event, new flag  = ', flag);
+    // console.log('pDrugs _handleDimChange event, new flag  = ', flag);
     this.setState({
       flag: flag,
       adjust: adjust
