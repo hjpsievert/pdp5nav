@@ -54,8 +54,8 @@ export default class App extends React.Component {
     if (Platform.OS !== 'web') {
       ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.ALL_BUT_UPSIDE_DOWN);
     }
-    const { screenOrientation,  windowWidth, windowHeight} = this.state;
-    console.log('App render dim = ', windowWidth, 'x', windowHeight);
+    const { windowWidth, windowHeight} = this.state;
+    // console.log('App render dim = ', windowWidth, 'x', windowHeight);
 
     return (
       <Provider store={store}>
