@@ -15,8 +15,10 @@ import SystemInfo from './SideMenu/smSystemInfo';
 
 const Drawer = createDrawerNavigator();
 export default function TopDrawer() {
+  console.log('Top Drawer');
   return (
     <Drawer.Navigator
+      initialRouteName={'Top'}
       drawerType={'back'}
       edgeWidth={Platform.OS === 'web' ? 5 : 25}
       minSwipeDistance={Platform.OS === 'web' ? Dimensions.get('window').width : Dimensions.get('window').width / 2}

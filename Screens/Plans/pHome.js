@@ -23,6 +23,8 @@ import size from 'lodash/size';
 import flatMap from 'lodash/flatMap';
 import sortBy from 'lodash/sortBy';
 import lowerCase from 'lodash/lowerCase';
+// import isEqual from 'lodash/isEqual';
+// import reduce from 'lodash/reduce';
 
 export class pHome extends React.Component {
   constructor(props, context) {
@@ -58,19 +60,29 @@ export class pHome extends React.Component {
     });
   }
 
+
   // shouldComponentUpdate(nextProps, nextState) {
-  //   //return true;
-  //   const before = { ...this.props, ...this.state}; 
-  //   const after = { ...nextProps, ...nextState}; 
-  //   const diff = reduce(before, function (result, value, key) { return isEqual(value, after[key]) ? result : result.concat(key); }, []);
-  //   console.log('pHome Update diff = ', diff);
-  //   if (isEqual(before, after)) {
-  //     console.log('pHome will not update, no change');
-  //     return false;
+  //   const { updateFlowState, refreshRoutes } = this.props;
+  //   if (refreshRoutes) {
+  //     updateFlowState({
+  //       refreshRoutes: false
+  //     });
+  //     console.log('pHome refresh routes');
+  //     return true;
   //   }
   //   else {
-  //     console.log('pHome will update');
-  //     return true;
+  //     const before = { ...this.props, ...this.state };
+  //     const after = { ...nextProps, ...nextState };
+  //     const diff = reduce(before, function (result, value, key) { return isEqual(value, after[key]) ? result : result.concat(key); }, []);
+  //     console.log('pHome Update diff = ', diff);
+  //     if (isEqual(before, after)) {
+  //       console.log('pHome will not update, no change');
+  //       return false;
+  //     }
+  //     else {
+  //       console.log('pHome will update');
+  //       return true;
+  //     }
   //   }
   // }
 
@@ -274,7 +286,7 @@ export class pHome extends React.Component {
   }
 
   render() {
-    // console.log('pHome render');
+    console.log('pHome render');
     const { showActive, showPlans, showGreeting, adjust, drugsLoaded, animating } = this.state;
     const { drugCount, planCount, myPlans, activeDrugs, userProfile, previousLogin } = this.props;
     let currDate;
@@ -422,6 +434,7 @@ pHome.propTypes = {
   planDenominator: PropTypes.number.isRequired,
   planNumerator: PropTypes.number.isRequired,
   previousLogin: PropTypes.string.isRequired,
+  refreshRoutes: PropTypes.bool.isRequired,
   startDate: PropTypes.string.isRequired,
   updateContent: PropTypes.func.isRequired,
   updateFlowState: PropTypes.func.isRequired,
@@ -443,6 +456,7 @@ const mapStateToProps = (state) => {
     planCount: size(state.myPlans) ?? 0,
     planDenominator: size(state.myPlans) ? sortBy(flatMap(state.myPlans, (d) => d), 'totalCost')[size(state.myPlans) - 1].totalCost - sortBy(flatMap(state.myPlans, (d) => d), 'totalCost')[0].totalCost : 1,
     planNumerator: size(state.myPlans) ? sortBy(flatMap(state.myPlans, (d) => d), 'totalCost')[0].totalCost : 0,
+    refreshRoutes: state.flowState['refreshRoutes'] ?? false,
   }
 }
 

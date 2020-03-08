@@ -11,11 +11,10 @@ import { Icon } from 'react-native-elements';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import * as Dispatch from '../../Redux/Dispatches';
-import { Input, Button } from 'react-native-elements';
+import { Input } from 'react-native-elements';
 import { loadDBProfile } from '../../Utils/Api';
 import { saveUserProfile } from '../../Utils/SaveData';
 import { defaultProfileSave, usrMode } from '../../Utils/Constants';
-import { DrawerActions } from '@react-navigation/native';
 
 export class aActivate extends React.Component {
   constructor(props, context) {
@@ -140,8 +139,7 @@ export class aActivate extends React.Component {
   }
 
   _exitToTop = () => {
-    const jumpToAction = DrawerActions.jumpTo('Top');
-    this.props.navigation.dispatch(jumpToAction);   
+    // const { navigation, route, updateFlowState } = this.props;
   }
 
   render() {
@@ -308,10 +306,10 @@ export class aActivate extends React.Component {
             }}
             >
               <TouchableHighlight
-                onPress={this._exitToTop}
-                //onPress={() => navigation.popToTop()}
-                // onPress={() => navigation.navigate('Top', { screen: 'Home', params: { screen: 'pHome' } })}
-                
+                onPress={navigation.popToTop()}
+              //onPress={() => navigation.popToTop()}
+              // onPress={() => navigation.navigate('Top', { screen: 'Home', params: { screen: 'pHome' } })}
+
               >
                 <View style={{ flexDirection: 'column', justifyContent: 'center', paddingBottom: 5 }}>
                   <Icon
@@ -343,7 +341,6 @@ export class aActivate extends React.Component {
 aActivate.propTypes = {
   navigation: PropTypes.object.isRequired,
   userProfile: PropTypes.object.isRequired,
-
 };
 
 const mapStateToProps = (state) => {
@@ -353,7 +350,6 @@ const mapStateToProps = (state) => {
 }
 
 const mapDispatchToProps = {
-  updateFlowState: Dispatch.updateFlowState,
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(aActivate);

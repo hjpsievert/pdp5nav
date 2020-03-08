@@ -23,7 +23,8 @@ import aActivate from '../Account/aActivate';
 
 const Stack = createStackNavigator();
 
-function AccountStack() {
+function AccountStack({route}) {
+  console.log('AccountStack route = ', route);
   return (
     <Stack.Navigator initialRouteName="aAccount">
       <Stack.Screen
@@ -38,7 +39,7 @@ function AccountStack() {
           headerLeft: () => (
             <View style={styles.innerContainer}>
               <TouchableHighlight
-                onPress={() => navigation.navigate('Top')}
+                onPress={() => navigation.navigate('Home')}
               >
                 <View style={[styles.touch, { justifyContent: 'flex-start' }]}>
                   <Icon
@@ -66,7 +67,7 @@ function AccountStack() {
           headerLeft: () => (
             <View style={styles.innerContainer}>
               <TouchableHighlight
-                onPress={() => navigation.navigate('aAccount')}
+                onPress={() => navigation.popToTop()}
               >
                 <View style={[styles.touch, { justifyContent: 'flex-start' }]}>
                   <Icon
@@ -240,8 +241,8 @@ function AccountStack() {
           headerLeft: () => (
             <View style={styles.innerContainer}>
               <TouchableHighlight
-                onPress={() => navigation.navigate('aAccount')}
-              >
+                onPress={() => navigation.popToTop()}
+                >
                 <View style={[styles.touch, { justifyContent: 'flex-start' }]}>
                   <Icon
                     name={'ios-arrow-back'}

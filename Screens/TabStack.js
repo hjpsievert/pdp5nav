@@ -18,18 +18,40 @@ import { TouchableHighlight } from 'react-native-gesture-handler';
 export class TabStack extends React.Component {
   constructor(props, context) {
     super(props, context);
-    this.state = {
-      flag: Dimensions.get('window').width * 1000 + Dimensions.get('window').height,
-      adjust: Dimensions.get('window').width > Dimensions.get('window').height && Platform.OS !== 'web'
-    }
+    // this.state = {
+    //   flag: Dimensions.get('window').width * 1000 + Dimensions.get('window').height,
+    //   adjust: Dimensions.get('window').width > Dimensions.get('window').height && Platform.OS !== 'web'
+    // }
   }
+
+  // componentDidMount() {
+  //   console.log('TabStack did mount');
+  //   Dimensions.addEventListener('change', this._handleDimChange);
+  // }
+
+  // componentWillUnmount() {
+  //   console.log('TabStack unmounting');
+  //   Dimensions.removeEventListener('change', this._handleDimChange);
+  // }
+
+  // _handleDimChange = ({ window }) => {
+  //   let flag = window.width * 1000 + window.height;
+  //   let adjust = window.width > window.height && Platform.OS !== 'web';
+  //   // console.log('pDrugs _handleDimChange event, new flag  = ', flag);
+  //   this.setState({
+  //     flag: flag,
+  //     adjust: adjust
+  //   })
+  // }
 
   render() {
     let Tab = createBottomTabNavigator();
     const { drugCount, planCount } = this.props;
+    console.log('Tab Stack'); // route = ', this.props.route);
 
     return (
       <Tab.Navigator
+        initialRouteName={'Home'}
         showIcon={true}
         lazy={true}
         labelStyle={{

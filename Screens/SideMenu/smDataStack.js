@@ -17,7 +17,7 @@ const Stack = createStackNavigator();
 
 function DataStack() {
   return (
-    <Stack.Navigator initialRouteName="aAccount">
+    <Stack.Navigator initialRouteName="dManager">
       <Stack.Screen
         name="dManager"
         component={dManager}
@@ -30,7 +30,7 @@ function DataStack() {
           headerLeft: () => (
             <View style={styles.innerContainer}>
               <TouchableHighlight
-                onPress={() => navigation.navigate('Top')}
+                onPress={() => navigation.navigate('Home')}
               >
                 <View style={[styles.touch, { justifyContent: 'flex-start' }]}>
                   <Icon
