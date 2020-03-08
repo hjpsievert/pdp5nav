@@ -15,6 +15,7 @@ import lowerCase from 'lodash/lowerCase';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import * as Dispatch from '../../Redux/Dispatches';
+import size from 'lodash/size';
 
 export class pDrugSelect extends React.Component {
   constructor(props, context) {
@@ -33,7 +34,7 @@ export class pDrugSelect extends React.Component {
     Dimensions.addEventListener('change', this._handleDimChange);
     const { baseList, userStateId, navigation } = this.props;
     navigation.setParams({
-      handleLeft: this._handleGoBack,
+      // handleLeft: this._handleGoBack,
       handleRight: this._handleAddSelection,
     });
     //console.log('pDrugSelect componentDidMount');
@@ -43,7 +44,7 @@ export class pDrugSelect extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
-    const { baseList, userStateId } = this.props;
+    const { baseList, userStateId, searchResultCount, navigation } = this.props;
     const { drugsLoaded } = this.state;
     // console.log('Prev: ', prevProps.baseList, ', current: ', baseList);
     if (isEqual(prevProps.baseList, baseList) && drugsLoaded) return;
@@ -52,6 +53,9 @@ export class pDrugSelect extends React.Component {
       this._handleLoadDrugs(response)
     }, userStateId, baseList);
 
+    if (prevProps.searchResultCount != searchResultCount) {
+      navigation.setParams({ resultCount: searchResultCount })
+    }
     console.log('pDrugSelect componentDidUpdate');
   }
 
@@ -63,7 +67,7 @@ export class pDrugSelect extends React.Component {
   _handleDimChange = ({ window }) => {
     let flag = window.width * 1000 + window.height;
     let adjust = window.width > window.height && Platform.OS !== 'web';
-    console.log('pDrugSelect _handleDimChange event, new flag  = ', flag);
+    // console.log('pDrugSelect _handleDimChange event, new flag  = ', flag);
     this.setState({
       flag: flag,
       adjust: adjust
@@ -105,33 +109,37 @@ export class pDrugSelect extends React.Component {
     // }
   }
 
-  _handleGoBack = () => {
-    const { navigation, searchResultCount } = this.props;
-    searchResultCount === 1 ? navigation.navigate('pDrugSearch') : navigation.navigate('pDrugPick');
-  }
+  // _handleGoBack = () => {
+  //   const { navigation, searchResultCount } = this.props;
+  //   searchResultCount === 1 ? navigation.navigate('pDrugSearch') : navigation.navigate('pDrugPick');
+  // }
 
   _handleAddSelection = () => {
     const { mainDrugs } = this.state;
     const { addSelectionToMyDrugs, navigation, updateFlowState } = this.props;
     let selected = mainDrugs.filter((configDrug) => configDrug.isSelected);
     selected.forEach((r) => (r.isSelected = false));
-    addSelectionToMyDrugs(selected);
-    updateFlowState({
-      planListDirty: true,
-      activeListDirty: true,
-    });
-    // navigation.navigate('pDrug', { refresh: true });
-    navigation.navigate('pDrug');
+    if (size(selected) > 0) {
+      addSelectionToMyDrugs(selected);
+      updateFlowState({
+        planListDirty: true,
+        activeListDirty: true,
+      });
+      navigation.navigate('pDrugs');
+    }
+    // console.log('pDrugSelect _handleAddSelection size =', size(selected));
   }
 
   _handleDrugClick = (drug) => {
     //console.log('DrugSearcher _handleDrugClick');
     const { mainDrugs, doCombo, showAll, showBrand } = this.state;
+    const { navigation } = this.props;
     const drugIndex = mainDrugs.indexOf(drug);
     const comboLimit = (doCombo ? 99 : 2);
     let checked = [...mainDrugs];
     if (drugIndex > -1) {
       checked[drugIndex].isSelected = !drug.isSelected;
+      navigation.setParams({ drugsSelected: size(checked.filter((r) => r.isSelected)) });
     }
 
     let updated;

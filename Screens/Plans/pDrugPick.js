@@ -30,15 +30,19 @@ export class pDrugPick extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
-    if (prevProps.searchResults != this.props.searchResults) {
+    const { navigation, selectionCount, searchResults } = this.props;
+    if (prevProps.searchResults != searchResults) {
       this.setState({
-        dataSource: this.props.searchResults,
+        dataSource: searchResults,
       });
+    }
+    if (prevProps.selectionCount != selectionCount) {
+      navigation.setParams({ drugsPicked: selectionCount })
     }
     console.log('pDrugPick componentDidUpdate');
   }
 
-componentWillUnmount() {
+  componentWillUnmount() {
     console.log('pDrugPick will unmount');
     Dimensions.removeEventListener('change', this._handleDimChange);
   }
@@ -46,7 +50,7 @@ componentWillUnmount() {
   _handleDimChange = ({ window }) => {
     let flag = window.width * 1000 + window.height;
     let adjust = window.width > window.height && Platform.OS !== 'web';
-    console.log('pDrugPick _handleDimChange event, new flag  = ', flag);
+    // console.log('pDrugPick _handleDimChange event, new flag  = ', flag);
     this.setState({
       flag: flag,
       adjust: adjust
@@ -58,9 +62,9 @@ componentWillUnmount() {
     if (selectionCount > 0) {
       navigation.navigate('pDrugSelect');
     }
-    else {
-      navigation.navigate('pDrugSearch');
-    }
+    // else {
+    //   navigation.navigate('pDrugSearch');
+    // }
   }
 
   _renderBaseDrug = (item) => {
@@ -93,20 +97,20 @@ componentWillUnmount() {
     );
   }
 
-render() {
-  const {adjust} = this.state;
+  render() {
+    const { adjust } = this.state;
     return (
       <View style={{ height: Dimensions.get('window').height - 75 - (adjust ? 0 : 35), flexDirection: 'column', alignItems: 'stretch' }} >
-          <View style={{ flex: 1, borderBottomColor: '#bbb', borderBottomWidth: 1 }}>
-            <FlatList
-              data={this.state.dataSource}
-              extraData={adjust}
-              keyExtractor={(item) => item.baseId.toString()}
-              renderItem={({ item }) => this._renderBaseDrug(item)}
-            />
-          </View>
+        <View style={{ flex: 1, borderBottomColor: '#bbb', borderBottomWidth: 1 }}>
+          <FlatList
+            data={this.state.dataSource}
+            extraData={adjust}
+            keyExtractor={(item) => item.baseId.toString()}
+            renderItem={({ item }) => this._renderBaseDrug(item)}
+          />
+        </View>
 
-        </View>)
+      </View>)
   }
 
 }

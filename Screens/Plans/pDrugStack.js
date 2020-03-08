@@ -97,6 +97,7 @@ function pDrugStack() {
       <Stack.Screen
         name="pDrugSelect"
         component={pDrugSelect}
+        initialParams={{ drugsSelected: 0, resultCount: 1 }}
         options={({ navigation, route }) => ({
           title: 'Select Drug(s)',
           headerTitle: "Select Drug(s)",
@@ -107,10 +108,9 @@ function pDrugStack() {
           headerLeft: () => (
             <View style={styles.innerContainer}>
               <TouchableHighlight
-                onPress={() => navigation.navigate('pDrugs', {refresh: true})}
-                // onPress={() => route.params.handleLeft()}
+                onPress={() => navigation.navigate(route.params.resultCount===1 ? 'pDrugSearch' : 'pDrugPick')}
               >
-                <View style={[styles.touch, { justifyContent: 'flex-end' }]}>
+                <View style={[styles.touch, { justifyContent: 'flex-start' }]}>
                   <Icon
                     name={'ios-arrow-back'}
                     type={'ionicon'}
@@ -131,9 +131,9 @@ function pDrugStack() {
                   <Icon
                     name={'ios-arrow-forward'}
                     type={'ionicon'}
-                    color={'white'}
+                    color={route.params.drugsSelected > 0 ? 'white' : 'grey'}
                     size={24}
-                    style={{ padding: 5 }}
+                    style={{ padding: 5 }} 
                   />
                 </View>
               </TouchableHighlight>
@@ -145,7 +145,8 @@ function pDrugStack() {
       <Stack.Screen
         name="pDrugPick"
         component={pDrugPick}
-        options={({ navigation }) => ({
+        initialParams={{ drugsPicked: 0 }}
+        options={({ navigation, route }) => ({
           title: 'Pick Base Drug(s)',
           headerTitle: "Pick Base Drug(s)",
           headerStyle: { backgroundColor: '#405ce8' },
@@ -155,7 +156,7 @@ function pDrugStack() {
           headerLeft: () => (
             <View style={styles.innerContainer}>
               <TouchableHighlight
-                onPress={() => navigation.navigate('pDrugSearch', { refresh: true })}
+                onPress={() => navigation.navigate('pDrugSearch')}
               >
                 <View style={[styles.touch, { justifyContent: 'flex-start' }]}>
                   <Icon
@@ -172,13 +173,13 @@ function pDrugStack() {
           headerRight: () => (
             <View style={styles.innerContainer}>
               <TouchableHighlight
-                onPress={() => navigation.navigate('pDrugSelect')}
+                onPress={() => navigation.navigate(route.params.drugsPicked > 0 ? 'pDrugSelect' : '')}
               >
                 <View style={[styles.touch, { justifyContent: 'flex-end' }]}>
                   <Icon
                     name={'ios-arrow-forward'}
                     type={'ionicon'}
-                    color={'white'}
+                    color={route.params.drugsPicked > 0 ? 'white' : 'grey'}
                     size={24}
                     style={{ padding: 5 }}
                   />

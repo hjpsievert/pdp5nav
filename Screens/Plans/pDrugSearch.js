@@ -8,7 +8,7 @@ import {
   Keyboard,
   Platform
 } from 'react-native';
-import { Icon, SearchBar, Button } from 'react-native-elements';
+import { Icon, SearchBar } from 'react-native-elements';
 import { searchBaseDrugs } from '../../Utils/Api';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
@@ -44,7 +44,7 @@ export class pDrugSearch extends React.Component {
   _handleDimChange = ({ window }) => {
     let flag = window.width * 1000 + window.height;
     let adjust = window.width > window.height && Platform.OS !== 'web';
-    console.log('pDrugSearch _handleDimChange event, new flag  = ', flag);
+    // console.log('pDrugSearch _handleDimChange event, new flag  = ', flag);
     this.setState({
       flag: flag,
       adjust: adjust
@@ -83,7 +83,7 @@ export class pDrugSearch extends React.Component {
         repeatSearch: true,
         entryComplete: false,
       });
-      this.mySearch.clearText();
+      this.mySearch.clear();
     }
     else {
       handleBaseDrugSearchComplete(payLoad);
@@ -247,8 +247,8 @@ export class pDrugSearch extends React.Component {
               onSubmitEditing={this._handleUserSearch}
               onChangeText={this._handleSearchTextChanged}
               returnKeyType={'search'}
-              loadingIcon={{ name: 'hourglass-empty', color: 'black' }}
-              showLoadingIcon={entryComplete}
+              loadingicon={{ name: 'hourglass-empty', color: 'black' }}
+              showLoading={entryComplete}
             />
           </View>
         }
