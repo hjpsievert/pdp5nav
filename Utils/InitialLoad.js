@@ -107,11 +107,11 @@ const _handleLoadActiveDB = (response, callBack, userStateId, userEmail, mergedP
 const _handleRefresh = (response, callBack, drugListOld, userEmail, mergedProfile) => {
   const {success, payLoad, code, err} = response;
   const drugListNew = payLoad;
-  console.log('InitialLoad _handleRefresh drugListOld = ', flatMap(drugListOld, (d) => d.drugId + ', ' + d.planDetail.avePrice90*30), ', druglistNew = ', flatMap(drugListNew, (d) => d.drugId + ', ' + d.planDetail.avePrice90*30));
+  // console.log('InitialLoad _handleRefresh drugListOld = ', flatMap(drugListOld, (d) => d.drugId + ', ' + d.planDetail.avePrice90*30), ', druglistNew = ', flatMap(drugListNew, (d) => d.drugId + ', ' + d.planDetail.avePrice90*30));
   let drugList = [];
   const oldSorted = sortBy(drugListOld, 'drugId');
   const newSorted = sortBy(drugListNew, 'drugId')
-  console.log('InitialLoad oldSorted ', JSON.stringify(flatMap(oldSorted, (d) => d.drugId)), ', newSorted ', JSON.stringify(flatMap(newSorted, (d) => d.drugId)));
+  // console.log('InitialLoad oldSorted ', JSON.stringify(flatMap(oldSorted, (d) => d.drugId)), ', newSorted ', JSON.stringify(flatMap(newSorted, (d) => d.drugId)));
   let i;
   for (i = 0; i < oldSorted.length; i++) {
     if (newSorted[i].ndc === 'discontinued'){
@@ -121,7 +121,7 @@ const _handleRefresh = (response, callBack, drugListOld, userEmail, mergedProfil
       drugList.push({ ...oldSorted[i], ...newSorted[i] }); // oldSorted retains configDetails, drugDetail and planDetail are overwritten from newSorted
     }
   }
-  console.log('InitialLoad _handleRefresh new drugList = ', flatMap(drugList, (d) => d.drugId + ', ' + d.ndc));
+  // console.log('InitialLoad _handleRefresh new drugList = ', flatMap(drugList, (d) => d.drugId + ', ' + d.ndc));
   saveDrugList((response) => {_handleSaveActive(response, callBack, drugList, mergedProfile)}, mergedProfile, 'Active List', 'Saved on every change', 'System', drugList, 'activePlanDrugs')
 
   console.log('InitialLoad _handleRefresh reached end');

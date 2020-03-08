@@ -77,7 +77,7 @@ export class pHome extends React.Component {
   componentDidUpdate() {
     const { drugCount } = this.props;
     const { planListDirty } = this.state;
-    console.log('pHome component did update, drugCount = ', drugCount, ', planListDirty = ', planListDirty);
+    // console.log('pHome component did update, drugCount = ', drugCount, ', planListDirty = ', planListDirty);
   }
 
   componentWillUnmount() {

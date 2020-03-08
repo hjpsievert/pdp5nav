@@ -6,7 +6,7 @@ const processRequest = function (cb, mode = 'GET', path, load = null) {
   request.open(mode, url + path, true);
   request.timeout = 30000;
 
-  console.log('API processRequest, mode: ' + mode);
+  console.log('API processRequest, mode: ' + mode + ', path: ', path);
   request.setRequestHeader("Accept", "application/json");
   request.setRequestHeader("Content-Type", "application/json");
   const myLoad = JSON.stringify({ post: load ? load : {}, queryString: (path + '?x').split('?')[1] });
@@ -84,7 +84,7 @@ export const loadDrugsByBaseName = function (cb, stateCode, baseName = '') {
 
 export const refreshDrugs = function (cb, NDCIds, stateCode) {
   const NDCIdSearchString = NDCIds.map((ndc) => `drugId=${ndc}`).join('&');
-  console.log('RefreshDrugs?stateId=' + stateCode + `&${NDCIdSearchString}`);
+  // console.log('RefreshDrugs?stateId=' + stateCode + `&${NDCIdSearchString}`);
   const mode = 'GET';
   return processRequest(cb, mode, `RefreshDrugs?code=tshJbaFStUSmYRdvy8GwZGUYs76ORJ9UYeNDslOVJMu0JnCHut7ILw==&stateId=${stateCode}&${NDCIdSearchString}`);
 }
