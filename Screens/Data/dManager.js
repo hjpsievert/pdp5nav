@@ -13,9 +13,9 @@ function buildList() {
   let listOptions = [];
   let i = 0;
   listOptions.push({ key: i++, title: 'Save Active', subtitle: 'Save your active drug list under a new name', icon: 'download', type: 'font-awesome', target: 'dSave' });
-  listOptions.push({ key: i++, title: 'Clear Active', subtitle: 'Clear all drugs from the active list', icon: 'eraser', type: 'material-community', target: 'dClear' });
-  listOptions.push({ key: i++, title: 'Local Data', subtitle: 'Manage data on your device', icon: 'list-alt', type: 'font-awesome', target: 'dStore', param: 'device' });
-  listOptions.push({ key: i++, title: 'Cloud Data', subtitle: 'Manage data across all your devices', icon: 'devices-other', type: 'material', target: 'dStore', param: 'cloud' });
+  listOptions.push({ key: i++, title: 'Load Active', subtitle: 'Load one of the saved drug lists into the active list', icon: 'upload', type: 'font-awesome', target: 'dLoad' });
+  listOptions.push({ key: i++, title: 'Clear Active', subtitle: 'Clear all drugs from the active list', icon: 'eraser', type: 'material-community', target: 'dClear' });  listOptions.push({ key: i++, title: 'Local Data', subtitle: 'Manage data on your device', icon: 'list-alt', type: 'font-awesome', target: 'dStorage', param: 'device' });
+  listOptions.push({ key: i++, title: 'Cloud Data', subtitle: 'Manage data across all your devices', icon: 'devices-other', type: 'material', target: 'dStorage', param: 'cloud' });
   return listOptions;
 }
 
@@ -39,10 +39,10 @@ function dManager({ route, navigation }) {
             }}
             key={i}
             title={l.title}
-            titleStyle={{ fontSize: 14, color: l.active ? 'black' : '#86939e' }}
+            titleStyle={{ paddingLeft: 20, fontSize: 16, color: l.active ? 'black' : '#86939e' }}
             subtitle={l.subtitle.length ? l.subtitle : null}
             subtitleNumberOfLines={2}
-            subtitleStyle={{ fontSize: 12, color: l.active ? '#86939e' : '#bdc6cf' }}
+            subtitleStyle={{ paddingLeft: 20, fontSize: 14, color: l.active ? '#86939e' : '#bdc6cf' }}
             onPress={() => handlePress(navigation, l.target, l.param)}
             hideChevron={!l.active}
           />
