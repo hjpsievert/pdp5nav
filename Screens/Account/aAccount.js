@@ -44,13 +44,12 @@ function aAccount({ route, navigation }) {
             }}
             key={i}
             title={l.title}
-            titleStyle={{ fontSize: 14, color: l.active ? 'black' : '#86939e' }}
+            titleStyle={{ paddingLeft: 20, fontSize: 16, color: l.active ? 'black' : '#86939e' }}
             subtitle={l.subtitle.length ? l.subtitle : null}
             subtitleNumberOfLines={2}
-            subtitleStyle={{ fontSize: 12, color: l.active ? '#86939e' : '#bdc6cf' }}
-            onPress={() => handlePress(navigation, l.target)}
-            hideChevron={!l.active}
-          />
+            subtitleStyle={{ paddingLeft: 20, fontSize: 14, color: l.active ? '#86939e' : '#bdc6cf' }}
+            onPress={() => handlePress(navigation, l.target, l.param)}
+            hideChevron={!l.active}          />
         ))
       }
     </View>
