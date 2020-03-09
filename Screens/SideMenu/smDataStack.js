@@ -10,7 +10,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import dManager from '../Data/dManager';
 import dSave from '../Data/dSave';
 import dLoad from '../Data/dLoad';
-import dStore from '../Data/dStore';
+import dStorage from '../Data/dStorage';
 import dClear from '../Data/dClear';
 
 const Stack = createStackNavigator();
@@ -27,6 +27,7 @@ function DataStack() {
           headerStyle: { backgroundColor: '#405ce8' },
           headerTitleStyle: { fontWeight: 'normal' },
           headerTintColor: 'white',
+          headerTitleAlign: 'center',
           headerLeft: () => (
             <View style={styles.innerContainer}>
               <TouchableHighlight
@@ -55,6 +56,7 @@ function DataStack() {
           headerStyle: { backgroundColor: '#405ce8' },
           headerTitleStyle: { fontWeight: 'normal' },
           headerTintColor: 'white',
+          headerTitleAlign: 'center',
           headerLeft: () => (
             <View style={styles.innerContainer}>
               <TouchableHighlight
@@ -84,6 +86,7 @@ function DataStack() {
           headerStyle: { backgroundColor: '#405ce8' },
           headerTitleStyle: { fontWeight: 'normal' },
           headerTintColor: 'white',
+          headerTitleAlign: 'center',
           headerLeft: () => (
             <View style={styles.innerContainer}>
               <TouchableHighlight
@@ -105,14 +108,15 @@ function DataStack() {
       />
 
       <Stack.Screen
-        name="dStore"
-        component={dStore}
+        name="dStorage"
+        component={dStorage}
         options={({ navigation, route }) => ({
           title: 'Storage',
           headerTitle: 'Storage',
           headerStyle: { backgroundColor: '#405ce8' },
           headerTitleStyle: { fontWeight: 'normal' },
           headerTintColor: 'white',
+          headerTitleAlign: 'center',
           headerLeft: () => (
             <View style={styles.innerContainer}>
               <TouchableHighlight
@@ -142,6 +146,7 @@ function DataStack() {
           headerStyle: { backgroundColor: '#405ce8' },
           headerTitleStyle: { fontWeight: 'normal' },
           headerTintColor: 'white',
+          headerTitleAlign: 'center',
           headerLeft: () => (
             <View style={styles.innerContainer}>
               <TouchableHighlight
