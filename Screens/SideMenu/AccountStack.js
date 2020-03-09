@@ -28,7 +28,7 @@ function AccountStack() {
           headerLeft: () => (
             <View style={styles.innerContainer}>
               <TouchableHighlight
-                onPress={() => navigation.navigate('Home')}
+                onPress={() => navigation.navigate('Top')}
               >
                 <View style={[styles.touch, { justifyContent: 'left' }]}>
                   <Icon

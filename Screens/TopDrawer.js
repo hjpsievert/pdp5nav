@@ -1,13 +1,18 @@
 import React from 'react';
 import {
   createDrawerNavigator,
+  View,
+  Text
 } from '@react-navigation/drawer';
 import { Icon } from 'react-native-elements';
-import MainTab from './MainTabs';
+// import MainTab from './MainTabs';
 import AccountStack from './SideMenu/AccountStack';
+import HomeScreen from './Plans/Home';
+
 
 const Drawer = createDrawerNavigator();
-export default function TopDrawer() {
+function TopDrawer() {
+
   return (
     <Drawer.Navigator
       drawerStyle={{
@@ -17,7 +22,7 @@ export default function TopDrawer() {
     >
       <Drawer.Screen
         name="Top"
-        component={MainTab}
+        component={HomeScreen}
         options={() => ({
           drawerIcon: ({ color, size }) => {
             return (
@@ -40,3 +45,5 @@ export default function TopDrawer() {
     </Drawer.Navigator>
   );
 }
+
+export default TopDrawer;

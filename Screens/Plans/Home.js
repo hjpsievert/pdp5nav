@@ -4,12 +4,12 @@ import {
   Text,
 } from 'react-native';
 
-function pDrugSearch() {
+function HomeScreen() {
 
   return (
     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text>Drug Search</Text>
+      <Text>This is the Home Screen</Text>
     </View>)
 }
 
-export default pDrugSearch;
+export default HomeScreen;
