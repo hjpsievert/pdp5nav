@@ -1,12 +1,11 @@
 import React from 'react';
 import {
-  Button,
   View,
-  Text, Platform
+  Platform
 } from 'react-native';
 import { Icon } from 'react-native-elements';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import pHome from './Plans/pHome';
+import Home from './Plans/pHome';
 import Drugs from './Plans/pDrugs';
 import Plans from './Plans/pPlans';
 
@@ -32,9 +31,9 @@ export default function MainTab() {
     >
       <Tab.Screen
         name="Home"
-        component={pHome}
+        component={Home}
         options={() => ({
-          tabBarIcon: ({ focused, color, size }) => {
+          tabBarIcon: ({ color, size }) => {
             return (
               <Icon
                 name={'home'}
@@ -50,7 +49,7 @@ export default function MainTab() {
         name="Drugs"
         component={Drugs}
         options={() => ({
-          tabBarIcon: ({ focused, color, size }) => {
+          tabBarIcon: ({ color, size }) => {
             return (
               <View style={{ width: 24, height: 24, margin: 5 }}>
                 <Icon
@@ -59,26 +58,6 @@ export default function MainTab() {
                   size={Platform.OS === 'ios' ? size + 4 : size}
                   color={color}
                 />
-                {
-                  <View
-                    style={{
-                      // On React Native < 0.57 overflow outside of parent will not work on Android, see https://git.io/fhLJ8
-                      position: 'absolute',
-                      right: -6,
-                      top: -3,
-                      backgroundColor: 'red',
-                      borderRadius: 6,
-                      width: 12,
-                      height: 12,
-                      justifyContent: 'center',
-                      alignItems: 'center',
-                    }}
-                  >
-                    <Text style={{ color: 'white', fontSize: 10, fontWeight: 'bold' }}>
-                      {8}
-                    </Text>
-                  </View>
-                }
               </View>)
           }
         })}
@@ -87,7 +66,7 @@ export default function MainTab() {
         name="Plans"
         component={Plans}
         options={() => ({
-          tabBarIcon: ({ focused, color, size }) => {
+          tabBarIcon: ({ color, size }) => {
             return (
               <View style={{ width: 24, height: 24, margin: 5 }}>
                 <Icon
@@ -96,26 +75,6 @@ export default function MainTab() {
                   size={Platform.OS === 'ios' ? size + 4 : size}
                   color={color}
                 />
-                {
-                  <View
-                    style={{
-                      // On React Native < 0.57 overflow outside of parent will not work on Android, see https://git.io/fhLJ8
-                      position: 'absolute',
-                      right: -6,
-                      top: -3,
-                      backgroundColor: 'red',
-                      borderRadius: 6,
-                      width: 12,
-                      height: 12,
-                      justifyContent: 'center',
-                      alignItems: 'center',
-                    }}
-                  >
-                    <Text style={{ color: 'white', fontSize: 10, fontWeight: 'bold' }}>
-                      {21}
-                    </Text>
-                  </View>
-                }
               </View>)
           }
         })}

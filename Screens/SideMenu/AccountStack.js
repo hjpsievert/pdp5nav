@@ -1,58 +1,34 @@
 import React from 'react'
 import {
   View,
-  Text,
   StyleSheet,
   TouchableHighlight
 } from 'react-native';
 import { Icon } from 'react-native-elements';
-import pDrugSearch from './pDrugSearch';
 import { createStackNavigator } from '@react-navigation/stack';
-
-function DrugScreen() {
-
-  return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text>Drugs Main</Text>
-    </View>)
-}
+import aRegCreate from '../Account/aRegCreate';
+import aLogin from '../Account/aLogin';
+import aAccount from '../Account/aAccount';
 
 const Stack = createStackNavigator();
 
-function Drugs() {
+function AccountStack() {
   return (
-    <Stack.Navigator>
+    <Stack.Navigator initialRouteName="aAccount">
       <Stack.Screen
-        name="DrugScreen"
-        component={DrugScreen}
+        name="aAccount"
+        component={aAccount}
         options={({ navigation }) => ({
-          title: 'My Drugs',
-          headerTitle: "Drugs Header",
+          title: 'Account Management',
+          headerTitle: 'Account Management',
           headerStyle: { backgroundColor: '#405ce8' },
           headerTitleStyle: { fontWeight: 'normal' },
           headerTintColor: 'white',
           headerTitleAlign: 'center',
-          headerRight: () => (
-            <View style={styles.innerContainer}>
-              <TouchableHighlight
-                onPress={() => navigation.navigate('pDrugSearch')}
-              >
-                <View style={[styles.touch, { justifyContent: 'right' }]}>
-                  <Icon
-                    name={'ios-arrow-forward'}
-                    type={'ionicon'}
-                    color={'white'}
-                    size={24}
-                    style={{ padding: 5 }}
-                  />
-                </View>
-              </TouchableHighlight>
-            </View>
-          ),
           headerLeft: () => (
             <View style={styles.innerContainer}>
               <TouchableHighlight
-                onPress={() => navigation.navigate('HomeScreen')}
+                onPress={() => navigation.navigate('Home')}
               >
                 <View style={[styles.touch, { justifyContent: 'left' }]}>
                   <Icon
@@ -66,14 +42,15 @@ function Drugs() {
               </TouchableHighlight>
             </View>
           ),
-        })} />
+        })}
+      />
 
       <Stack.Screen
-        name="pDrugSearch"
-        component={pDrugSearch}
+        name="aRegCreate"
+        component={aRegCreate}
         options={({ navigation }) => ({
-          title: 'Search Drugs',
-          headerTitle: "Drug Search",
+          title: 'Register',
+          headerTitle: 'Register',
           headerStyle: { backgroundColor: '#405ce8' },
           headerTitleStyle: { fontWeight: 'normal' },
           headerTintColor: 'white',
@@ -81,7 +58,7 @@ function Drugs() {
           headerLeft: () => (
             <View style={styles.innerContainer}>
               <TouchableHighlight
-                onPress={() => navigation.navigate('DrugScreen')}
+                onPress={() => navigation.navigate('aAccount')}
               >
                 <View style={[styles.touch, { justifyContent: 'left' }]}>
                   <Icon
@@ -95,7 +72,38 @@ function Drugs() {
               </TouchableHighlight>
             </View>
           ),
-        })} />
+        })}
+      />
+
+      <Stack.Screen
+        name="aLogin"
+        component={aLogin}
+        options={({ navigation }) => ({
+          title: 'Login',
+          headerTitle: 'Login',
+          headerStyle: { backgroundColor: '#405ce8' },
+          headerTitleStyle: { fontWeight: 'normal' },
+          headerTintColor: 'white',
+          headerTitleAlign: 'center',
+          headerLeft: () => (
+            <View style={styles.innerContainer}>
+              <TouchableHighlight
+                onPress={() => navigation.navigate('aAccount')}
+              >
+                <View style={[styles.touch, { justifyContent: 'left' }]}>
+                  <Icon
+                    name={'ios-arrow-back'}
+                    type={'ionicon'}
+                    color={'white'}
+                    size={24}
+                    style={{ padding: 5 }}
+                  />
+                </View>
+              </TouchableHighlight>
+            </View>
+          ),
+        })}
+      />
 
     </Stack.Navigator>
   );
@@ -115,5 +123,5 @@ const styles = StyleSheet.create({
   }
 });
 
-export default Drugs;
+export default AccountStack;
 

@@ -2,17 +2,14 @@ import React from 'react'
 import {
   View,
   Text,
-  StyleSheet,
-  TouchableHighlight
 } from 'react-native';
-import { Icon } from 'react-native-elements';
 
-function pSelect() {
+function pDrugSearch() {
 
   return (
     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text>Select your drugs</Text>
+      <Text>Drug Search</Text>
     </View>)
 }
 
-export default pSelect;
+export default pDrugSearch;

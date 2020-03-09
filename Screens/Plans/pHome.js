@@ -19,7 +19,7 @@ function HomeScreen() {
 
 const Stack = createStackNavigator();
 
-function pHome() {
+function Home() {
   return (
     <Stack.Navigator>
       <Stack.Screen
@@ -69,5 +69,5 @@ const styles = StyleSheet.create({
   }
 });
 
-export default pHome;
+export default Home;
 
