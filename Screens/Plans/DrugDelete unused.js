@@ -9,7 +9,6 @@ import {
   Text,
   View,
   FlatList,
-  Alert,
   Dimensions,
   Platform,
   ScrollView

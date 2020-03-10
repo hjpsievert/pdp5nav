@@ -1,5 +1,5 @@
 import {
-    AsyncStorage, Alert
+    AsyncStorage
 } from 'react-native';
 import size from 'lodash/size';
 import flatMap from 'lodash/flatMap';

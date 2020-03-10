@@ -4,8 +4,6 @@ import {  defaultConfigDetail } from '../Utils/Constants';
 // import AppNavigation from '../Navigation/AppNavigation'
 import findKey from 'lodash/findKey';
 import filter from 'lodash/filter';
-// import { Alert } from 'react-native';
-
 
 // const navReducer = (state, action) => {
 //   const newState = AppNavigation.router.getStateForAction(action, state)

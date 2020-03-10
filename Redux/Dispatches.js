@@ -1,5 +1,4 @@
 import * as Actions from './Actions';
-import { Alert } from 'react-native';
 
 // Flow management across components
 
