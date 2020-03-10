@@ -1,14 +1,10 @@
 import React from 'react';
 import {
-  createDrawerNavigator,
-  View,
-  Text
+  createDrawerNavigator
 } from '@react-navigation/drawer';
 import { Icon } from 'react-native-elements';
-// import MainTab from './MainTabs';
 import AccountStack from './SideMenu/AccountStack';
 import HomeScreen from './Plans/Home';
-
 
 const Drawer = createDrawerNavigator();
 function TopDrawer() {
@@ -45,5 +41,4 @@ function TopDrawer() {
     </Drawer.Navigator>
   );
 }
-
 export default TopDrawer;
