@@ -25,6 +25,7 @@ export class aRegCheck extends React.Component {
     //console.log('aLogin componentDidMount');
     const { userProfile, navigation } = this.props;
     const { emailVerified, } = userProfile;
+    // const emailVerified = false; // for testing
     console.log('RegisterCheck will mount');
     if (!emailVerified) {
       navigation.navigate('aRegCreate');
@@ -166,6 +167,7 @@ export class aRegCheck extends React.Component {
                 </View>
               </TouchableHighlight>
             </View>
+
           </View>
         }
 
