@@ -7,7 +7,7 @@ import {
 import { Icon } from 'react-native-elements';
 import { createStackNavigator } from '@react-navigation/stack';
 import pPlans from './pPlans';
-import pBreakdown from './pBreakdown';
+import pPlanBreakdown from './pPlanBreakdown';
 
 const Stack = createStackNavigator();
 
@@ -45,8 +45,8 @@ function pPlanStack() {
       />
 
       <Stack.Screen
-        name="pBreakdown"
-        component={pBreakdown}
+        name="pPlanBreakdown"
+        component={pPlanBreakdown}
         options={({ navigation, route }) => ({
           title: 'Plan Breakdown',
           headerTitle: "Plan Breakdown",

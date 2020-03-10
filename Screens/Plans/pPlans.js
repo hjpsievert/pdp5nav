@@ -187,7 +187,7 @@ updateFlowState({
     const { navigation } = this.props;
     console.log('pPlans _handlePlanClick item.planId = ', item.planId)
     // navigation.navigate('fpBreak', { planSelected: [item.planId, 55, 217] });
-    navigation.navigate('pBreakdown', { planSelected: [item.planId] });
+    navigation.navigate('pPlanBreakdown', { planSelected: [item.planId] });
   }
 
 _handlePlanSelect = (item) => {
@@ -228,7 +228,7 @@ _handlePlanSelect = (item) => {
   _handlePlanCompare = () => {
     const { navigation } = this.props;
     const { compareSelected } = this.state;
-    navigation.navigate('pBreakdown', { planSelected: compareSelected });
+    navigation.navigate('pPlanBreakdown', { planSelected: compareSelected });
   }
 
   _renderRow = (item, scaleIn, planNumerator, planDenominator) => {
