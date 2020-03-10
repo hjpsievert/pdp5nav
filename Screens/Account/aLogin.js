@@ -10,7 +10,7 @@ import {
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import * as Dispatch from '../../Redux/Dispatches';
-import { Input, Button, Icon } from 'react-native-elements';
+import { Input, Icon } from 'react-native-elements';
 import { loginUser, validateLogin, getProvider, addUserDevice } from '../../Utils/Api';
 import { saveUserProfile } from '../../Utils/SaveData';
 import { loadAppData } from '../../Utils/AppLoad';
@@ -49,14 +49,14 @@ export class aLogin extends React.Component {
   }
 
   componentWillUnmount() {
-    console.log('pDrugSearch will unmount');
+    console.log('aLogin will unmount');
     Dimensions.removeEventListener('change', this._handleDimChange);
   }
 
   _handleDimChange = ({ window }) => {
     let flag = window.width * 1000 + window.height;
     let adjust = window.width > window.height && Platform.OS !== 'web';
-    // console.log('pDrugSearch _handleDimChange event, new flag  = ', flag);
+    // console.log('aLogin _handleDimChange event, new flag  = ', flag);
     this.setState({
       flag: flag,
       adjust: adjust
@@ -330,7 +330,7 @@ export class aLogin extends React.Component {
             <View style={{ marginTop: 10, borderColor: '#bbb', borderWidth: 1, backgroundColor: 'linen', paddingTop: 10, paddingBottom: 10, paddingLeft: 20, paddingRight: 20 }}>
               <Text>{'Please login with your user ID (email address) and password.'}</Text>
             </View>
-            <View style={{ paddingTop: 10 }}>
+            <View style={{ paddingTop: 10, paddingBottom: 10 }}>
               <Input
                 label='User ID/eMail'
                 labelStyle={{ fontSize: 14 }}
@@ -374,16 +374,39 @@ export class aLogin extends React.Component {
                 autoCorrect={false}
               />
             </View>
-            <View style={{ flexDirection: 'row', justifyContent: 'center', paddingTop: 25 }}>
-              <Button
-                containerStyle={{ width: 200 }}
-                raised={true}
-                icon={{ name: 'ios-arrow-dropright', type: 'ionicon', color: 'white' }}
-                iconRight
-                color={'white'}
-                title={'Continue'}
+
+            <View style={{
+              flexDirection: 'row',
+              justifyContent: 'space-around',
+              paddingTop: 3,
+              backgroundColor: 'rgb(183, 211, 255)',
+              borderBottomWidth: 1,
+              borderBottomColor: 'black',
+              borderTopWidth: 1,
+              borderTopColor: 'black'
+            }}
+            >
+              <TouchableHighlight
                 onPress={this._tryLogin}
-              />
+              >
+                <View style={{ flexDirection: 'column', justifyContent: 'space-between' }}>
+                  <Icon
+                    name={'ios-arrow-dropright'}
+                    type={'ionicon'}
+                    color={'black'}
+                    size={25}
+                    containerStyle={{
+                      paddingLeft: 10,
+                      paddingRight: 10,
+                    }}
+                  />
+                  <Text
+                    style={[styles.topTabText, { color: 'black' }]}
+                  >
+                    {'CONTINUE'}
+                  </Text>
+                </View>
+              </TouchableHighlight>
             </View>
           </View>
         }
@@ -408,16 +431,39 @@ export class aLogin extends React.Component {
                 errorMessage={validationBad ? 'You entered an incorrect validation code. This should be a six digit code you received by ' + userProvider.toLowerCase() + '.' : ''}
               />
             </View>
-            <View style={{ flexDirection: 'row', justifyContent: 'center', paddingTop: 25 }}>
-              <Button
-                containerStyle={{ width: 200 }}
-                raised={true}
-                icon={{ name: 'ios-arrow-dropright', type: 'ionicon', color: 'white' }}
-                iconRight
-                color={'white'}
-                title='Continue'
+
+            <View style={{
+              flexDirection: 'row',
+              justifyContent: 'space-around',
+              paddingTop: 3,
+              backgroundColor: 'rgb(183, 211, 255)',
+              borderBottomWidth: 1,
+              borderBottomColor: 'black',
+              borderTopWidth: 1,
+              borderTopColor: 'black'
+            }}
+            >
+              <TouchableHighlight
                 onPress={this._processValidation}
-              />
+              >
+                <View style={{ flexDirection: 'column', justifyContent: 'space-between' }}>
+                  <Icon
+                    name={'ios-arrow-dropright'}
+                    type={'ionicon'}
+                    color={'black'}
+                    size={25}
+                    containerStyle={{
+                      paddingLeft: 10,
+                      paddingRight: 10,
+                    }}
+                  />
+                  <Text
+                    style={[styles.topTabText, { color: 'black' }]}
+                  >
+                    {'CONTINUE'}
+                  </Text>
+                </View>
+              </TouchableHighlight>
             </View>
           </View>
         }
@@ -499,16 +545,39 @@ export class aLogin extends React.Component {
               <Text style={{ paddingBottom: 3 }}>{'EZPartD Login successful!.'}</Text>
               <Text>{'You now have full access to all features of EZPartD on this device.'}</Text>
             </View>
-            <View style={{ flexDirection: 'row', justifyContent: 'space-around', paddingTop: 25 }}>
-              <Button
-                containerStyle={{ width: 200 }}
-                raised={true}
-                icon={{ name: 'exit-to-app', type: 'material-community', color: 'white' }}
-                iconRight
-                color={'white'}
-                title={'Exit'}
+
+            <View style={{
+              flexDirection: 'row',
+              justifyContent: 'space-around',
+              paddingTop: 3,
+              backgroundColor: 'rgb(183, 211, 255)',
+              borderBottomWidth: 1,
+              borderBottomColor: 'black',
+              borderTopWidth: 1,
+              borderTopColor: 'black'
+            }}
+            >
+              <TouchableHighlight
                 onPress={navigation.popToTop}
-              />
+              >
+                <View style={{ flexDirection: 'column', justifyContent: 'space-between' }}>
+                  <Icon
+                    name={'exit-to-app'}
+                    type={'material-community'}
+                    color={'black'}
+                    size={25}
+                    containerStyle={{
+                      paddingLeft: 10,
+                      paddingRight: 10,
+                    }}
+                  />
+                  <Text
+                    style={[styles.topTabText, { color: 'black' }]}
+                  >
+                    {'EXIT'}
+                  </Text>
+                </View>
+              </TouchableHighlight>
             </View>
           </View>
         }
@@ -539,8 +608,11 @@ const mapDispatchToProps = {
 export default connect(mapStateToProps, mapDispatchToProps)(aLogin);
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
+  topTabText: {
+    fontSize: 8,
+    //fontWeight: 'bold',
+    textAlign: 'center',
+    color: 'black',
+    paddingTop: 2,
   },
 });
