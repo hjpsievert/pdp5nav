@@ -16,6 +16,7 @@ import { connect } from 'react-redux';
 import * as Dispatch from '../../Redux/Dispatches';
 import { Icon, ListItem } from 'react-native-elements';
 import SlideInView from '../../Components/SlideInView';
+import AlertBox from '../../Components/AlertBox';
 import { readKeys, loadObject, removeKey } from '../../Utils/Storage';
 import { saveDrugList } from '../../Utils/SaveData';
 import { loadFromDB, loadFromDbById, deleteFromDBById, refreshDrugs } from '../../Utils/Api';
@@ -43,6 +44,8 @@ export class dStorage extends Component {
       headerSelected: Constants.deviceName,
       showSection: true,
       storageMode: 'undefined',
+      askDelete: false,
+      askShowDelete: false
     }
   }
 
@@ -121,39 +124,43 @@ export class dStorage extends Component {
     }
   }
 
+  _handleDeleteCallback = (response) => {
+    this.setState({
+      askDelete: false
+    })
+    if (response) {
+      this._handleDeleteSaved()
+    }
+  }
+
+  _handleShowDeleteCallback = (response) => {
+    this.setState({
+      askShowDelete: false,
+      showOptions: false
+    })
+    if (response) {
+      this._handleDeleteSaved()
+    }
+  }
+
   _confirmDeleteItem = (currItem) => {
-    console.log('Delete Storage Item?');
-    Alert.alert(
-      'Delete Item',
-      'Are you sure you want to delete this item?',
-      [
-        {
-          text: 'Cancel', style: 'cancel'
-        },
-        { text: 'Delete', onPress: () => this._handleDeleteSaved(currItem) },
-      ]
-    );
+    this.setState({
+      deleteItem: currItem,
+      askDelete: true
+    });
   }
 
-  _confirmDeleteSaved = () => {
+  _confirmShowDeleteItem = () => {
     const { showItem } = this.state;
-    //console.log('Delete Saved');
-    const { title } = showItem;
-    Alert.alert(
-      'Delete Saved Item ' + title,
-      'Are you sure you want to delete this item?',
-      [
-        {
-          text: 'Cancel', onPress: this.setState({ showOptions: false }), style: 'cancel'
-        },
-        { text: 'Delete', onPress: () => this._handleDeleteSaved(showItem) },
-      ]
-    );
+    this.setState({
+      deleteItem: showItem,
+      askShowDelete: true
+    });
   }
 
-  _handleDeleteSaved = (currItem) => { // fix removeKey
-    const { storageMode } = this.state;
-    const { storageIndex, contentType, id, title } = currItem;
+  _handleDeleteSaved = () => { // fix removeKey
+    const { storageMode, deleteItem } = this.state;
+    const { storageIndex, contentType, id, title } = deleteItem;
     console.log('dmStorageScreen handeDeleteSaved title = ' + title);
     if (storageMode === 'cloud') {
       const isDB = true;
@@ -253,15 +260,18 @@ export class dStorage extends Component {
     const { navigation } = this.props;
     this.setState({ showOptions: false });
 
-    Alert.alert(
-      'Load Drugs into Active List',
-      'Active List updated successfully',
-      [
-        { text: 'OK', onPress: () => navigation.navigate('fpDrugScreen') },
-      ]
-    );
+    if (Platform.OS === 'web') {
+      alert('Active List updated successfully')
+    } else {
 
-    // this._handleLoadData();
+      Alert.alert(
+        'Load Drugs into Active List',
+        'Active List updated successfully',
+        [
+          { text: 'OK', onPress: () => navigation.navigate('fpDrugScreen') },
+        ]
+      );
+    }
   }
 
   _handleShowOptions = (item) => {
@@ -501,7 +511,7 @@ export class dStorage extends Component {
   }
 
   render() {
-    const { adjust, flag, savedList, dataFiltered, dataList, selectedIndex, doSections, showOptions, upStart, upEnd, duration, headerSelected, showSection, storageMode } = this.state;
+    const { adjust, flag, askDelete, askShowDelete, savedList, dataFiltered, dataList, selectedIndex, doSections, showOptions, upStart, upEnd, duration, headerSelected, showSection, storageMode, deleteItem } = this.state;
     if (storageMode === 'undefined') {
       return null;
     }
@@ -514,36 +524,51 @@ export class dStorage extends Component {
     let listOptions = [];
     let i = 0;
     listOptions.push({ key: i++, title: 'Load', subtitle: 'Load this saved item into the active list', icon: 'upload', type: 'font-awesome', onPress: this._loadSavedDrugList });
-    listOptions.push({ key: i++, title: 'Delete', subtitle: 'Delete this saved item', icon: 'delete', type: 'material', onPress: this._confirmDeleteSaved });
+    listOptions.push({ key: i++, title: 'Delete', subtitle: 'Delete this saved item', icon: 'delete', type: 'material', onPress: this._confirmShowDeleteItem });
     listOptions.push({ key: i++, title: 'Edit', subtitle: 'Edit title or comment for this saved item', icon: 'edit', type: 'material', onPress: this._handleEmpty });
     listOptions.push({ key: i++, title: 'Close', subtitle: '', icon: 'exit-to-app', type: 'material', onPress: this._handleShowOptions });
-
+    let alertMessage;
+    if (askDelete || askShowDelete) {
+      alertMessage = 'Are you sure you want to delete  \'' + deleteItem.title + '\'?';
+    }
     return (
       <View style={{ height: Dimensions.get('window').height - 75 - (adjust ? 0 : 35) }} >
 
-        <TouchableHighlight
-          onPress={storageMode === 'device' ? null : this._handleToggleSections}
-        >
-          <View style={{ flexDirection: 'row', alignContent: 'center', backgroundColor: '#bbb' }}>
-            <Icon
-              name={storageMode === 'device' ? null : (doSections ? 'triangle-down' : 'triangle-right')}
-              type={'entypo'}
-              color={'black'}
-              size={20}
-              containerStyle={{
-                paddingLeft: 15,
-                paddingRight: 5,
-                backgroundColor: '#bbb',
-                paddingTop: 10,
-                paddingBottom: 10,
-              }}
-            />
-            <Text style={{ fontSize: 16, color: 'black', textAlign: 'left', paddingTop: 10, paddingBottom: 10, backgroundColor: '#bbb' }}>
-              {'Data from ' + upperFirst(storageMode) + (doSections ? '' : (storageMode === 'cloud' ? ' for' : '') + ': ' + Constants.deviceName)}
-            </Text>
-          </View>
-        </TouchableHighlight>
-        {storageMode === 'cloud' ?
+        {askDelete &&
+          <AlertBox
+            alertTitle={'Delete Storage Item'}
+            alertMessage={alertMessage}
+            executeLabel={'DELETE'}
+            cancelLabel={'CANCEL'}
+            callbackFunction={this._handleDeleteCallback}
+          />
+        }
+
+        {!askDelete &&
+          <TouchableHighlight
+            onPress={storageMode === 'device' ? null : this._handleToggleSections}
+          >
+            <View style={{ flexDirection: 'row', alignContent: 'center', backgroundColor: '#bbb' }}>
+              <Icon
+                name={storageMode === 'device' ? null : (doSections ? 'triangle-down' : 'triangle-right')}
+                type={'entypo'}
+                color={'black'}
+                size={20}
+                containerStyle={{
+                  paddingLeft: 15,
+                  paddingRight: 5,
+                  backgroundColor: '#bbb',
+                  paddingTop: 10,
+                  paddingBottom: 10,
+                }}
+              />
+              <Text style={{ fontSize: 16, color: 'black', textAlign: 'left', paddingTop: 10, paddingBottom: 10, backgroundColor: '#bbb' }}>
+                {'Data from ' + upperFirst(storageMode) + (doSections ? '' : (storageMode === 'cloud' ? ' for' : '') + ': ' + Constants.deviceName)}
+              </Text>
+            </View>
+          </TouchableHighlight>
+        }
+        {storageMode === 'cloud' && !askDelete &&
           <SectionList
             sections={dataFiltered}
             extraData={flag, selectedIndex}
@@ -551,7 +576,8 @@ export class dStorage extends Component {
             renderSectionHeader={({ section: { title, count } }) => this._renderHeader(title, count)}
             keyExtractor={(item) => (item.id).toString()}
           />
-          :
+        }
+        {storageMode === 'device' && !askDelete &&
           <FlatList
             data={dataFiltered}
             extraData={flag, selectedIndex}
@@ -560,7 +586,7 @@ export class dStorage extends Component {
           />
         }
 
-        {showOptions ?
+        {showOptions &&
           <SlideInView
             sideStart={0}
             sideEnd={0}
@@ -570,30 +596,39 @@ export class dStorage extends Component {
             slideTop={false}
           >
             <View style={{ height: Dimensions.get('window').height - 75 - (adjust ? 0 : 35), width: Dimensions.get('window').width, backgroundColor: 'rgb(255,255,255)' }}>
-                <View style={{ borderColor: '#999', borderWidth: 1 }}>
-                  {this._renderSelectedItem()}
-                </View>
-                {
-                  listOptions.map((l, i) => (
-                    <ListItem
-                      leftIcon={{
-                        name: l.icon,
-                        type: l.type,
-                        color: 'black'
-                      }}
-                      key={i}
-                      title={l.title}
-                      titleStyle={{ fontSize: 14 }}
-                      subtitle={l.subtitle.length ? l.subtitle : null}
-                      subtitleNumberOfLines={2}
-                      subtitleStyle={{ fontSize: 12 }}
-                      onPress={l.onPress}
-                    />
-                  ))
-                }
+              <View style={{ borderColor: '#999', borderWidth: 1 }}>
+                {this._renderSelectedItem()}
+              </View>
+              {askShowDelete &&
+                <AlertBox
+                  alertTitle={'Delete Storage Item'}
+                  alertMessage={alertMessage}
+                  executeLabel={'DELETE'}
+                  cancelLabel={'CANCEL'}
+                  callbackFunction={this._handleShowDeleteCallback}
+                />
+              }
+              {
+                listOptions.map((l, i) => (
+                  <ListItem
+                    leftIcon={{
+                      name: l.icon,
+                      type: l.type,
+                      color: 'black'
+                    }}
+                    key={i}
+                    title={l.title}
+                    titleStyle={{ fontSize: 14 }}
+                    subtitle={l.subtitle.length ? l.subtitle : null}
+                    subtitleNumberOfLines={2}
+                    subtitleStyle={{ fontSize: 12 }}
+                    onPress={l.onPress}
+                  />
+                ))
+              }
             </View>
           </SlideInView>
-          : null}
+        }
 
       </View>)
   }

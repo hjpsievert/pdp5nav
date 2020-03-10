@@ -1,6 +1,3 @@
-// extracts the top drawer navigation from App.js
-// implemented as function, not class
-
 import React from 'react';
 import {
   createDrawerNavigator,
