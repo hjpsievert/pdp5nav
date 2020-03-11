@@ -96,8 +96,7 @@ export class aRegPhone extends React.Component {
 
   _finishAddPhone = (response) => {
     const { success, payLoad, code, err } = response;
-    const { navigation, userProfile } = this.props;
-    const { userIsSubscribed } = userProfile;
+    const { navigation } = this.props;
     if (success) {
       this.setState({
         usePhone: true,
@@ -172,7 +171,7 @@ export class aRegPhone extends React.Component {
   _finishValidatePhone = (response) => {
     const { success, payLoad, code, err } = response;
     console.log('_finishValidatePhone response ', payLoad);
-    const { navigation, route } = this.props;
+    const { navigation } = this.props;
 
     if (success) {
       navigation.navigate('aRegFinish', {
@@ -199,8 +198,6 @@ export class aRegPhone extends React.Component {
 
   render() {
     const { adjust, phoneBad, prettyPhone, usePhone, validationBad } = this.state;
-    // const usePhone = true;
-    const { userProfile } = this.props;
 
     return (
       <View style={{ height: Dimensions.get('window').height - 75 - (adjust ? 0 : 35) }} >
