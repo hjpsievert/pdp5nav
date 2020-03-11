@@ -88,78 +88,83 @@ export class aRegFinish extends React.Component {
 
   render() {
     const { adjust, registered } = this.state;
-    const { navigation, route, userProfile } = this.props;
-    const { userIsSubscribed } = userProfile;
+    const { navigation, route } = this.props;
     const provider = route.params?.provider ?? '';
 
     return (
       <View style={{ height: Dimensions.get('window').height - 75 - (adjust ? 0 : 35) }} >
-        <View style={{
-          flexDirection: 'column', paddingLeft: 15, paddingRight: 15, flex: 1
-        }}
-        >
-          <View style={{ marginTop: 10, borderColor: '#bbb', borderWidth: 1, backgroundColor: 'linen', paddingTop: 10, paddingBottom: 10, paddingLeft: 20, paddingRight: 20 }}>
-            <Text style={{ paddingBottom: 3 }}>{'Verification email has been sent. It should arrive within the next few minutes. Clicking on the link in the verification email will generate your final activation code which will arrive by ' + provider.toLowerCase() + '.'}</Text>
-            <Text>{'If your code has already arrived, you can continue to Activation, otherwise come back later to Account Management and Activate EZPartD.'}</Text>
-          </View>
 
+        {!registered &&
+          <Text style={{ paddingTop: 50, textAlign: 'center' }}>{'Generating verification email ...'}</Text>
+        }
+
+        {registered &&
           <View style={{
-            flexDirection: 'row',
-            justifyContent: 'space-around',
-            paddingTop: 3,
-            backgroundColor: 'rgb(183, 211, 255)',
-            borderBottomWidth: 1,
-            borderBottomColor: 'black',
-            borderTopWidth: 1,
-            borderTopColor: 'black'
+            flexDirection: 'column', paddingLeft: 15, paddingRight: 15, flex: 1
           }}
           >
-            <TouchableHighlight
-              onPress={() => navigation.navigate('aActivate')}
+            <View style={{ marginTop: 10, borderColor: '#bbb', borderWidth: 1, backgroundColor: 'linen', paddingTop: 10, paddingBottom: 10, paddingLeft: 20, paddingRight: 20 }}>
+              <Text style={{ paddingBottom: 3 }}>{'Verification email has been sent. It should arrive within the next few minutes. Clicking on the link in the verification email will generate your final activation code which will arrive by ' + provider.toLowerCase() + '.'}</Text>
+              <Text>{'If your code has already arrived, you can continue to Activation, otherwise come back later to Account Management and Activate EZPartD.'}</Text>
+            </View>
+
+            <View style={{
+              flexDirection: 'row',
+              justifyContent: 'space-around',
+              paddingTop: 3,
+              backgroundColor: 'rgb(183, 211, 255)',
+              borderBottomWidth: 1,
+              borderBottomColor: 'black',
+              borderTopWidth: 1,
+              borderTopColor: 'black'
+            }}
             >
-              <View style={{ flexDirection: 'column', justifyContent: 'space-between', paddingBottom: 5 }}>
-                <Icon
-                  name={'skip-forward'}
-                  type={'feather'}
-                  color={'black'}
-                  size={25}
-                  containerStyle={{
-                    paddingLeft: 10,
-                    paddingRight: 10,
-                  }}
-                />
-                <Text
-                  style={styles.topTabText}
-                >
-                  {'ACTIVATE'}
-                </Text>
-              </View>
-            </TouchableHighlight>
-            <TouchableHighlight
-              onPress={navigation.popToTop}
-            >
-              <View style={{ flexDirection: 'column', justifyContent: 'space-between' }}>
-                <Icon
-                  name={'exit-to-app'}
-                  type={'material-community'}
-                  color={'black'}
-                  size={25}
-                  containerStyle={{
-                    paddingLeft: 10,
-                    paddingRight: 10,
-                  }}
-                />
-                <Text
-                  style={[styles.topTabText, { color: 'black' }]}
-                >
-                  {'EXIT'}
-                </Text>
-              </View>
-            </TouchableHighlight>
-          </View>
+              <TouchableHighlight
+                onPress={() => navigation.navigate('aActivate')}
+              >
+                <View style={{ flexDirection: 'column', justifyContent: 'space-between', paddingBottom: 5 }}>
+                  <Icon
+                    name={'skip-forward'}
+                    type={'feather'}
+                    color={'black'}
+                    size={25}
+                    containerStyle={{
+                      paddingLeft: 10,
+                      paddingRight: 10,
+                    }}
+                  />
+                  <Text
+                    style={styles.topTabText}
+                  >
+                    {'ACTIVATE'}
+                  </Text>
+                </View>
+              </TouchableHighlight>
+              <TouchableHighlight
+                onPress={navigation.popToTop}
+              >
+                <View style={{ flexDirection: 'column', justifyContent: 'space-between' }}>
+                  <Icon
+                    name={'exit-to-app'}
+                    type={'material-community'}
+                    color={'black'}
+                    size={25}
+                    containerStyle={{
+                      paddingLeft: 10,
+                      paddingRight: 10,
+                    }}
+                  />
+                  <Text
+                    style={[styles.topTabText, { color: 'black' }]}
+                  >
+                    {'EXIT'}
+                  </Text>
+                </View>
+              </TouchableHighlight>
+            </View>
 
 
-          {/* <View style={{ flexDirection: 'row', justifyContent: 'space-around', paddingTop: 25 }}>
+            {/* <View style={{ flexDirection: 'row', justifyContent: 'space-around', paddingTop: 25 }}>
               <View style={{ width: 2 * Dimensions.get('window').width / 4 }}>
                 <Button
                   raised={true}
@@ -185,8 +190,10 @@ export class aRegFinish extends React.Component {
             </View> */}
 
 
-        </View>
+          </View>
+        }
       </View>
+
     )
   }
 }
