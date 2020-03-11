@@ -1,9 +1,8 @@
 import React from 'react'
 import {
   View,
-  Text,
   StyleSheet,
-  TouchableHighlight
+  ScrollView
 } from 'react-native';
 import { ListItem } from 'react-native-elements';
 
@@ -14,6 +13,11 @@ function buildList() {
   let listOptions = [];
   let i = 0;
   listOptions.push({ key: i++, title: 'Register', subtitle: 'Register for a new account', icon: 'user-plus', type: 'font-awesome', active: !emailVerified, target: (emailVerified || appVerified) ? 'aRegCheck' : 'aRegCreate' });
+  listOptions.push({ key: i++, title: 'Register Create', subtitle: 'For test only', icon: 'user-plus', type: 'font-awesome', active: true, target: 'aRegCreate' });
+  listOptions.push({ key: i++, title: 'Register Provider', subtitle: 'For test only', icon: 'user-plus', type: 'font-awesome', active: true, target: 'aRegProvider' });
+  listOptions.push({ key: i++, title: 'Register Phone', subtitle: 'For test only', icon: 'user-plus', type: 'font-awesome', active: true, target: 'aRegPhone', paramName: 'provider', param: 'Phone' });
+  listOptions.push({ key: i++, title: 'Register Finish Phone', subtitle: 'For test only', icon: 'user-plus', type: 'font-awesome', active: true, target: 'aRegFinish', paramName: 'provider', param: 'Phone' });
+  listOptions.push({ key: i++, title: 'Register Finish Email', subtitle: 'For test only', icon: 'user-plus', type: 'font-awesome', active: true, target: 'aRegFinish', paramName: 'provider', param: 'Email' });
   listOptions.push({ key: i++, title: 'Activate', subtitle: 'Unlock the EZPartD Application', icon: 'key', type: 'font-awesome', active: emailVerified && !appVerified, target: 'aActivate' });
   listOptions.push({ key: i++, title: 'Login', subtitle: 'Login to your account', icon: 'login', type: 'material-community', active: appVerified, target: 'aLogin' });
   listOptions.push({ key: i++, title: 'Change Password', subtitle: 'Change your password', icon: 'key-change', type: 'material-community', active: appVerified, target: 'aChangePw' });
@@ -24,35 +28,40 @@ function buildList() {
   return listOptions;
 }
 
-function handlePress(navigation, target){
-  navigation.navigate(target);
-// console.log('handlePress ', target);
+function handlePress(navigation, target, paramName, param) {
+
+  navigation.navigate(target, paramName ? { [paramName]: param } : {});
+
+  console.log('handlePress ' + paramName + ': ' + param);
 }
 
 const myList = buildList();
 
-function aAccount({ route, navigation }) {
+function aAccount({ navigation }) {
   return (
-    <View style={styles.container}>
-      {
-        myList.map((l, i) => (
-          <ListItem
-            leftIcon={{
-              name: l.icon,
-              type: l.type,
-              color: l.active ? '#405ce8' : 'grey'
-            }}
-            key={i}
-            title={l.title}
-            titleStyle={{ paddingLeft: 20, fontSize: 16, color: l.active ? 'black' : '#86939e' }}
-            subtitle={l.subtitle.length ? l.subtitle : null}
-            subtitleNumberOfLines={2}
-            subtitleStyle={{ paddingLeft: 20, fontSize: 14, color: l.active ? '#86939e' : '#bdc6cf' }}
-            onPress={() => handlePress(navigation, l.target, l.param)}
-            hideChevron={!l.active}          />
-        ))
-      }
-    </View>
+    <ScrollView>
+      <View style={styles.container}>
+        {
+          myList.map((l, i) => (
+            <ListItem
+              leftIcon={{
+                name: l.icon,
+                type: l.type,
+                color: l.active ? '#405ce8' : 'grey'
+              }}
+              key={i}
+              title={l.title}
+              titleStyle={{ paddingLeft: 20, fontSize: 16, color: l.active ? 'black' : '#86939e' }}
+              subtitle={l.subtitle.length ? l.subtitle : null}
+              subtitleNumberOfLines={2}
+              subtitleStyle={{ paddingLeft: 20, fontSize: 14, color: l.active ? '#86939e' : '#bdc6cf' }}
+              onPress={() => handlePress(navigation, l.target, l.paramName, l.param)}
+              hideChevron={!l.active}
+            />
+          ))
+        }
+      </View>
+    </ScrollView>
   )
 }
 
