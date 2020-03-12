@@ -68,15 +68,20 @@ export class aRegFinish extends React.Component {
       saveUserProfile(() => { this._finishSaveProfile() }, newUserProfile, defaultProfileSave, 'RegisterFinish');
     }
     else {
-      Alert.alert(
-        'Register User',
-        'An error occurred: ' + payLoad,
-        [
-          {
-            text: 'OK'
-          },
-        ]
-      );
+      if (Platform.OS === 'web') {
+        alert('Register User\n\nAn error occurred: ' + payLoad)
+      }
+      else {
+        Alert.alert(
+          'Register User',
+          'An error occurred: ' + payLoad,
+          [
+            {
+              text: 'OK'
+            },
+          ]
+        );
+      }
     }
   }
 
