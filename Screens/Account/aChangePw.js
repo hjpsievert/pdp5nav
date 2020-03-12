@@ -290,21 +290,6 @@ export class aChangePw extends React.Component {
                         </View>
                       </TouchableHighlight>
                     </View>
-
-                    // <View style={{ flexDirection: 'row', justifyContent: 'space-around', paddingTop: 25 }}>
-                    //   <View style={{ width: 2 * Dimensions.get('window').width / 3 }}>
-                    //     <Button
-                    //       raised={true}
-                    //       icon={{ name: 'ios-arrow-dropright', type: 'ionicon' }}
-                    //       iconRight
-                    //       backgroundColor={'green'}
-                    //       color={'white'}
-                    //       title={'Continue'}
-                    //       onPress={this._changePassword}
-                    //     />
-                    //   </View>
-                    // </View>
-
                   }
                 </View>
               </ScrollView>
