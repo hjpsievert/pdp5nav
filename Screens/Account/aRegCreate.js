@@ -121,7 +121,7 @@ export class aRegCreate extends React.Component {
       this._isStrongPwd();
       this._doPasswordsMatch();
       if (Platform.OS === 'web') {
-        alert('You have to provide valid entries for email and password in order to complete registration!')
+        alert('Register User\n\nYou have to provide valid entries for email and password in order to complete registration!')
       } else {
         Alert.alert(
           'Register User',

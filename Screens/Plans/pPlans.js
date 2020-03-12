@@ -202,7 +202,7 @@ _handlePlanSelect = (item) => {
       if (compareSelected.length === maxCompare) {
         console.log('pPlans compare limit reached');
         if (Platform.OS === 'web') {
-          alert('Can only compare ' + maxCompare + ' plans, remove a plan first before selecting this one.')
+          alert('Compare Plans\n\nCan only compare ' + maxCompare + ' plans, remove a plan first before selecting this one.')
         } else {
           Alert.alert(
             'Compare Plans',

@@ -261,7 +261,7 @@ export class dStorage extends Component {
     this.setState({ showOptions: false });
 
     if (Platform.OS === 'web') {
-      alert('Active List updated successfully')
+      alert('Load Drugs into Active List\n\nActive List updated successfully')
     } else {
 
       Alert.alert(

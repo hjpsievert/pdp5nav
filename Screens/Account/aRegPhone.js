@@ -79,7 +79,7 @@ export class aRegPhone extends React.Component {
     else {
       this._updatePhoneBad();
       if (Platform.OS === 'web') {
-        alert('You have to provide a valid phone number to continue with phone validation!')
+        alert('Add Phone Number\n\nYou have to provide a valid phone number to continue with phone validation!')
       } else {
         Alert.alert(
           'Add Phone Number',
@@ -152,7 +152,7 @@ export class aRegPhone extends React.Component {
     else {
       this._updateValidationBad();
       if (Platform.OS === 'web') {
-        alert('Your validation code must consist of six digits')
+        alert('Validation Code Error\n\nYour validation code must consist of six digits')
       }
       else {
         Alert.alert(
