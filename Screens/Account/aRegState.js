@@ -7,12 +7,9 @@ import {
   Dimensions,
   Platform,
   Alert,
-  ScrollView,
-  FlatList,
   Picker,
-  Keyboard
 } from 'react-native';
-import { Icon, Button } from 'react-native-elements';
+import { Icon } from 'react-native-elements';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Constants from 'expo-constants';
@@ -20,8 +17,6 @@ import { loadStates, createAnonymous } from '../../Utils/Api';
 import { saveUserProfile } from '../../Utils/SaveData';
 import { defaultProfileSave, usrMode } from '../../Utils/Constants';
 import sortBy from 'lodash/sortBy';
-import size from 'lodash/size';
-// import normalize from '../Utils/normalizeText';
 
 export class aRegState extends React.Component {
   constructor(props, context) {
@@ -32,7 +27,6 @@ export class aRegState extends React.Component {
       stateId: 'AK',
       stateName: 'Select your state ...',
       stateSelected: false,
-      stateBad: false,
       stateListVisible: true,
       registerState: 'initial',
     }
@@ -76,7 +70,6 @@ export class aRegState extends React.Component {
       stateName: itemStateName,
       stateListVisible: false,
       stateSelected: true,
-      stateBad: false,
     })
   }
 
@@ -105,7 +98,6 @@ export class aRegState extends React.Component {
     const { stateSelected, stateId, stateName } = this.state;
     const { installationId, deviceName } = Constants;
     const { userProfile } = this.props;
-    const currDate = new Date();
     if (stateSelected) {
       userProfile.userMode = usrMode.anon;
       userProfile.userStateId = stateId;
@@ -119,7 +111,6 @@ export class aRegState extends React.Component {
     const { success, payLoad, code, err } = response;
     console.log('_finishCreateAnonymous success = ' + success + ', data ' + payLoad);
     const { navigation } = this.props;
-    const { userIsSubscribed } = userProfile;
 
     if (success) {
       saveUserProfile(() => { this._finishSaveProfile() }, userProfile, defaultProfileSave, 'RegisterState');
@@ -128,16 +119,20 @@ export class aRegState extends React.Component {
       })
     }
     else {
-      Alert.alert(
-        'User Creation Error',
-        payLoad,
-        [
-          {
-            text: 'OK'
-          },
-        ]
-      );
-      navigation.popToTop();
+      if (Platform.OS === 'web') {
+        alert('User Creation Error ' + payLoad)
+      } else {
+        Alert.alert(
+          'User Creation Error',
+          payLoad,
+          [
+            {
+              text: 'OK'
+            },
+          ]
+        );
+        navigation.popToTop();
+      }
     }
   }
 
@@ -147,10 +142,8 @@ export class aRegState extends React.Component {
 
   render() {
 
-    const { tablet, navigation, userProfile } = this.props;
-    const { userIsSubscribed } = userProfile;
-    const { adjust, stateListVisible, stateName, stateData, stateSelected, stateBad, registerState2 } = this.state;
-    const registerState = 'initial';
+    const { navigation } = this.props;
+    const { adjust, stateListVisible, stateName, stateData, stateSelected, registerState } = this.state;
     let serviceItems;
     if (stateData) {
       serviceItems = stateData.map((s) => {
@@ -179,7 +172,7 @@ export class aRegState extends React.Component {
                 <Text style={{ paddingLeft: 10, color: '#86939e' }}>{stateSelected ? stateName : 'not selected'}
                 </Text>
                 {!stateListVisible &&
-                  <View style={{flexDirection: 'row', justifyContent: 'flex-end', flex: 1, alignItems: 'center'}}>
+                  <View style={{ flexDirection: 'row', justifyContent: 'flex-end', flex: 1, alignItems: 'center' }}>
                     <Text style={{ textAlign: 'right', paddingLeft: 10 }}>
                       {'Pick another'}
                     </Text>
@@ -300,30 +293,5 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     color: 'black',
     paddingTop: 2,
-  },
-  stateContainer: {
-    marginLeft: 15,
-    marginRight: 15,
-    ...Platform.select({
-      ios: {
-        marginLeft: 20,
-        marginRight: 20,
-      },
-    }),
-    borderBottomColor: '#bdc6cf',
-    borderBottomWidth: 1,
-  },
-  input: {
-    color: '#86939e',
-    fontSize: 14, //Platform.OS === 'ios' ? normalize(14) : 14,
-    paddingTop: 7,
-    minHeight: 36,
-  },
-  textBold: {
-    fontWeight: 'bold',
-  },
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
   },
 });
