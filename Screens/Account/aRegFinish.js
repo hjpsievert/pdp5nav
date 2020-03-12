@@ -162,34 +162,6 @@ export class aRegFinish extends React.Component {
                 </View>
               </TouchableHighlight>
             </View>
-
-
-            {/* <View style={{ flexDirection: 'row', justifyContent: 'space-around', paddingTop: 25 }}>
-              <View style={{ width: 2 * Dimensions.get('window').width / 4 }}>
-                <Button
-                  raised={true}
-                  icon={{ name: 'ios-arrow-dropright', type: 'ionicon' }}
-                  iconRight
-                  backgroundColor={'green'}
-                  color={'white'}
-                  title={'Activation'}
-                  onPress={navigation.navigate('aActivate')}
-                />
-              </View>
-              <View style={{ width: 2 * Dimensions.get('window').width / 4 }}>
-                <Button
-                  raised={true}
-                  icon={{ name: 'ios-arrow-dropright', type: 'ionicon' }}
-                  iconRight
-                  backgroundColor={'green'}
-                  color={'white'}
-                  title={'Exit'}
-                  onPress={navigation.navigate(userIsSubscribed ? 'fdHomeScreen' : 'fpHomeScreen')}
-                />
-              </View>
-            </View> */}
-
-
           </View>
         }
       </View>
