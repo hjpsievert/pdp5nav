@@ -79,21 +79,6 @@ export class aRegState extends React.Component {
     })
   }
 
-  _renderState = (item) => {
-    //console.log('_renderState item: ' + JSON.stringify(item.stateCode));
-    return (
-      <TouchableHighlight
-        onPress={() => this._pickState(item.stateCode, item.stateName)}
-      >
-        <View style={{ borderBottomColor: '#bbb', borderBottomWidth: 1 }}>
-          <Text style={{ fontSize: 12, paddingTop: 5, paddingBottom: 5, textAlign: 'center' }}>
-            {item.stateName}
-          </Text>
-        </View>
-      </TouchableHighlight>
-    );
-  }
-
   _createAnonymous = () => {
     const { stateSelected, stateId, stateName } = this.state;
     const { installationId, deviceName } = Constants;
@@ -165,6 +150,7 @@ export class aRegState extends React.Component {
             </View>
 
             <TouchableHighlight
+              underlayColor={'#ccc'}
               onPress={stateListVisible ? this._idle : this._handleStateEntry}
             >
               <View style={{ flexDirection: 'row', alignItems: 'center' }}>
@@ -192,7 +178,7 @@ export class aRegState extends React.Component {
             </TouchableHighlight>
 
             {stateListVisible &&
-              <View style={{ flexShrink: 1, paddingTop: 20, paddingLeft: 20, width: Dimensions.get('window').width / 2 }}>
+              <View style={{ flexShrink: 1, paddingTop: 20, paddingLeft: 20 }}>
                 <Picker
                   mode={'dropdown'}
                   selectedValue={stateName}
@@ -219,6 +205,7 @@ export class aRegState extends React.Component {
             }}
             >
               <TouchableHighlight
+                underlayColor={'#ccc'}
                 onPress={this._createAnonymous}
               >
                 <View style={{ flexDirection: 'column', justifyContent: 'space-between' }}>
@@ -240,6 +227,7 @@ export class aRegState extends React.Component {
                 </View>
               </TouchableHighlight>
               <TouchableHighlight
+                underlayColor={'#ccc'}
                 onPress={() => navigation.navigate('aLogin')}
               >
                 <View style={{ flexDirection: 'column', justifyContent: 'space-between', paddingBottom: 5 }}>
