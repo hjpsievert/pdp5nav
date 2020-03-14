@@ -24,7 +24,7 @@ import aActivate from '../Account/aActivate';
 const Stack = createStackNavigator();
 
 function AccountStack({route}) {
-  console.log('AccountStack route = ', route);
+  // console.log('AccountStack route = ', route);
   return (
     <Stack.Navigator initialRouteName="aAccount">
       <Stack.Screen
