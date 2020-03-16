@@ -114,7 +114,8 @@ export class aRegFinish extends React.Component {
             </View>
 
             <View style={{
-              flexDirection: 'row',
+            marginTop: 10,
+            flexDirection: 'row',
               justifyContent: 'space-around',
               paddingTop: 3,
               backgroundColor: 'rgb(183, 211, 255)',

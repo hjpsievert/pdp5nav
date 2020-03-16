@@ -54,124 +54,129 @@ export class aRegCheck extends React.Component {
 
     return (
       <View style={{ height: Dimensions.get('window').height - 75 - (adjust ? 0 : 35) }} >
-
-
-        {emailVerified && appVerified &&
-          <View>
-            <View style={{ marginTop: 10, borderColor: '#bbb', borderWidth: 1, backgroundColor: 'linen', paddingTop: 10, paddingBottom: 10, paddingLeft: 20, paddingRight: 20 }}>
-              <Text>{'You are already registered!'}</Text>
-            </View>
-
-            <View style={{
-              flexDirection: 'row',
-              justifyContent: 'space-around',
-              paddingTop: 3,
-              backgroundColor: 'rgb(183, 211, 255)',
-              borderBottomWidth: 1,
-              borderBottomColor: 'black',
-              borderTopWidth: 1,
-              borderTopColor: 'black'
-            }}
-            >
-              <TouchableHighlight
-                onPress={navigation.popToTop}
-              >
-                <View style={{ flexDirection: 'column', justifyContent: 'space-between' }}>
-                  <Icon
-                    name={'exit-to-app'}
-                    type={'material-community'}
-                    color={'black'}
-                    size={25}
-                    containerStyle={{
-                      paddingLeft: 10,
-                      paddingRight: 10,
-                    }}
-                  />
-                  <Text
-                    style={[styles.topTabText, { color: 'black' }]}
-                  >
-                    {'EXIT'}
-                  </Text>
-                </View>
-              </TouchableHighlight>
-            </View>
-
-          </View>
-        }
-
-        {(emailVerified && !appVerified) &&
-          <View>
-            {newDevice ?
+        <View style={{
+          flexDirection: 'column', paddingHorizontal: 15, flex: 1
+        }}
+        >
+          {emailVerified && appVerified &&
+            <View>
               <View style={{ marginTop: 10, borderColor: '#bbb', borderWidth: 1, backgroundColor: 'linen', paddingTop: 10, paddingBottom: 10, paddingLeft: 20, paddingRight: 20 }}>
-                <Text style={{ paddingBottom: 3 }}>{'You can activate EZPartD?'}</Text>
-                <Text>{'Your email has already been validated, but it looks like you are accessing EZPartD from a new device. Please login in to activate EZPartD on this device.'}</Text>
+                <Text>{'You are already registered!'}</Text>
               </View>
-              :
-              <View style={{ marginTop: 10, borderColor: '#bbb', borderWidth: 1, backgroundColor: 'linen', paddingTop: 10, paddingBottom: 10, paddingLeft: 20, paddingRight: 20 }}>
-                <Text style={{ paddingBottom: 3 }}>{'Did you forget to activate EZPartD?'}</Text>
-                <Text>{'Your email has been validated, but it looks like you did not activate EZPartD with the code you received by ' + provider + '. Please login in to continue the activation process.'}</Text>
-              </View>
-            }
 
-            <View style={{
-              flexDirection: 'row',
-              justifyContent: 'space-around',
-              paddingTop: 3,
-              backgroundColor: 'rgb(183, 211, 255)',
-              borderBottomWidth: 1,
-              borderBottomColor: 'black',
-              borderTopWidth: 1,
-              borderTopColor: 'black'
-            }}
-            >
-              <TouchableHighlight
-                onPress={navigation.popToTop}
+              <View style={{
+                marginTop: 10,
+                flexDirection: 'row',
+                justifyContent: 'space-around',
+                paddingTop: 3,
+                backgroundColor: 'rgb(183, 211, 255)',
+                borderBottomWidth: 1,
+                borderBottomColor: 'black',
+                borderTopWidth: 1,
+                borderTopColor: 'black'
+              }}
               >
-                <View style={{ flexDirection: 'column', justifyContent: 'space-between' }}>
-                  <Icon
-                    name={'exit-to-app'}
-                    type={'material-community'}
-                    color={'black'}
-                    size={25}
-                    containerStyle={{
-                      paddingLeft: 10,
-                      paddingRight: 10,
-                    }}
-                  />
-                  <Text
-                    style={[styles.topTabText, { color: 'black' }]}
-                  >
-                    {'EXIT'}
-                  </Text>
-                </View>
-              </TouchableHighlight>
-              <TouchableHighlight
-                onPress={() => navigation.navigate('aLogin')}
-              >
-                <View style={{ flexDirection: 'column', justifyContent: 'space-between', paddingBottom: 5 }}>
-                  <Icon
-                    name={'login'}
-                    type={'material-community'}
-                    color={'black'}
-                    size={25}
-                    containerStyle={{
-                      paddingLeft: 10,
-                      paddingRight: 10,
-                    }}
-                  />
-                  <Text
-                    style={styles.topTabText}
-                  >
-                    {'LOGIN'}
-                  </Text>
-                </View>
-              </TouchableHighlight>
+                <TouchableHighlight
+                  onPress={navigation.popToTop}
+                >
+                  <View style={{ flexDirection: 'column', justifyContent: 'space-between' }}>
+                    <Icon
+                      name={'exit-to-app'}
+                      type={'material-community'}
+                      color={'black'}
+                      size={25}
+                      containerStyle={{
+                        paddingLeft: 10,
+                        paddingRight: 10,
+                      }}
+                    />
+                    <Text
+                      style={[styles.topTabText, { color: 'black' }]}
+                    >
+                      {'EXIT'}
+                    </Text>
+                  </View>
+                </TouchableHighlight>
+              </View>
+
             </View>
+          }
 
-          </View>
-        }
+          {(emailVerified && !appVerified) &&
+            <View>
+              {newDevice ?
+                <View style={{ marginTop: 10, borderColor: '#bbb', borderWidth: 1, backgroundColor: 'linen', paddingTop: 10, paddingBottom: 10, paddingLeft: 20, paddingRight: 20 }}>
+                  <Text style={{ paddingBottom: 3 }}>{'You can activate EZPartD?'}</Text>
+                  <Text>{'Your email has already been validated, but it looks like you are accessing EZPartD from a new device. Please login in to activate EZPartD on this device.'}</Text>
+                </View>
+                :
+                <View style={{ marginTop: 10, borderColor: '#bbb', borderWidth: 1, backgroundColor: 'linen', paddingTop: 10, paddingBottom: 10, paddingLeft: 20, paddingRight: 20 }}>
+                  <Text style={{ paddingBottom: 3 }}>{'Did you forget to activate EZPartD?'}</Text>
+                  <Text>{'Your email has been validated, but it looks like you did not activate EZPartD with the code you received by ' + provider + '. Please login in to continue the activation process.'}</Text>
+                </View>
+              }
 
-      </View>)
+              <View style={{
+                marginTop: 10,
+                flexDirection: 'row',
+                justifyContent: 'space-around',
+                paddingTop: 3,
+                backgroundColor: 'rgb(183, 211, 255)',
+                borderBottomWidth: 1,
+                borderBottomColor: 'black',
+                borderTopWidth: 1,
+                borderTopColor: 'black'
+              }}
+              >
+                <TouchableHighlight
+                  onPress={navigation.popToTop}
+                >
+                  <View style={{ flexDirection: 'column', justifyContent: 'space-between' }}>
+                    <Icon
+                      name={'exit-to-app'}
+                      type={'material-community'}
+                      color={'black'}
+                      size={25}
+                      containerStyle={{
+                        paddingLeft: 10,
+                        paddingRight: 10,
+                      }}
+                    />
+                    <Text
+                      style={[styles.topTabText, { color: 'black' }]}
+                    >
+                      {'EXIT'}
+                    </Text>
+                  </View>
+                </TouchableHighlight>
+                <TouchableHighlight
+                  onPress={() => navigation.navigate('aLogin')}
+                >
+                  <View style={{ flexDirection: 'column', justifyContent: 'space-between', paddingBottom: 5 }}>
+                    <Icon
+                      name={'login'}
+                      type={'material-community'}
+                      color={'black'}
+                      size={25}
+                      containerStyle={{
+                        paddingLeft: 10,
+                        paddingRight: 10,
+                      }}
+                    />
+                    <Text
+                      style={styles.topTabText}
+                    >
+                      {'LOGIN'}
+                    </Text>
+                  </View>
+                </TouchableHighlight>
+              </View>
+
+            </View>
+          }
+        </View>
+      </View>
+    )
   }
 }
 

@@ -249,340 +249,344 @@ export class aLogin extends React.Component {
     //console.log('aLogin render loginState = ', loginState, ', userProfile ' + JSON.stringify(this.props.userProfile));    
     return (
       <View style={{ height: Dimensions.get('window').height - 75 - (adjust ? 0 : 35) }} >
-
-        {loginState === 'loadingAppData' &&
-          <View style={{ marginTop: 10, borderColor: '#bbb', borderWidth: 1, backgroundColor: 'linen', paddingTop: 10, paddingBottom: 10, paddingLeft: 20, paddingRight: 20 }}>
-            <Text style={{ paddingBottom: 3 }}>{'Loading app data for user ' + loginId + '.'}</Text>
-          </View>
-        }
-
-        {loginState === 'notAvailable' &&
-          <View>
+        <View style={{
+          flexDirection: 'column', paddingHorizontal: 15, flex: 1
+        }}
+        >
+          {loginState === 'loadingAppData' &&
             <View style={{ marginTop: 10, borderColor: '#bbb', borderWidth: 1, backgroundColor: 'linen', paddingTop: 10, paddingBottom: 10, paddingLeft: 20, paddingRight: 20 }}>
-              <Text style={{ paddingBottom: 5 }}>{'EZPartD login is not available, you are not registered.'}</Text>
-              <Text>{'If you have logged in previously from a different device, you can continue with the '}
-                <Text style={{ fontWeight: 'bold' }}>{'Login'}</Text>
-                {' process to activate this device, otherwise please '}
-                <Text style={{ fontWeight: 'bold' }}>{'Register'}</Text>
-              </Text>
+              <Text style={{ paddingBottom: 3 }}>{'Loading app data for user ' + loginId + '.'}</Text>
             </View>
+          }
 
-            <View style={{
-              flexDirection: 'row',
-              justifyContent: 'space-around',
-              paddingTop: 3,
-              backgroundColor: 'rgb(183, 211, 255)',
-              borderBottomWidth: 1,
-              borderBottomColor: 'black',
-              borderTopWidth: 1,
-              borderTopColor: 'black'
-            }}
-            >
-              <TouchableHighlight
-                onPress={this._handleLogin}
+          {loginState === 'notAvailable' &&
+            <View>
+              <View style={{ marginTop: 10, borderColor: '#bbb', borderWidth: 1, backgroundColor: 'linen', paddingTop: 10, paddingBottom: 10, paddingLeft: 20, paddingRight: 20 }}>
+                <Text style={{ paddingBottom: 5 }}>{'EZPartD login is not available, you are not registered.'}</Text>
+                <Text>{'If you have logged in previously from a different device, you can continue with the '}
+                  <Text style={{ fontWeight: 'bold' }}>{'Login'}</Text>
+                  {' process to activate this device, otherwise please '}
+                  <Text style={{ fontWeight: 'bold' }}>{'Register'}</Text>
+                </Text>
+              </View>
+
+              <View style={{
+                flexDirection: 'row',
+                justifyContent: 'space-around',
+                paddingTop: 3,
+                backgroundColor: 'rgb(183, 211, 255)',
+                borderBottomWidth: 1,
+                borderBottomColor: 'black',
+                borderTopWidth: 1,
+                borderTopColor: 'black'
+              }}
               >
-                <View style={{ flexDirection: 'column', justifyContent: 'space-between', paddingBottom: 5 }}>
-                  <Icon
-                    name={'login'}
-                    type={'material-community'}
-                    color={'black'}
-                    size={25}
-                    containerStyle={{
-                      paddingLeft: 10,
-                      paddingRight: 10,
-                    }}
-                  />
-                  <Text
-                    style={styles.topTabText}
-                  >
-                    {'LOGIN'}
-                  </Text>
-                </View>
-              </TouchableHighlight>
-              <TouchableHighlight
-                onPress={this._handleRegister}
+                <TouchableHighlight
+                  onPress={this._handleLogin}
+                >
+                  <View style={{ flexDirection: 'column', justifyContent: 'space-between', paddingBottom: 5 }}>
+                    <Icon
+                      name={'login'}
+                      type={'material-community'}
+                      color={'black'}
+                      size={25}
+                      containerStyle={{
+                        paddingLeft: 10,
+                        paddingRight: 10,
+                      }}
+                    />
+                    <Text
+                      style={styles.topTabText}
+                    >
+                      {'LOGIN'}
+                    </Text>
+                  </View>
+                </TouchableHighlight>
+                <TouchableHighlight
+                  onPress={this._handleRegister}
+                >
+                  <View style={{ flexDirection: 'column', justifyContent: 'space-between' }}>
+                    <Icon
+                      name={'user-plus'}
+                      type={'feather'}
+                      color={'black'}
+                      size={25}
+                      containerStyle={{
+                        paddingLeft: 10,
+                        paddingRight: 10,
+                      }}
+                    />
+                    <Text
+                      style={[styles.topTabText, { color: 'black' }]}
+                    >
+                      {'REGISTER'}
+                    </Text>
+                  </View>
+                </TouchableHighlight>
+              </View>
+
+
+            </View>}
+
+          {loginState === 'initial' &&
+            <View>
+              <View style={{ marginTop: 10, borderColor: '#bbb', borderWidth: 1, backgroundColor: 'linen', paddingTop: 10, paddingBottom: 10, paddingLeft: 20, paddingRight: 20 }}>
+                <Text>{'Please login with your user ID (email address) and password.'}</Text>
+              </View>
+              <View style={{ paddingTop: 10, paddingBottom: 10 }}>
+                <Input
+                  label='User ID/eMail'
+                  labelStyle={{ fontSize: 14 }}
+                  placeholder={'Enter your User ID ...'}
+                  inputStyle={{ fontSize: 14 }}
+                  onChangeText={this._saveLogin}
+                  onSubmitEditing={this._isLogin}
+                  editable={true}
+                  keyboardType={'email-address'}
+                  autoCapitalize={'none'}
+                  autoCorrect={false}
+                  errorMessage={loginBad ? 'Invalid User ID, your login should be an email address' : ''}
+                />
+                <TouchableHighlight
+                  onPress={this._togglePwdVisibility}
+                >
+                  <View style={{ paddingLeft: 20, flexDirection: 'row', alignItems: 'center' }}>
+                    <Text style={{ paddingTop: 5, paddingBottom: 5, color: '#86939e', fontSize: 14 }}>{(hidePwd ? 'Show' : 'Hide') + ' password'}</Text>
+                    <Icon
+                      name={hidePwd ? 'toggle-off' : 'toggle-on'}
+                      type={'font-awesome'}
+                      color={'#86939e'}
+                      size={15}
+                      containerStyle={{
+                        paddingLeft: 10,
+                        paddingRight: 5,
+                      }}
+                    />
+                  </View>
+                </TouchableHighlight>
+                <Input
+                  ref={input => this.myInput = input}
+                  label={'Password'}
+                  labelStyle={{ fontSize: 14 }}
+                  placeholder={'Enter a password ...'}
+                  inputStyle={{ fontSize: 14 }}
+                  onChangeText={this._savePwd}
+                  editable={true}
+                  secureTextEntry={hidePwd}
+                  autoCapitalize={'none'}
+                  autoCorrect={false}
+                />
+              </View>
+
+              <View style={{
+                flexDirection: 'row',
+                justifyContent: 'space-around',
+                paddingTop: 3,
+                backgroundColor: 'rgb(183, 211, 255)',
+                borderBottomWidth: 1,
+                borderBottomColor: 'black',
+                borderTopWidth: 1,
+                borderTopColor: 'black'
+              }}
               >
-                <View style={{ flexDirection: 'column', justifyContent: 'space-between' }}>
-                  <Icon
-                    name={'user-plus'}
-                    type={'feather'}
-                    color={'black'}
-                    size={25}
-                    containerStyle={{
-                      paddingLeft: 10,
-                      paddingRight: 10,
-                    }}
-                  />
-                  <Text
-                    style={[styles.topTabText, { color: 'black' }]}
-                  >
-                    {'REGISTER'}
-                  </Text>
-                </View>
-              </TouchableHighlight>
+                <TouchableHighlight
+                  onPress={this._tryLogin}
+                >
+                  <View style={{ flexDirection: 'column', justifyContent: 'space-between' }}>
+                    <Icon
+                      name={'ios-arrow-dropright'}
+                      type={'ionicon'}
+                      color={'black'}
+                      size={25}
+                      containerStyle={{
+                        paddingLeft: 10,
+                        paddingRight: 10,
+                      }}
+                    />
+                    <Text
+                      style={[styles.topTabText, { color: 'black' }]}
+                    >
+                      {'CONTINUE'}
+                    </Text>
+                  </View>
+                </TouchableHighlight>
+              </View>
             </View>
+          }
 
+          {loginState === 'loginProcessed' &&
+            <View>
+              <View style={{ marginTop: 10, borderColor: '#bbb', borderWidth: 1, backgroundColor: 'linen', paddingTop: 10, paddingBottom: 10, paddingLeft: 20, paddingRight: 20 }}>
+                <Text>{'Please enter the six digit validation code you received by ' + userProvider.toLowerCase()}</Text>
+              </View>
+              <View style={{ paddingTop: 10 }}>
+                <Input
+                  label={'Login Validation Code'}
+                  labelStyle={{ fontSize: 14 }}
+                  placeholder={'Enter your login validation code ...'}
+                  inputStyle={{ fontSize: 14 }}
+                  onChangeText={this._saveValidation}
+                  onSubmitEditing={this._isValidated}
+                  keyboardType={'numeric'}
+                  editable={true}
+                  autoCapitalize={'none'}
+                  autoCorrect={false}
+                  errorMessage={validationBad ? 'You entered an incorrect validation code. This should be a six digit code you received by ' + userProvider.toLowerCase() + '.' : ''}
+                />
+              </View>
 
-          </View>}
-
-        {loginState === 'initial' &&
-          <View>
-            <View style={{ marginTop: 10, borderColor: '#bbb', borderWidth: 1, backgroundColor: 'linen', paddingTop: 10, paddingBottom: 10, paddingLeft: 20, paddingRight: 20 }}>
-              <Text>{'Please login with your user ID (email address) and password.'}</Text>
-            </View>
-            <View style={{ paddingTop: 10, paddingBottom: 10 }}>
-              <Input
-                label='User ID/eMail'
-                labelStyle={{ fontSize: 14 }}
-                placeholder={'Enter your User ID ...'}
-                inputStyle={{ fontSize: 14 }}
-                onChangeText={this._saveLogin}
-                onSubmitEditing={this._isLogin}
-                editable={true}
-                keyboardType={'email-address'}
-                autoCapitalize={'none'}
-                autoCorrect={false}
-                errorMessage={loginBad ? 'Invalid User ID, your login should be an email address' : ''}
-              />
-              <TouchableHighlight
-                onPress={this._togglePwdVisibility}
+              <View style={{
+                flexDirection: 'row',
+                justifyContent: 'space-around',
+                paddingTop: 3,
+                backgroundColor: 'rgb(183, 211, 255)',
+                borderBottomWidth: 1,
+                borderBottomColor: 'black',
+                borderTopWidth: 1,
+                borderTopColor: 'black'
+              }}
               >
-                <View style={{ paddingLeft: 20, flexDirection: 'row', alignItems: 'center' }}>
-                  <Text style={{ paddingTop: 5, paddingBottom: 5, color: '#86939e', fontSize: 14 }}>{(hidePwd ? 'Show' : 'Hide') + ' password'}</Text>
-                  <Icon
-                    name={hidePwd ? 'toggle-off' : 'toggle-on'}
-                    type={'font-awesome'}
-                    color={'#86939e'}
-                    size={15}
-                    containerStyle={{
-                      paddingLeft: 10,
-                      paddingRight: 5,
-                    }}
-                  />
-                </View>
-              </TouchableHighlight>
-              <Input
-                ref={input => this.myInput = input}
-                label={'Password'}
-                labelStyle={{ fontSize: 14 }}
-                placeholder={'Enter a password ...'}
-                inputStyle={{ fontSize: 14 }}
-                onChangeText={this._savePwd}
-                editable={true}
-                secureTextEntry={hidePwd}
-                autoCapitalize={'none'}
-                autoCorrect={false}
-              />
+                <TouchableHighlight
+                  onPress={this._processValidation}
+                >
+                  <View style={{ flexDirection: 'column', justifyContent: 'space-between' }}>
+                    <Icon
+                      name={'ios-arrow-dropright'}
+                      type={'ionicon'}
+                      color={'black'}
+                      size={25}
+                      containerStyle={{
+                        paddingLeft: 10,
+                        paddingRight: 10,
+                      }}
+                    />
+                    <Text
+                      style={[styles.topTabText, { color: 'black' }]}
+                    >
+                      {'CONTINUE'}
+                    </Text>
+                  </View>
+                </TouchableHighlight>
+              </View>
             </View>
+          }
 
-            <View style={{
-              flexDirection: 'row',
-              justifyContent: 'space-around',
-              paddingTop: 3,
-              backgroundColor: 'rgb(183, 211, 255)',
-              borderBottomWidth: 1,
-              borderBottomColor: 'black',
-              borderTopWidth: 1,
-              borderTopColor: 'black'
-            }}
-            >
-              <TouchableHighlight
-                onPress={this._tryLogin}
+          {loginState === 'loginInvalid' &&
+            <View>
+              <View style={{ marginTop: 10, borderColor: '#bbb', borderWidth: 1, backgroundColor: 'linen', paddingTop: 10, paddingBottom: 10, paddingLeft: 20, paddingRight: 20 }}>
+                <Text>{'Login unsuccessful!'}</Text>
+                <Text>{'You provided an invalid combination of user Id and password. If you forgot your password, you will be able to reset it using your email address.'}</Text>
+              </View>
+
+              <View style={{
+                flexDirection: 'row',
+                justifyContent: 'space-around',
+                paddingTop: 3,
+                backgroundColor: 'rgb(183, 211, 255)',
+                borderBottomWidth: 1,
+                borderBottomColor: 'black',
+                borderTopWidth: 1,
+                borderTopColor: 'black'
+              }}
               >
-                <View style={{ flexDirection: 'column', justifyContent: 'space-between' }}>
-                  <Icon
-                    name={'ios-arrow-dropright'}
-                    type={'ionicon'}
-                    color={'black'}
-                    size={25}
-                    containerStyle={{
-                      paddingLeft: 10,
-                      paddingRight: 10,
-                    }}
-                  />
-                  <Text
-                    style={[styles.topTabText, { color: 'black' }]}
-                  >
-                    {'CONTINUE'}
-                  </Text>
-                </View>
-              </TouchableHighlight>
-            </View>
-          </View>
-        }
+                <TouchableHighlight
+                  onPress={() => {
+                    this.setState({
+                      loginState: 'initial',
+                      loginId: '',
+                      password: '',
+                    });
+                  }}
+                >
+                  <View style={{ flexDirection: 'column', justifyContent: 'space-between', paddingBottom: 5 }}>
+                    <Icon
+                      name={'login'}
+                      type={'material-community'}
+                      color={'black'}
+                      size={25}
+                      containerStyle={{
+                        paddingLeft: 10,
+                        paddingRight: 10,
+                      }}
+                    />
+                    <Text
+                      style={styles.topTabText}
+                    >
+                      {'RETRY LOGIN'}
+                    </Text>
+                  </View>
+                </TouchableHighlight>
+                <TouchableHighlight
+                  onPress={() => navigation.navigate('acResetPwd')}
+                >
+                  <View style={{ flexDirection: 'column', justifyContent: 'space-between' }}>
+                    <Icon
+                      name={'lock-reset'}
+                      type={'material-community'}
+                      color={'black'}
+                      size={25}
+                      containerStyle={{
+                        paddingLeft: 10,
+                        paddingRight: 10,
+                      }}
+                    />
+                    <Text
+                      style={[styles.topTabText, { color: 'black' }]}
+                    >
+                      {'RESET PASSWORD'}
+                    </Text>
+                  </View>
+                </TouchableHighlight>
+              </View>
 
-        {loginState === 'loginProcessed' &&
-          <View>
-            <View style={{ marginTop: 10, borderColor: '#bbb', borderWidth: 1, backgroundColor: 'linen', paddingTop: 10, paddingBottom: 10, paddingLeft: 20, paddingRight: 20 }}>
-              <Text>{'Please enter the six digit validation code you received by ' + userProvider.toLowerCase()}</Text>
             </View>
-            <View style={{ paddingTop: 10 }}>
-              <Input
-                label={'Login Validation Code'}
-                labelStyle={{ fontSize: 14 }}
-                placeholder={'Enter your login validation code ...'}
-                inputStyle={{ fontSize: 14 }}
-                onChangeText={this._saveValidation}
-                onSubmitEditing={this._isValidated}
-                keyboardType={'numeric'}
-                editable={true}
-                autoCapitalize={'none'}
-                autoCorrect={false}
-                errorMessage={validationBad ? 'You entered an incorrect validation code. This should be a six digit code you received by ' + userProvider.toLowerCase() + '.' : ''}
-              />
-            </View>
+          }
 
-            <View style={{
-              flexDirection: 'row',
-              justifyContent: 'space-around',
-              paddingTop: 3,
-              backgroundColor: 'rgb(183, 211, 255)',
-              borderBottomWidth: 1,
-              borderBottomColor: 'black',
-              borderTopWidth: 1,
-              borderTopColor: 'black'
-            }}
-            >
-              <TouchableHighlight
-                onPress={this._processValidation}
+          {loginState === 'validationSuccessful' &&
+            <View>
+              <View style={{ marginTop: 10, borderColor: '#bbb', borderWidth: 1, backgroundColor: 'linen', paddingTop: 10, paddingBottom: 10, paddingLeft: 20, paddingRight: 20 }}>
+                <Text style={{ paddingBottom: 3 }}>{'EZPartD Login successful!.'}</Text>
+                <Text>{'You now have full access to all features of EZPartD on this device.'}</Text>
+              </View>
+
+              <View style={{
+                flexDirection: 'row',
+                justifyContent: 'space-around',
+                paddingTop: 3,
+                backgroundColor: 'rgb(183, 211, 255)',
+                borderBottomWidth: 1,
+                borderBottomColor: 'black',
+                borderTopWidth: 1,
+                borderTopColor: 'black'
+              }}
               >
-                <View style={{ flexDirection: 'column', justifyContent: 'space-between' }}>
-                  <Icon
-                    name={'ios-arrow-dropright'}
-                    type={'ionicon'}
-                    color={'black'}
-                    size={25}
-                    containerStyle={{
-                      paddingLeft: 10,
-                      paddingRight: 10,
-                    }}
-                  />
-                  <Text
-                    style={[styles.topTabText, { color: 'black' }]}
-                  >
-                    {'CONTINUE'}
-                  </Text>
-                </View>
-              </TouchableHighlight>
+                <TouchableHighlight
+                  onPress={navigation.popToTop}
+                >
+                  <View style={{ flexDirection: 'column', justifyContent: 'space-between' }}>
+                    <Icon
+                      name={'exit-to-app'}
+                      type={'material-community'}
+                      color={'black'}
+                      size={25}
+                      containerStyle={{
+                        paddingLeft: 10,
+                        paddingRight: 10,
+                      }}
+                    />
+                    <Text
+                      style={[styles.topTabText, { color: 'black' }]}
+                    >
+                      {'EXIT'}
+                    </Text>
+                  </View>
+                </TouchableHighlight>
+              </View>
             </View>
-          </View>
-        }
-
-        {loginState === 'loginInvalid' &&
-          <View>
-            <View style={{ marginTop: 10, borderColor: '#bbb', borderWidth: 1, backgroundColor: 'linen', paddingTop: 10, paddingBottom: 10, paddingLeft: 20, paddingRight: 20 }}>
-              <Text>{'Login unsuccessful!'}</Text>
-              <Text>{'You provided an invalid combination of user Id and password. If you forgot your password, you will be able to reset it using your email address.'}</Text>
-            </View>
-
-            <View style={{
-              flexDirection: 'row',
-              justifyContent: 'space-around',
-              paddingTop: 3,
-              backgroundColor: 'rgb(183, 211, 255)',
-              borderBottomWidth: 1,
-              borderBottomColor: 'black',
-              borderTopWidth: 1,
-              borderTopColor: 'black'
-            }}
-            >
-              <TouchableHighlight
-                onPress={() => {
-                  this.setState({
-                    loginState: 'initial',
-                    loginId: '',
-                    password: '',
-                  });
-                }}
-              >
-                <View style={{ flexDirection: 'column', justifyContent: 'space-between', paddingBottom: 5 }}>
-                  <Icon
-                    name={'login'}
-                    type={'material-community'}
-                    color={'black'}
-                    size={25}
-                    containerStyle={{
-                      paddingLeft: 10,
-                      paddingRight: 10,
-                    }}
-                  />
-                  <Text
-                    style={styles.topTabText}
-                  >
-                    {'RETRY LOGIN'}
-                  </Text>
-                </View>
-              </TouchableHighlight>
-              <TouchableHighlight
-                onPress={() => navigation.navigate('acResetPwd')}
-              >
-                <View style={{ flexDirection: 'column', justifyContent: 'space-between' }}>
-                  <Icon
-                    name={'lock-reset'}
-                    type={'material-community'}
-                    color={'black'}
-                    size={25}
-                    containerStyle={{
-                      paddingLeft: 10,
-                      paddingRight: 10,
-                    }}
-                  />
-                  <Text
-                    style={[styles.topTabText, { color: 'black' }]}
-                  >
-                    {'RESET PASSWORD'}
-                  </Text>
-                </View>
-              </TouchableHighlight>
-            </View>
-
-          </View>
-        }
-
-        {loginState === 'validationSuccessful' &&
-          <View>
-            <View style={{ marginTop: 10, borderColor: '#bbb', borderWidth: 1, backgroundColor: 'linen', paddingTop: 10, paddingBottom: 10, paddingLeft: 20, paddingRight: 20 }}>
-              <Text style={{ paddingBottom: 3 }}>{'EZPartD Login successful!.'}</Text>
-              <Text>{'You now have full access to all features of EZPartD on this device.'}</Text>
-            </View>
-
-            <View style={{
-              flexDirection: 'row',
-              justifyContent: 'space-around',
-              paddingTop: 3,
-              backgroundColor: 'rgb(183, 211, 255)',
-              borderBottomWidth: 1,
-              borderBottomColor: 'black',
-              borderTopWidth: 1,
-              borderTopColor: 'black'
-            }}
-            >
-              <TouchableHighlight
-                onPress={navigation.popToTop}
-              >
-                <View style={{ flexDirection: 'column', justifyContent: 'space-between' }}>
-                  <Icon
-                    name={'exit-to-app'}
-                    type={'material-community'}
-                    color={'black'}
-                    size={25}
-                    containerStyle={{
-                      paddingLeft: 10,
-                      paddingRight: 10,
-                    }}
-                  />
-                  <Text
-                    style={[styles.topTabText, { color: 'black' }]}
-                  >
-                    {'EXIT'}
-                  </Text>
-                </View>
-              </TouchableHighlight>
-            </View>
-          </View>
-        }
-
-      </View>)
+          }
+        </View>
+      </View>
+    )
   }
 }
 
