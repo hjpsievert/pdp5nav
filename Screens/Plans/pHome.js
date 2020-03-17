@@ -23,6 +23,7 @@ import size from 'lodash/size';
 import flatMap from 'lodash/flatMap';
 import sortBy from 'lodash/sortBy';
 import lowerCase from 'lodash/lowerCase';
+import * as Localization from 'expo-localization';
 // import isEqual from 'lodash/isEqual';
 // import reduce from 'lodash/reduce';
 
@@ -43,6 +44,7 @@ export class pHome extends React.Component {
 
   componentDidMount() {
     Dimensions.addEventListener('change', this._handleDimChange);
+    // console.log('Localization region = ', Localization.region, ', timezone = ', Localization.timezone,' current time = ', new Date().toLocaleString(Localization.locale, {timeZone: Localization.timezone}));
 
     const { userProfile, isStarted } = this.props;
     console.log('pHome componentDidMount isStarted = ', isStarted, ', profile = ', JSON.stringify(userProfile));
@@ -211,7 +213,7 @@ export class pHome extends React.Component {
       }, JSON.stringify(myConfigList), stateId, doMailState, startDate);
     }
     if (!emailVerified && userMode != usrMode.anon) {
-      navigation.navigate('regState');
+      navigation.navigate('Account', {screen : 'aRegState'});
     }
   }
 
@@ -290,11 +292,18 @@ export class pHome extends React.Component {
     const { showActive, showPlans, showGreeting, adjust, drugsLoaded, animating } = this.state;
     const { drugCount, planCount, myPlans, activeDrugs, userProfile, previousLogin } = this.props;
     let currDate;
+    console.log('previousLogin(', Platform.OS, ') = ', previousLogin);
     if (previousLogin) {
+      // currDate = Platform.OS==='web' ? new Date(previousLogin).toLocaleString(Localization.locale, {timeZone: Localization.timezone}) :  new Date(previousLogin);
       currDate = new Date(previousLogin);
     }
-    const prevLogin = previousLogin ? (currDate.getMonth() + 1) + '/' + (currDate.getDate()) + '/' + currDate.getFullYear() + ' ' + (currDate.getHours()) + ':' + (currDate.getMinutes() + 1) : 'retrieving ...';
-    const { displayName, userMode, userStateName } = userProfile;
+    else{
+      currDate = new Date();
+      // currDate = Platform.OS==='web' ? new Date().toLocaleString(Localization.locale, {timeZone: Localization.timezone}) : new Date();
+    }
+    console.log('currDate(', Platform.OS, ') = ', currDate);
+    // const prevLogin = Platform.OS==='web' ? new Date().toLocaleString(Localization.locale) : (currDate.getMonth() + 1) + '/' + (currDate.getDate()) + '/' + currDate.getFullYear() + ' ' + (currDate.getHours()) + ':' + (currDate.getMinutes() + 1);
+    const prevLogin = (currDate.getMonth() + 1) + '/' + (currDate.getDate()) + '/' + currDate.getFullYear() + ' ' + (currDate.getHours()) + ':' + (currDate.getMinutes() + 1);    const { displayName, userMode, userStateName } = userProfile;
 
     return (
       <View>
