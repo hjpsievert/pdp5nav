@@ -191,7 +191,7 @@ export const updateAnonymous = function (cb, deviceIdentifier, userData) {
 export const createAnonymous = function (cb, deviceIdentifier, deviceName, userData) {
   // console.log('createAnonymous url = ', `userData/CreateAnonymous?deviceIdentifier=${deviceIdentifier}&deviceName=${deviceName}`, ', userData = ', userData)
   const mode = 'POST';
-  return processRequest(cb, mode, `ManageProfile?code=hs5RnPswRXhEsA9X/Dn8WwT8OoXia3QI7PlsXViKmz9nACNem58xbQ==&FunctionType=Create&DeviceIdentifier=${deviceIdentifier}&DeviceName=${deviceName}`, userData);
+  return processRequest(cb, mode, `ManageAnonymous?code=GLKdKFW0DQm0fZluAMcSjMi3VXSJer2B8gy7yfZ/W3cocTKaSOUVUw==&FunctionType=Create&DeviceIdentifier=${deviceIdentifier}&DeviceName=${deviceName}`, userData);
 }
 
 export const addUserDevice = function (cb, userEmail, deviceId, deviceName) {
