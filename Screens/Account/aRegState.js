@@ -251,6 +251,104 @@ export class aRegState extends React.Component {
             </View>
           </View>
         }
+
+        {registerState === 'anonymous' &&
+          <View>
+            <View style={{ marginTop: 10, borderColor: '#bbb', borderWidth: 1, backgroundColor: 'linen', paddingTop: 10, paddingBottom: 10, paddingLeft: 20, paddingRight: 20 }}>
+              <Text style={{ paddingBottom: 3 }}>{'Creation  of an anonymous user account was successful!'}</Text>
+              <Text style={{ paddingBottom: 3 }}>{'You can choose to continue to '}<Text style={styles.textBold}>{'REGISTER'}</Text>{' with your email and a password. This will allow you to securely store your drug selections and ensures that you are the only person able to access your data.'}</Text>
+              <Text>{'If you just want to do do a quick search for presscription plans you can continue in '}<Text style={styles.textBold}>{'ANONYMOUS'}</Text>{' mode. No further information will be required from you, but you will not be able to save your drug data.'}</Text>
+            </View>
+
+            <View style={{
+              marginTop: 10,
+              flexDirection: 'row',
+              justifyContent: 'space-around',
+              paddingTop: 3,
+              backgroundColor: 'rgb(183, 211, 255)',
+              borderBottomWidth: 1,
+              borderBottomColor: 'black',
+              borderTopWidth: 1,
+              borderTopColor: 'black'
+            }}
+            >
+              <TouchableHighlight
+                underlayColor={'#ccc'}
+                onPress={() => navigation.navigate('aAccount')}
+              >
+                <View style={{ flexDirection: 'column', justifyContent: 'space-between', paddingBottom: 5 }}>
+                  <Icon
+                    name={'skip-forward'}
+                    type={'feather'}
+                    color={'black'}
+                    size={25}
+                    containerStyle={{
+                      paddingLeft: 10,
+                      paddingRight: 10,
+                    }}
+                  />
+                  <Text
+                    style={styles.topTabText}
+                  >
+                    {'ANONYMOUS'}
+                  </Text>
+                </View>
+              </TouchableHighlight>
+
+              <TouchableHighlight
+                underlayColor={'#ccc'}
+                onPress={() => navigation.navigate('aRegCreate')}
+              >
+                <View style={{ flexDirection: 'column', justifyContent: 'space-between' }}>
+                <Icon
+                      name={'user-plus'}
+                      type={'feather'}
+                      color={'black'}
+                      size={25}
+                      containerStyle={{
+                        paddingLeft: 10,
+                        paddingRight: 10,
+                      }}
+                    />
+                    <Text
+                      style={[styles.topTabText, { color: 'black' }]}
+                    >
+                      {'REGISTRATION'}
+                    </Text>
+                </View>
+              </TouchableHighlight>
+            </View>
+
+
+{/* 
+            <View style={{ flexDirection: 'row', justifyContent: 'space-around', paddingTop: 25 }}>
+              <View style={{ width: 2 * Dimensions.get('window').width / 4 }}>
+                <Button
+                  raised={true}
+                  icon={{ name: 'ios-arrow-dropright', type: 'ionicon' }}
+                  iconRight
+                  backgroundColor={'green'}
+                  color={'white'}
+                  title={'Anonymous'}
+                  onPress={() => navigation.navigate(userIsSubscribed ? 'fsHomeScreen' : 'fpHomeScreen')}
+                />
+              </View>
+              <View style={{ width: 2 * Dimensions.get('window').width / 4 }}>
+                <Button
+                  raised={true}
+                  icon={{ name: 'ios-arrow-dropright', type: 'ionicon' }}
+                  iconRight
+                  backgroundColor={'green'}
+                  color={'white'}
+                  title={'Register'}
+                  onPress={() => navigation.navigate('registerCreate')}
+                />
+              </View>
+            </View> */}
+
+          </View>
+        }
+
       </View >
     )
   }
@@ -281,5 +379,8 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     color: 'black',
     paddingTop: 2,
+  },
+  textBold: {
+    fontWeight: 'bold',
   },
 });
