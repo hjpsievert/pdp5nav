@@ -11,6 +11,7 @@ import {
 import { Icon } from 'react-native-elements';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import * as Dispatch from '../../Redux/Dispatches';
 import { loadStates, loadStatePlans } from '../../Utils/Api';
 import { saveUserProfile } from '../../Utils/SaveData';
 import { defaultProfileSave } from '../../Utils/Constants';
@@ -403,6 +404,7 @@ export class aUserMode extends React.Component {
 
 aUserMode.propTypes = {
   navigation: PropTypes.object.isRequired,
+  updateFlowState: PropTypes.func.isRequired,
   userProfile: PropTypes.object.isRequired,
 };
 
@@ -413,6 +415,7 @@ const mapStateToProps = (state) => {
 }
 
 const mapDispatchToProps = {
+  updateFlowState: Dispatch.updateFlowState,
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(aUserMode);
