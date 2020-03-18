@@ -138,6 +138,7 @@ export class pDrugSearch extends React.Component {
             }}
             >
               <TouchableHighlight
+                underlayColor={'#ccc'}
                 onPress={this._handleRegister}
               >
                 <View style={{ flexDirection: 'column', justifyContent: 'space-between', paddingBottom: 5 }}>
@@ -159,6 +160,7 @@ export class pDrugSearch extends React.Component {
                 </View>
               </TouchableHighlight>
               <TouchableHighlight
+                underlayColor={'#ccc'}
                 onPress={this._handleProfile}
               >
                 <View style={{ flexDirection: 'column', justifyContent: 'space-between' }}>
@@ -251,10 +253,10 @@ export class pDrugSearch extends React.Component {
               showLoading={entryComplete}
             />
             {Platform.OS === 'web' &&
-            <Text style={{paddingTop: 10, paddingLeft: 20, fontSize: 16}}>
-              {'Hit \'Enter\' to search'}
-            </Text>
-  }
+              <Text style={{ paddingTop: 10, paddingLeft: 20, fontSize: 16 }}>
+                {'Hit \'Enter\' to search'}
+              </Text>
+            }
           </View>
         }
       </View>)

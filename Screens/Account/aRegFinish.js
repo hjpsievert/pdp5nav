@@ -114,8 +114,8 @@ export class aRegFinish extends React.Component {
             </View>
 
             <View style={{
-            marginTop: 10,
-            flexDirection: 'row',
+              marginTop: 10,
+              flexDirection: 'row',
               justifyContent: 'space-around',
               paddingTop: 3,
               backgroundColor: 'rgb(183, 211, 255)',
@@ -126,6 +126,7 @@ export class aRegFinish extends React.Component {
             }}
             >
               <TouchableHighlight
+                underlayColor={'#ccc'}
                 onPress={() => navigation.navigate('aActivate')}
               >
                 <View style={{ flexDirection: 'column', justifyContent: 'space-between', paddingBottom: 5 }}>
@@ -147,6 +148,7 @@ export class aRegFinish extends React.Component {
                 </View>
               </TouchableHighlight>
               <TouchableHighlight
+                underlayColor={'#ccc'}
                 onPress={navigation.popToTop}
               >
                 <View style={{ flexDirection: 'column', justifyContent: 'space-between' }}>

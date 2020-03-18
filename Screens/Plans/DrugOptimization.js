@@ -225,6 +225,7 @@ export class DrugOptimization extends Component {
                         {splitChoice}
                       </Text>
                       <TouchableHighlight
+                        underlayColor={'#ccc'}
                         onPress={this._toggleSplitSelected}
                       >
                         <View
@@ -257,6 +258,7 @@ export class DrugOptimization extends Component {
                         {compareChoices}
                       </Text>
                       <TouchableHighlight
+                        underlayColor={'#ccc'}
                         onPress={this._toggleCompareSelected}
                       >
                         <View
@@ -291,6 +293,7 @@ export class DrugOptimization extends Component {
                 }}
                 >
                   <TouchableHighlight
+                    underlayColor={'#ccc'}
                     onPress={this._handleExitOptimize}
                   >
                     <View style={{ flexDirection: 'column', justifyContent: 'space-between', paddingBottom: 5 }}>
@@ -312,6 +315,7 @@ export class DrugOptimization extends Component {
                     </View>
                   </TouchableHighlight>
                   <TouchableHighlight
+                    underlayColor={'#ccc'}
                     onPress={() => this._handleUpdateOptimize(drugDetail.altId)}
                   >
                     <View style={{ flexDirection: 'column', justifyContent: 'space-between' }}>

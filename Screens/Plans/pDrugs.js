@@ -338,6 +338,7 @@ export class pDrugs extends React.Component {
           {isSelected ?
             <View>
               <TouchableHighlight
+                underlayColor={'#ccc'}
                 onPress={discontinued ? null : () => this._handleStartMode(item.drugId)}
               >
                 <View style={{ flexDirection: 'row', paddingLeft: 15, backgroundColor: 'rgb(204, 223, 255)', alignItems: 'center', paddingBottom: 5 }}>
@@ -358,6 +359,7 @@ export class pDrugs extends React.Component {
               </TouchableHighlight>
 
               <TouchableHighlight
+                underlayColor={'#ccc'}
                 onPress={discontinued ? null : (drugDetail.ndc2.length === 0 && drugDetail.altCount === 0 ? null : () => this._handleStartOptimize(item.drugId))}
               >
                 <View style={{ flexDirection: 'row', paddingLeft: 15, backgroundColor: 'rgb(204, 223, 255)', alignItems: 'center', paddingBottom: 5 }}>
@@ -423,10 +425,11 @@ export class pDrugs extends React.Component {
                   {'Active List - ' + drugCount + ' drug' + (drugCount != 1 ? 's' : '')}
                 </Text>
                 <TouchableHighlight
+                  underlayColor={'#ccc'}
                   onPress={() => navigation.navigate('pDrugSearch')}
                 >
-                  <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                    <Text style={{ fontSize: 16, color: 'black', textAlign: 'right', paddingTop: 10, paddingBottom: 10, paddingRight: 5}}>
+                  <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                    <Text style={{ fontSize: 16, color: 'black', textAlign: 'right', paddingTop: 10, paddingBottom: 10, paddingRight: 5 }}>
                       {'Add'}
                     </Text>
                     <Icon

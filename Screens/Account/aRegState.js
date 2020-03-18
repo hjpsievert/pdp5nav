@@ -150,7 +150,6 @@ export class aRegState extends React.Component {
             </View>
 
             <TouchableHighlight
-              underlayColor={'#ccc'}
               onPress={stateListVisible ? this._idle : this._handleStateEntry}
             >
               <View style={{ flexDirection: 'row', alignItems: 'center' }}>
@@ -300,27 +299,27 @@ export class aRegState extends React.Component {
                 onPress={() => navigation.navigate('aRegCreate')}
               >
                 <View style={{ flexDirection: 'column', justifyContent: 'space-between' }}>
-                <Icon
-                      name={'user-plus'}
-                      type={'feather'}
-                      color={'black'}
-                      size={25}
-                      containerStyle={{
-                        paddingLeft: 10,
-                        paddingRight: 10,
-                      }}
-                    />
-                    <Text
-                      style={[styles.topTabText, { color: 'black' }]}
-                    >
-                      {'REGISTRATION'}
-                    </Text>
+                  <Icon
+                    name={'user-plus'}
+                    type={'feather'}
+                    color={'black'}
+                    size={25}
+                    containerStyle={{
+                      paddingLeft: 10,
+                      paddingRight: 10,
+                    }}
+                  />
+                  <Text
+                    style={[styles.topTabText, { color: 'black' }]}
+                  >
+                    {'REGISTRATION'}
+                  </Text>
                 </View>
               </TouchableHighlight>
             </View>
 
 
-{/* 
+            {/* 
             <View style={{ flexDirection: 'row', justifyContent: 'space-around', paddingTop: 25 }}>
               <View style={{ width: 2 * Dimensions.get('window').width / 4 }}>
                 <Button

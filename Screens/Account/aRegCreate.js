@@ -242,6 +242,7 @@ export class aRegCreate extends React.Component {
                 }}
                 >
                   <TouchableHighlight
+                    underlayColor={'#ccc'}
                     onPress={navigation.popToTop}
                   >
                     <View style={{ flexDirection: 'column', justifyContent: 'space-between' }}>
@@ -263,6 +264,7 @@ export class aRegCreate extends React.Component {
                     </View>
                   </TouchableHighlight>
                   <TouchableHighlight
+                    underlayColor={'#ccc'}
                     onPress={() => navigation.navigate('aLogin', { userEmail: userEmail })}
                   >
                     <View style={{ flexDirection: 'column', justifyContent: 'space-between', paddingBottom: 5 }}>
@@ -351,6 +353,7 @@ export class aRegCreate extends React.Component {
                 }}
                 >
                   <TouchableHighlight
+                    underlayColor={'#ccc'}
                     onPress={this._createUser}
                   >
                     <View style={{ flexDirection: 'column', justifyContent: 'space-between' }}>

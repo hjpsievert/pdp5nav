@@ -112,7 +112,7 @@ export class DrugDosage extends Component {
 
   _handleCallback = (mode) => {
     if (mode) {
-     this._handleUpdateDosage();
+      this._handleUpdateDosage();
     }
     else {
       this._setAlert(false);
@@ -351,7 +351,7 @@ export class DrugDosage extends Component {
                     callbackFunction={this._handleCallback}
                   />
                 }
-                
+
                 {!showAlert &&
                   <View>
                     <Text style={{ fontSize: 18, paddingLeft: 10, paddingRight: 10, paddingTop: 5, paddingBottom: 10, backgroundColor: 'rgb(183, 211, 255)', textAlign: 'center' }}>
@@ -374,6 +374,7 @@ export class DrugDosage extends Component {
                       {'Filter Results'}</Text>
                     <View style={{ flexDirection: 'row', justifyContent: 'space-between', paddingTop: 5, paddingBottom: 5 }}>
                       <TouchableHighlight
+                        underlayColor={'#ccc'}
                         onPress={this._handleDrugTypeGeneric}
                       >
                         <View style={{ flexDirection: 'row', alignItems: 'center', paddingLeft: 10 }}>
@@ -390,6 +391,7 @@ export class DrugDosage extends Component {
                         </View>
                       </TouchableHighlight>
                       <TouchableHighlight
+                        underlayColor={'#ccc'}
                         onPress={this._handleDrugTypeBrand}
                       >
                         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
@@ -406,6 +408,7 @@ export class DrugDosage extends Component {
                         </View>
                       </TouchableHighlight>
                       <TouchableHighlight
+                        underlayColor={'#ccc'}
                         onPress={this._handleDrugTypeAll}
                       >
                         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
@@ -423,6 +426,7 @@ export class DrugDosage extends Component {
                       </TouchableHighlight>
 
                       <TouchableHighlight
+                        underlayColor={'#ccc'}
                         onPress={this._handleComboChanged}
                       >
                         <View style={{ flexDirection: 'row', alignItems: 'center', paddingRight: 15, paddingLeft: 15 }}>
@@ -466,6 +470,7 @@ export class DrugDosage extends Component {
                   }}
                   >
                     <TouchableHighlight
+                      underlayColor={'#ccc'}
                       onPress={this._handleExitDosage}
                     >
                       <View style={{ flexDirection: 'column', justifyContent: 'space-between', paddingBottom: 5 }}>
@@ -487,6 +492,7 @@ export class DrugDosage extends Component {
                       </View>
                     </TouchableHighlight>
                     <TouchableHighlight
+                      underlayColor={'#ccc'}
                       onPress={!selectionMade ? null : this._confirmUpdateDosage}
                     >
                       <View style={{ flexDirection: 'column', justifyContent: 'space-between' }}>

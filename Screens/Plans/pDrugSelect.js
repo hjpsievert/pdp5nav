@@ -266,6 +266,7 @@ export class pDrugSelect extends React.Component {
 
           <View style={{ flexDirection: 'row', justifyContent: 'space-between', paddingTop: 5, paddingBottom: 5 }}>
             <TouchableHighlight
+              underlayColor={'#ccc'}
               onPress={this._handleDrugTypeGeneric}
             >
               <View style={{ flexDirection: 'row', alignItems: 'center', paddingLeft: 10 }}>
@@ -282,6 +283,7 @@ export class pDrugSelect extends React.Component {
               </View>
             </TouchableHighlight>
             <TouchableHighlight
+              underlayColor={'#ccc'}
               onPress={this._handleDrugTypeBrand}
             >
               <View style={{ flexDirection: 'row', alignItems: 'center' }}>
@@ -298,6 +300,7 @@ export class pDrugSelect extends React.Component {
               </View>
             </TouchableHighlight>
             <TouchableHighlight
+              underlayColor={'#ccc'}
               onPress={this._handleDrugTypeAll}
             >
               <View style={{ flexDirection: 'row', alignItems: 'center' }}>
@@ -314,6 +317,7 @@ export class pDrugSelect extends React.Component {
               </View>
             </TouchableHighlight>
             <TouchableHighlight
+              underlayColor={'#ccc'}
               onPress={this._handleComboChanged}
             >
               <View style={{ flexDirection: 'row', alignItems: 'center', paddingRight: 15, paddingLeft: 15 }}>

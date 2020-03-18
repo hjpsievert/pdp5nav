@@ -157,7 +157,7 @@ export class aActivate extends React.Component {
         >
           {noActivation &&
             <View>
-              <View style={{  marginTop: 10, borderColor: '#bbb', borderWidth: 1, backgroundColor: 'linen', paddingTop: 10, paddingBottom: 10, paddingLeft: 20, paddingRight: 20 }}>
+              <View style={{ marginTop: 10, borderColor: '#bbb', borderWidth: 1, backgroundColor: 'linen', paddingTop: 10, paddingBottom: 10, paddingLeft: 20, paddingRight: 20 }}>
                 <Text style={{ paddingBottom: 3 }}>{'EZPartD Activation is not available.'}</Text>
                 <Text>{'You must first register or, if you previously registered, you can login to restart activation.'}</Text>
               </View>
@@ -174,6 +174,7 @@ export class aActivate extends React.Component {
               }}
               >
                 <TouchableHighlight
+                  underlayColor={'#ccc'}
                   onPress={this._handleRegister}
                 >
                   <View style={{ flexDirection: 'column', justifyContent: 'space-between', paddingBottom: 5 }}>
@@ -195,6 +196,7 @@ export class aActivate extends React.Component {
                   </View>
                 </TouchableHighlight>
                 <TouchableHighlight
+                  underlayColor={'#ccc'}
                   onPress={() => navigation.navigate('aLogin')}
                 >
                   <View style={{ flexDirection: 'column', justifyContent: 'space-between' }}>
@@ -221,7 +223,7 @@ export class aActivate extends React.Component {
           }
 
           {validationError &&
-            <View style={{  marginTop: 10, borderColor: '#bbb', borderWidth: 1, backgroundColor: 'linen', paddingTop: 10, paddingBottom: 10, paddingLeft: 20, paddingRight: 20 }}>
+            <View style={{ marginTop: 10, borderColor: '#bbb', borderWidth: 1, backgroundColor: 'linen', paddingTop: 10, paddingBottom: 10, paddingLeft: 20, paddingRight: 20 }}>
               <Text style={{ paddingBottom: 3 }}>{'Incorrect activation code!'}</Text>
               <Text>{'You entered an incorrect activation code. Please check the eight digit code provided to you by ' + userProfile.provider + ' and enter it again.'}</Text>
             </View>
@@ -230,12 +232,12 @@ export class aActivate extends React.Component {
           {activationPending &&
             <View>
               {validationError ?
-                <View style={{  marginTop: 10, borderColor: '#bbb', borderWidth: 1, backgroundColor: 'linen', paddingTop: 10, paddingBottom: 10, paddingLeft: 20, paddingRight: 20 }}>
+                <View style={{ marginTop: 10, borderColor: '#bbb', borderWidth: 1, backgroundColor: 'linen', paddingTop: 10, paddingBottom: 10, paddingLeft: 20, paddingRight: 20 }}>
                   <Text style={{ paddingBottom: 3 }}>{'Incorrect activation code!'}</Text>
                   <Text>{'You entered an incorrect activation code. Please check the eight digit code provided to you by ' + userProfile.provider + ' and enter it again.'}</Text>
                 </View>
                 :
-                <View style={{  marginTop: 10, borderColor: '#bbb', borderWidth: 1, backgroundColor: 'linen', paddingTop: 10, paddingBottom: 10, paddingLeft: 20, paddingRight: 20 }}>
+                <View style={{ marginTop: 10, borderColor: '#bbb', borderWidth: 1, backgroundColor: 'linen', paddingTop: 10, paddingBottom: 10, paddingLeft: 20, paddingRight: 20 }}>
                   <Text>{'Please enter the eight digit activation code you received by ' + userProfile.provider + '.'}</Text>
                 </View>
               }
@@ -266,6 +268,7 @@ export class aActivate extends React.Component {
               }}
               >
                 <TouchableHighlight
+                  underlayColor={'#ccc'}
                   onPress={this._handleRegister}
                 >
                   <View style={{ flexDirection: 'column', justifyContent: 'center', paddingBottom: 5 }}>
@@ -293,7 +296,7 @@ export class aActivate extends React.Component {
 
           {activationComplete &&
             <View>
-              <View style={{  marginTop: 10, borderColor: '#bbb', borderWidth: 1, backgroundColor: 'linen', paddingTop: 10, paddingBottom: 10, paddingLeft: 20, paddingRight: 20 }}>
+              <View style={{ marginTop: 10, borderColor: '#bbb', borderWidth: 1, backgroundColor: 'linen', paddingTop: 10, paddingBottom: 10, paddingLeft: 20, paddingRight: 20 }}>
                 <Text style={{ paddingBottom: 3 }}>{'EZPartD Activation successful!.'}</Text>
                 <Text>{'You now have full access to all features of EZPartD on this device.'}</Text>
               </View>
@@ -311,6 +314,7 @@ export class aActivate extends React.Component {
               }}
               >
                 <TouchableHighlight
+                  underlayColor={'#ccc'}
                   onPress={navigation.popToTop}
                 //onPress={() => navigation.popToTop()}
                 // onPress={() => navigation.navigate('Top', { screen: 'Home', params: { screen: 'pHome' } })}

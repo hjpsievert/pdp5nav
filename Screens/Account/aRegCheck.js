@@ -77,6 +77,7 @@ export class aRegCheck extends React.Component {
               }}
               >
                 <TouchableHighlight
+                  underlayColor={'#ccc'}
                   onPress={navigation.popToTop}
                 >
                   <View style={{ flexDirection: 'column', justifyContent: 'space-between' }}>
@@ -129,6 +130,7 @@ export class aRegCheck extends React.Component {
               }}
               >
                 <TouchableHighlight
+                  underlayColor={'#ccc'}
                   onPress={navigation.popToTop}
                 >
                   <View style={{ flexDirection: 'column', justifyContent: 'space-between' }}>
@@ -150,6 +152,7 @@ export class aRegCheck extends React.Component {
                   </View>
                 </TouchableHighlight>
                 <TouchableHighlight
+                  underlayColor={'#ccc'}
                   onPress={() => navigation.navigate('aLogin')}
                 >
                   <View style={{ flexDirection: 'column', justifyContent: 'space-between', paddingBottom: 5 }}>

@@ -193,7 +193,7 @@ export class aUserMode extends React.Component {
     navigation.popToTop();
   }
 
-   render() {
+  render() {
 
     const { adjust, stateListVisible, planListVisible, stateName, planName, planDisplay, stateData, planData, stateSelected, planSelected, drugFind } = this.state;
     const { userProfile } = this.props;
@@ -232,7 +232,6 @@ export class aUserMode extends React.Component {
 
           <View style={{ flexDirection: 'row', justifyContent: 'space-around', paddingTop: 5, paddingBottom: 5, borderBottomColor: '#bbb', borderBottomWidth: 1 }}>
             <TouchableHighlight
-              underlayColor={'#ccc'}
               onPress={this._handlePlanFind}
             >
               <View style={{ flexDirection: 'row', alignItems: 'center', paddingLeft: 10 }}>
@@ -249,7 +248,6 @@ export class aUserMode extends React.Component {
               </View>
             </TouchableHighlight>
             <TouchableHighlight
-              underlayColor={'#ccc'}
               onPress={this._handleDrugFind}
             >
               <View style={{ flexDirection: 'row', alignItems: 'center' }}>
@@ -314,6 +312,7 @@ export class aUserMode extends React.Component {
             <View>
               <TouchableHighlight
                 underlayColor={'#ccc'}
+                underlayColor={'#ccc'}
                 onPress={planListVisible && !stateListVisible ? this._idle : this._handlePlanEntry}
               >
                 <View style={{ flexDirection: 'row', alignItems: 'center' }}>
@@ -373,7 +372,6 @@ export class aUserMode extends React.Component {
           }}
           >
             <TouchableHighlight
-              underlayColor={'#ccc'}
               onPress={this._saveProfile}
             >
               <View style={{ flexDirection: 'column', justifyContent: 'space-between' }}>

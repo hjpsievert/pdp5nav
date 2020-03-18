@@ -134,8 +134,7 @@ export class dSave extends Component {
             borderTopColor: 'black'
           }}
           >
-            <TouchableHighlight
-              underlayColor={'#ccc'}
+<TouchableHighlight
               onPress={this._savePlanDrugList}
             >
               <View style={{ flexDirection: 'column', justifyContent: 'space-between' }}>

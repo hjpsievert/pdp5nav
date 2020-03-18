@@ -282,6 +282,7 @@ export class aLogin extends React.Component {
               }}
               >
                 <TouchableHighlight
+                  underlayColor={'#ccc'}
                   onPress={this._handleLogin}
                 >
                   <View style={{ flexDirection: 'column', justifyContent: 'space-between', paddingBottom: 5 }}>
@@ -303,6 +304,7 @@ export class aLogin extends React.Component {
                   </View>
                 </TouchableHighlight>
                 <TouchableHighlight
+                  underlayColor={'#ccc'}
                   onPress={this._handleRegister}
                 >
                   <View style={{ flexDirection: 'column', justifyContent: 'space-between' }}>
@@ -348,6 +350,7 @@ export class aLogin extends React.Component {
                   errorMessage={loginBad ? 'Invalid User ID, your login should be an email address' : ''}
                 />
                 <TouchableHighlight
+                  underlayColor={'#ccc'}
                   onPress={this._togglePwdVisibility}
                 >
                   <View style={{ paddingLeft: 20, flexDirection: 'row', alignItems: 'center' }}>
@@ -390,6 +393,7 @@ export class aLogin extends React.Component {
               }}
               >
                 <TouchableHighlight
+                  underlayColor={'#ccc'}
                   onPress={this._tryLogin}
                 >
                   <View style={{ flexDirection: 'column', justifyContent: 'space-between' }}>
@@ -447,6 +451,7 @@ export class aLogin extends React.Component {
               }}
               >
                 <TouchableHighlight
+                  underlayColor={'#ccc'}
                   onPress={this._processValidation}
                 >
                   <View style={{ flexDirection: 'column', justifyContent: 'space-between' }}>
@@ -490,6 +495,7 @@ export class aLogin extends React.Component {
               }}
               >
                 <TouchableHighlight
+                  underlayColor={'#ccc'}
                   onPress={() => {
                     this.setState({
                       loginState: 'initial',
@@ -517,6 +523,7 @@ export class aLogin extends React.Component {
                   </View>
                 </TouchableHighlight>
                 <TouchableHighlight
+                  underlayColor={'#ccc'}
                   onPress={() => navigation.navigate('acResetPwd')}
                 >
                   <View style={{ flexDirection: 'column', justifyContent: 'space-between' }}>
@@ -561,6 +568,7 @@ export class aLogin extends React.Component {
               }}
               >
                 <TouchableHighlight
+                  underlayColor={'#ccc'}
                   onPress={navigation.popToTop}
                 >
                   <View style={{ flexDirection: 'column', justifyContent: 'space-between' }}>

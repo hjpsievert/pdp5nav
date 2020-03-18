@@ -322,6 +322,7 @@ export class pHome extends React.Component {
           :
           <View style={{ height: Dimensions.get('window').height - 75 - (adjust ? 0 : 35) }} >
             <TouchableHighlight
+              underlayColor={'#ccc'}
               onPress={this._toggleShowGreeting}
             >
               <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingLeft: 10, paddingTop: 5, paddingBottom: 5, backgroundColor: '#75aaff', borderBottomColor: '#bbb', borderBottomWidth: 1 }}>
@@ -344,6 +345,7 @@ export class pHome extends React.Component {
             <View style={{ flexShrink: 1, flexDirection: 'column', justifyContent: 'center' }}>
               <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingLeft: 10, backgroundColor: '#ddd', borderBottomColor: '#bbb', paddingTop: 5, paddingBottom: 5, borderBottomWidth: 1 }}>
                 <TouchableHighlight
+                  underlayColor={'#ccc'}
                   onPress={drugCount > 0 ? this._toggleShowActive : () => ({})}
                 >
                   <View style={{ flexDirection: 'row', justifyContent: 'flex-start', alignItems: 'center' }}>
@@ -361,6 +363,7 @@ export class pHome extends React.Component {
                 </TouchableHighlight>
                 {drugCount === 0 &&
                   <TouchableHighlight
+                    underlayColor={'#ccc'}
                     onPress={this._handleAdd}
                   >
                     <View style={{ flexDirection: 'row', paddingRight: 10 }}>
@@ -403,6 +406,7 @@ export class pHome extends React.Component {
             {planCount > 0 &&
               <View style={{ flexShrink: 1, flexDirection: 'column', justifyContent: 'center' }}>
                 <TouchableHighlight
+                  underlayColor={'#ccc'}
                   onPress={this._toggleShowPlans}
                 >
                   <View style={{ flexDirection: 'row', justifyContent: 'flex-start', alignItems: 'center', paddingLeft: 10, backgroundColor: '#ddd', borderBottomColor: '#bbb', paddingTop: 5, paddingBottom: 5, borderBottomWidth: 1 }}>

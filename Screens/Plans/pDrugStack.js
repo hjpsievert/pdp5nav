@@ -30,6 +30,7 @@ function pDrugStack() {
           headerLeft: () => (
             <View style={styles.innerContainer}>
               <TouchableHighlight
+                underlayColor={'#ccc'}
                 onPress={() => navigation.navigate('pHome')}
               >
                 <View style={[styles.touch, { justifyContent: 'flex-start' }]}>
@@ -60,6 +61,7 @@ function pDrugStack() {
           headerLeft: () => (
             <View style={styles.innerContainer}>
               <TouchableHighlight
+                underlayColor={'#ccc'}
                 onPress={() => navigation.navigate('pDrugs', { refresh: true })}
               >
                 <View style={[styles.touch, { justifyContent: 'flex-start' }]}>
@@ -91,7 +93,8 @@ function pDrugStack() {
           headerLeft: () => (
             <View style={styles.innerContainer}>
               <TouchableHighlight
-                onPress={() => navigation.navigate(route.params.resultCount===1 ? 'pDrugSearch' : 'pDrugPick')}
+                underlayColor={'#ccc'}
+                onPress={() => navigation.navigate(route.params.resultCount === 1 ? 'pDrugSearch' : 'pDrugPick')}
               >
                 <View style={[styles.touch, { justifyContent: 'flex-start' }]}>
                   <Icon
@@ -108,6 +111,7 @@ function pDrugStack() {
           headerRight: () => (
             <View style={styles.innerContainer}>
               <TouchableHighlight
+                underlayColor={'#ccc'}
                 onPress={() => route.params.handleRight()}
               >
                 <View style={[styles.touch, { justifyContent: 'flex-end' }]}>
@@ -116,7 +120,7 @@ function pDrugStack() {
                     type={'ionicon'}
                     color={route.params.drugsSelected > 0 ? 'white' : 'grey'}
                     size={24}
-                    style={{ padding: 5 }} 
+                    style={{ padding: 5 }}
                   />
                 </View>
               </TouchableHighlight>
@@ -139,6 +143,7 @@ function pDrugStack() {
           headerLeft: () => (
             <View style={styles.innerContainer}>
               <TouchableHighlight
+                underlayColor={'#ccc'}
                 onPress={() => navigation.navigate('pDrugSearch')}
               >
                 <View style={[styles.touch, { justifyContent: 'flex-start' }]}>
@@ -156,6 +161,7 @@ function pDrugStack() {
           headerRight: () => (
             <View style={styles.innerContainer}>
               <TouchableHighlight
+                underlayColor={'#ccc'}
                 onPress={() => navigation.navigate(route.params.drugsPicked > 0 ? 'pDrugSelect' : '')}
               >
                 <View style={[styles.touch, { justifyContent: 'flex-end' }]}>

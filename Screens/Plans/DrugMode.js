@@ -146,6 +146,7 @@ export class DrugMode extends Component {
                         {currentType}
                       </Text>
                       <TouchableHighlight
+                        underlayColor={'#ccc'}
                         onPress={this._toggleDrugMode}
                       >
                         <View
@@ -280,6 +281,7 @@ export class DrugMode extends Component {
                   }}
                   >
                     <TouchableHighlight
+                      underlayColor={'#ccc'}
                       onPress={this._handleExitMode}
                     >
                       <View style={{ flexDirection: 'column', justifyContent: 'space-between', paddingBottom: 5 }}>
@@ -301,6 +303,7 @@ export class DrugMode extends Component {
                       </View>
                     </TouchableHighlight>
                     <TouchableHighlight
+                      underlayColor={'#ccc'}
                       onPress={() => this._handleUpdateMode(drugId)}
                     >
                       <View style={{ flexDirection: 'column', justifyContent: 'space-between' }}>

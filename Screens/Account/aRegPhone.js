@@ -265,6 +265,7 @@ export class aRegPhone extends React.Component {
           }}
           >
             <TouchableHighlight
+              underlayColor={'#ccc'}
               onPress={usePhone ? this._validatePhone : this._addPhone}
             >
               <View style={{ flexDirection: 'column', justifyContent: 'space-between' }}>

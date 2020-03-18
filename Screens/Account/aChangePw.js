@@ -269,6 +269,7 @@ export class aChangePw extends React.Component {
                     }}
                     >
                       <TouchableHighlight
+                        underlayColor={'#ccc'}
                         onPress={this._changePassword}
                       >
                         <View style={{ flexDirection: 'column', justifyContent: 'space-between' }}>

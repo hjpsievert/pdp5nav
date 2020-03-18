@@ -66,6 +66,7 @@ export default class aRegProvider extends React.Component {
           }}
           >
             <TouchableHighlight
+              underlayColor={'#ccc'}
               onPress={() => navigation.navigate('aRegFinish', {
                 provider: 'Email'
               })}
@@ -89,6 +90,7 @@ export default class aRegProvider extends React.Component {
               </View>
             </TouchableHighlight>
             <TouchableHighlight
+              underlayColor={'#ccc'}
               onPress={() => navigation.navigate('aRegPhone')}
             >
               <View style={{ flexDirection: 'column', justifyContent: 'space-between', paddingBottom: 5 }}>

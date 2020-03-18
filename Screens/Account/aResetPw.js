@@ -262,6 +262,7 @@ export class aResetPw extends React.Component {
               }}
               >
                 <TouchableHighlight
+                  underlayColor={'#ccc'}
                   onPress={this._checkReset}
                 >
                   <View style={{ flexDirection: 'column', justifyContent: 'space-between' }}>
@@ -307,6 +308,7 @@ export class aResetPw extends React.Component {
               }}
               >
                 <TouchableHighlight
+                  underlayColor={'#ccc'}
                   onPress={this._checkReset}
                 >
                   <View style={{ flexDirection: 'column', justifyContent: 'space-between' }}>
@@ -381,6 +383,7 @@ export class aResetPw extends React.Component {
               }}
               >
                 <TouchableHighlight
+                  underlayColor={'#ccc'}
                   onPress={this._resetPassword}
                 >
                   <View style={{ flexDirection: 'column', justifyContent: 'space-between' }}>
@@ -443,6 +446,7 @@ export class aResetPw extends React.Component {
               }}
               >
                 <TouchableHighlight
+                  underlayColor={'#ccc'}
                   onPress={this._forgotPassword}
                 >
                   <View style={{ flexDirection: 'column', justifyContent: 'space-between' }}>
