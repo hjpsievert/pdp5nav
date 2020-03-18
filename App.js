@@ -27,20 +27,11 @@ export default class App extends React.Component {
 
   componentDidMount() {
     Dimensions.addEventListener('change', this._handleDimChange);
-    // ScreenOrientation.addOrientationChangeListener(this._myListener);
   }
 
   componentWillUnmount() {
     Dimensions.removeEventListener('change', this._handleDimChange);
-    // ScreenOrientation.removeOrientationChangeListeners();
   }
-
-  // _myListener = ({ orientationInfo }) => {
-  //   console.log('_myListener info = ', orientationInfo.orientation);
-  //   this.setState({
-  //     screenOrientation: orientationInfo.orientation,
-  //   });
-  // }
 
   _handleDimChange = ({ window }) => {
     // console.log('App _handleDimChange event, new width = ', window.width);
