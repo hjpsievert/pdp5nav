@@ -90,6 +90,7 @@ export class dStorage extends Component {
   _handleLoadData = () => {
     const contentTypes = ['activePlanDrugs', 'savedPlanDrugs', 'backupActivePlanDrugs', 'appError'];
     // const contentTypes = ['activePlanDrugs', 'savedPlanDrugs', 'backupActivePlanDrugs', 'appError'];
+    // eslint-disable-next-line no-unused-vars
     const { userEmail, userIsSubscribed } = this.props.userProfile;
     const { storageMode } = this.state;
     if (storageMode === 'device') {

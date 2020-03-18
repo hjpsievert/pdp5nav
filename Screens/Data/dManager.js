@@ -7,6 +7,7 @@ import { ListItem } from 'react-native-elements';
 
 function buildList() {
 
+  // eslint-disable-next-line no-unused-vars
   const userIsSubscribed = false;
   let listOptions = [];
   let i = 0;
