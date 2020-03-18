@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import {
   View,
   Text,
-  StyleSheet,
   TouchableHighlight,
   Dimensions,
   Platform,
@@ -92,7 +91,7 @@ export class dStorage extends Component {
     const contentTypes = ['activePlanDrugs', 'savedPlanDrugs', 'backupActivePlanDrugs', 'appError'];
     // const contentTypes = ['activePlanDrugs', 'savedPlanDrugs', 'backupActivePlanDrugs', 'appError'];
     const { userEmail, userIsSubscribed } = this.props.userProfile;
-    const { doSections, storageMode } = this.state;
+    const { storageMode } = this.state;
     if (storageMode === 'device') {
       readKeys((response) => this._handleReadData(response, storageMode), contentTypes);
     }
@@ -105,7 +104,7 @@ export class dStorage extends Component {
   }
 
   _handleReadData = (response, storageMode) => {
-    const { success, code, err } = response;
+    const { success } = response;
     let payLoad;
     if (storageMode === 'cloud') {
       payLoad = response.payLoad;
@@ -177,7 +176,7 @@ export class dStorage extends Component {
   _handleDeleteResponse = (response, isDB) => {
     let result;
     if (isDB) {
-      const { success, payLoad, code, err } = response;
+      const { success } = response;
       result = success;
     }
     else {
@@ -209,7 +208,7 @@ export class dStorage extends Component {
     const { myDrugs, userProfile } = this.props;
     let drugList
     if (isDB) {
-      const { success, payLoad, code, err } = response;
+      const { payLoad } = response;
       // console.log('_handleLoadActive payload = ', payLoad);
 
       drugList = JSON.parse(payLoad.payload);
@@ -231,7 +230,7 @@ export class dStorage extends Component {
   }
 
   _handleRefresh = (response, drugListOld) => {
-    const { success, payLoad, code, err } = response;
+    const { payLoad } = response;
     const drugListNew = payLoad;
     const { userProfile, handleLoadMyDrugs } = this.props;
     // console.log('dmStorageScreen _handleRefresh drugListOld = ', flatMap(drugListOld, (d) => d.drugId + ', ' + d.planDetail.avePrice90 * 30), ', druglistNew = ', flatMap(drugListNew, (d) => d.drugId + ', ' + d.planDetail.avePrice90 * 30));
@@ -363,7 +362,7 @@ export class dStorage extends Component {
         return null
       }
     }
-    const { dateStamp, description, category, payload, contentType, storageIndex, deviceName } = currItem;
+    const { dateStamp, description, category, payload, contentType } = currItem;
     // if (contentType === 'userProfile') {
     const titleText = contentInfo[contentType];
     const currDate = new Date(dateStamp);
@@ -511,7 +510,7 @@ export class dStorage extends Component {
   }
 
   render() {
-    const { adjust, flag, askDelete, askShowDelete, savedList, dataFiltered, dataList, selectedIndex, doSections, showOptions, upStart, upEnd, duration, headerSelected, showSection, storageMode, deleteItem } = this.state;
+    const { adjust, flag, askDelete, askShowDelete, dataFiltered, selectedIndex, doSections, showOptions, upStart, upEnd, duration, headerSelected, showSection, storageMode, deleteItem } = this.state;
     if (storageMode === 'undefined') {
       return null;
     }

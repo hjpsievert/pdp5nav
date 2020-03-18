@@ -1,9 +1,7 @@
 import React from 'react'
 import {
   View,
-  Text,
   StyleSheet,
-  TouchableHighlight
 } from 'react-native';
 import { ListItem } from 'react-native-elements';
 
@@ -26,7 +24,7 @@ function handlePress(navigation, target, param) {
 
 const myList = buildList();
 
-function dManager({ route, navigation }) {
+function dManager({ navigation }) {
   return (
     <View style={styles.container}>
       {
