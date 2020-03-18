@@ -1,3 +1,4 @@
+/* eslint-disable no-useless-escape */
 import React from 'react'
 import {
   View,
@@ -121,7 +122,7 @@ export class aResetPw extends React.Component {
   }
 
   _handleLoadProfileDB = (response) => {
-    const { success, payLoad, code, err } = response;
+    const { success, payLoad } = response;
 
     if (success) {
       const userProfile = payLoad;
@@ -147,10 +148,17 @@ export class aResetPw extends React.Component {
   }
 
   _finishForgotPassword = (response) => {
-    const { success, payLoad, code, err } = response;
-    this.setState({
-      requestState: 'resetRequestEmailed',
-    });
+    const { success } = response;
+    if (success) {
+      this.setState({
+        requestState: 'resetRequestEmailed',
+      });
+    }
+    else {
+      this.setState({
+        requestState: 'resetRequestEmailFailed',
+      });
+    }
   }
 
   _resetPassword = () => {
@@ -183,7 +191,7 @@ export class aResetPw extends React.Component {
   }
 
   _finishResetPassword = (response) => {
-    const { success, payLoad, code, err } = response;
+    const { success } = response;
     console.log('_finishResetPassword success = ', success);
     if (success) {
       const currentUserProfile = this.props.userProfile;
@@ -233,14 +241,90 @@ export class aResetPw extends React.Component {
     navigation.popToTop();
   }
 
+  _handleRetry = () => {
+    this.setState({
+      requestState: usrMode.reg,
+    })
+  }
+
   render() {
     const { adjust, emailBad, requestState, passwordBad, passwordMismatch } = this.state;
+    const { navigation } = this.props;
     return (
       <View style={{ height: Dimensions.get('window').height - 75 - (adjust ? 0 : 35) }} >
         <View style={{
           flexDirection: 'column', paddingLeft: 15, paddingRight: 15, flex: 1
         }}
         >
+          {requestState === 'resetRequestEmailFailed' &&
+            <View>
+              <View style={{ marginTop: 10, borderColor: '#bbb', borderWidth: 1, backgroundColor: 'linen', paddingTop: 10, paddingBottom: 10, paddingLeft: 20, paddingRight: 20 }}>
+                <Text style={{ paddingBottom: 3 }}>{'Password reset email failed.'}</Text>
+                <Text>{'The email request for a password reset was unsuccessful. You can Retry the request or Exit and come back later to try again.'}</Text>
+              </View>
+
+              <View style={{
+                marginTop: 10,
+                flexDirection: 'row',
+                justifyContent: 'space-around',
+                paddingTop: 3,
+                backgroundColor: 'rgb(183, 211, 255)',
+                borderBottomWidth: 1,
+                borderBottomColor: 'black',
+                borderTopWidth: 1,
+                borderTopColor: 'black'
+              }}
+              >
+                <TouchableHighlight
+                  underlayColor={'#ccc'}
+                  onPress={navigation.popToTop}
+                >
+                  <View style={{ flexDirection: 'column', justifyContent: 'center', paddingBottom: 5 }}>
+                    <Icon
+                      name={'exit-to-app'}
+                      type={'material-community'}
+                      color={'black'}
+                      size={25}
+                      containerStyle={{
+                        paddingLeft: 10,
+                        paddingRight: 10,
+                      }}
+                    />
+                    <Text
+                      style={styles.topTabText}
+                    >
+                      {'EXIT'}
+                    </Text>
+                  </View>
+                </TouchableHighlight>
+
+                <TouchableHighlight
+                  underlayColor={'#ccc'}
+                  onPress={this._handleRetry}
+                >
+                  <View style={{ flexDirection: 'column', justifyContent: 'space-between' }}>
+                    <Icon
+                      name={'ios-repeat'}
+                      type={'ionicon'}
+                      color={'black'}
+                      size={25}
+                      containerStyle={{
+                        paddingLeft: 10,
+                        paddingRight: 10,
+                      }}
+                    />
+                    <Text
+                      style={[styles.topTabText, { color: 'black' }]}
+                    >
+                      {'RETRY'}
+                    </Text>
+                  </View>
+                </TouchableHighlight>
+
+              </View>
+
+            </View>
+          }
 
           {requestState === 'resetRequestEmailed' &&
             <View>
@@ -285,8 +369,8 @@ export class aResetPw extends React.Component {
                 </TouchableHighlight>
               </View>
 
-
-            </View>}
+            </View>
+          }
 
           {requestState === usrMode.resetting &&
             <View>
