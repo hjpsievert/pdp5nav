@@ -1,3 +1,4 @@
+/* eslint-disable no-useless-escape */
 import React from 'react'
 import {
   View,
@@ -130,7 +131,7 @@ export class aLogin extends React.Component {
   }
 
   _processLogin = (response, loginId, password) => {
-    const { success, payLoad, code, err } = response;
+    const { success, payLoad } = response;
     console.log('_processLogin provider = ', payLoad);
     const { provider } = this.props.userProfile;
     const finalProvider = !success ? (!provider ? '' : provider) : payLoad;
@@ -138,7 +139,7 @@ export class aLogin extends React.Component {
   }
 
   _finishLogin = (response, provider) => {
-    const { success, payLoad, code, err } = response;
+    const { success, payLoad } = response;
     if (success) {
       if (payLoad === 'Login succeeded') {
         this.setState({
@@ -168,7 +169,7 @@ export class aLogin extends React.Component {
   }
 
   _finishValidation = (response, provider) => {
-    const { success, payLoad, code, err } = response;
+    const { success, payLoad, err } = response;
     console.log('_finishValidation provider = ', provider, ', payload = ', payLoad, ', err = ', err);
     if (success) {
       this._activateApp(provider);
@@ -198,7 +199,7 @@ export class aLogin extends React.Component {
   }
 
   _finishActivateApp(response, updatedUserProfile) {
-    const { success, payLoad, code, err } = response;
+    const { success, payLoad } = response;
     console.log('_finishActivateApp success = ', success, ', payload = ', payLoad);
     if (success) {
       loadAppData((profile, drugList) => { this._finishAppLoad(profile, drugList) }, updatedUserProfile);
@@ -244,8 +245,7 @@ export class aLogin extends React.Component {
   render() {
     const { adjust, loginBad, hidePwd, validationBad, loginState, userProvider, loginId } = this.state;
 
-    const { navigation, userProfile } = this.props;
-    const { userIsSubscribed } = userProfile;
+    const { navigation } = this.props;
     //console.log('aLogin render loginState = ', loginState, ', userProfile ' + JSON.stringify(this.props.userProfile));    
     return (
       <View style={{ height: Dimensions.get('window').height - 75 - (adjust ? 0 : 35) }} >

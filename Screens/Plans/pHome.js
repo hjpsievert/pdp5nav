@@ -89,9 +89,7 @@ export class pHome extends React.Component {
   // }
 
   componentDidUpdate() {
-    const { drugCount } = this.props;
-    const { planListDirty } = this.state;
-    // console.log('pHome component did update, drugCount = ', drugCount, ', planListDirty = ', planListDirty);
+
   }
 
   componentWillUnmount() {
@@ -116,7 +114,7 @@ export class pHome extends React.Component {
       updateDevice((response) => { this._finishUpdateDevice(response) }
         , Constants.installationId, null, null, updateLogin);
       ContentInfo((response) => {
-        const { success, payLoad, code, err } = response;
+        const { payLoad } = response;
         console.log('pHome _authFunction installationId = ', Constants.installationId);
         this.props.updateContent(payLoad)
       });
@@ -134,7 +132,7 @@ export class pHome extends React.Component {
   }
 
   _finishUpdateDevice = (response) => {
-    const { success, payLoad, code, err } = response;
+    const { success, payLoad} = response;
     console.log('pHome _finishUpdateDevice success = ', success, ', prev login = ', payLoad.previousLogin);
     this.props.updateFlowState({
       isStarted: true,
@@ -219,7 +217,7 @@ export class pHome extends React.Component {
 
   // ToDo: make this a utility function across components??
   onFindPlansComplete = (response) => {
-    const { success, payLoad, code, err } = response;
+    const { payLoad, code } = response;
     console.log('pHome onFindPlansComplete planList size = ', code);
     const { handleUpdatePlanList, updateFlowState } = this.props;
     handleUpdatePlanList(payLoad);
@@ -452,7 +450,6 @@ pHome.propTypes = {
   planDenominator: PropTypes.number.isRequired,
   planNumerator: PropTypes.number.isRequired,
   previousLogin: PropTypes.string.isRequired,
-  refreshRoutes: PropTypes.bool.isRequired,
   startDate: PropTypes.string.isRequired,
   updateContent: PropTypes.func.isRequired,
   updateFlowState: PropTypes.func.isRequired,
@@ -474,7 +471,6 @@ const mapStateToProps = (state) => {
     planCount: size(state.myPlans) ?? 0,
     planDenominator: size(state.myPlans) ? sortBy(flatMap(state.myPlans, (d) => d), 'totalCost')[size(state.myPlans) - 1].totalCost - sortBy(flatMap(state.myPlans, (d) => d), 'totalCost')[0].totalCost : 1,
     planNumerator: size(state.myPlans) ? sortBy(flatMap(state.myPlans, (d) => d), 'totalCost')[0].totalCost : 0,
-    refreshRoutes: state.flowState['refreshRoutes'] ?? false,
   }
 }
 

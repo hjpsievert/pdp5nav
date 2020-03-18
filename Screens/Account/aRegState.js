@@ -36,7 +36,7 @@ export class aRegState extends React.Component {
     Dimensions.addEventListener('change', this._handleDimChange);
     //console.log('aRegState componentDidMount');
     loadStates((response) => {
-      const { success, payLoad, code, err } = response;
+      const { payLoad } = response;
       // console.log('RegisterState componentDidMount stateList ', response);
       this.setState({
         stateData: sortBy(payLoad, 'stateName'),
@@ -93,7 +93,7 @@ export class aRegState extends React.Component {
   }
 
   _finishCreateAnonymous = (response, userProfile) => {
-    const { success, payLoad, code, err } = response;
+    const { success, payLoad } = response;
     console.log('_finishCreateAnonymous success = ' + success + ', data ' + payLoad);
     const { navigation } = this.props;
 

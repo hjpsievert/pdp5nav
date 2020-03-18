@@ -1,3 +1,4 @@
+/* eslint-disable no-useless-escape */
 import React from 'react'
 import {
   View,
@@ -137,7 +138,7 @@ export class aRegCreate extends React.Component {
   }
 
   _processCreateUser = (response) => {
-    const { success, payLoad, code, err } = response;
+    const { success, payLoad } = response;
     console.log('_processCreateUser success = ' + success + ', data ' + payLoad);
     const { email } = this.state;
     const { installationId } = Constants;
@@ -179,7 +180,7 @@ export class aRegCreate extends React.Component {
 
   _finishCreateUser = (response, userProfile) => {
     const { navigation } = this.props;
-    const { success, payLoad, code, err } = response;
+    const { success, payLoad } = response;
     if (success) {
       saveUserProfile(() => { this._finishSaveProfile() }, userProfile, defaultProfileSave, 'RegisterCreate');
       navigation.navigate('aRegProvider')

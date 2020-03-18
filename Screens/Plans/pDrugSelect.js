@@ -75,7 +75,7 @@ export class pDrugSelect extends React.Component {
   }
 
   _handleLoadDrugs = (response) => {
-    const { success, payLoad, code, err } = response;
+    const { success, payLoad } = response;
     // console.log('pDrugSelect loadDrugsByBaseId response code = ', code, ', err = ', err, ', payLoad = ', payLoad);
     if (success) {
       this.setState({

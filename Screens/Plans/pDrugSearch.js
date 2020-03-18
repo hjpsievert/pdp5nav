@@ -75,7 +75,7 @@ export class pDrugSearch extends React.Component {
   }
 
   _onBaseDrugSearchComplete = (response) => {
-    const { success, payLoad, code, err } = response;
+    const { payLoad, code } = response;
     console.log('pDrugSearch _onBaseDrugSearchComplete resultList = ', payLoad, ', code = ', code);
     const { handleBaseDrugSearchComplete, navigation } = this.props;
     if (code === 0) {

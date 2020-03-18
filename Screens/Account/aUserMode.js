@@ -33,7 +33,7 @@ export class aUserMode extends React.Component {
     Dimensions.addEventListener('change', this._handleDimChange);
     //console.log('aUserMode componentDidMount');
     loadStates((response) => {
-      const { success, payLoad, code, err } = response;
+      const { payLoad } = response;
       const { userProfile } = this.props;
       const { userPlanId, userContractId, userPlanName, userStateId, userIsSubscribed } = userProfile;
       const planDisplay = userPlanId && userContractId && userPlanName ? (userPlanId + '-' + userContractId + ': ' + userPlanName) : 'Select your plan ...';
@@ -61,7 +61,7 @@ export class aUserMode extends React.Component {
     console.log('aUserMode componentDidUpdate');
     if (planReload && stateId) {
       loadStatePlans((response) => {
-        const { success, payLoad, code, err } = response;
+        const { payLoad } = response;
         this.setState({
           planData: sortBy(payLoad, 'planName'),
           planName: planId ? (payLoad.find((pl) => pl.planId === planId) ? payLoad.find((pl) => pl.planId === planId).planName : payLoad[0].planName) : payLoad[0].planName,
@@ -311,7 +311,6 @@ export class aUserMode extends React.Component {
           {drugFind &&
             <View>
               <TouchableHighlight
-                underlayColor={'#ccc'}
                 underlayColor={'#ccc'}
                 onPress={planListVisible && !stateListVisible ? this._idle : this._handlePlanEntry}
               >

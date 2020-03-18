@@ -1,7 +1,6 @@
 import React from 'react'
 import {
   View,
-  Text,
   StyleSheet,
   TouchableHighlight
 } from 'react-native';
@@ -23,14 +22,14 @@ import aActivate from '../Account/aActivate';
 
 const Stack = createStackNavigator();
 
-function AccountStack({route}) {
+function AccountStack() {
   // console.log('AccountStack route = ', route);
   return (
     <Stack.Navigator initialRouteName="aAccount">
       <Stack.Screen
         name="aAccount"
         component={aAccount}
-        options={({ navigation, route }) => ({
+        options={({ navigation }) => ({
           title: 'Account Management',
           headerTitle: 'Account Management',
           headerStyle: { backgroundColor: '#405ce8' },
@@ -59,7 +58,7 @@ function AccountStack({route}) {
       <Stack.Screen
         name="aRegCheck"
         component={aRegCheck}
-        options={({ navigation, route }) => ({
+        options={({ navigation }) => ({
           title: 'Register Check',
           headerTitle: 'Register Check',
           headerStyle: { backgroundColor: '#405ce8' },
@@ -89,7 +88,7 @@ function AccountStack({route}) {
       <Stack.Screen
         name="aRegCreate"
         component={aRegCreate}
-        options={({ navigation, route }) => ({
+        options={({ navigation }) => ({
           title: 'Register',
           headerTitle: 'Register',
           headerStyle: { backgroundColor: '#405ce8' },
@@ -119,7 +118,7 @@ function AccountStack({route}) {
       <Stack.Screen
         name="aRegState"
         component={aRegState}
-        options={({ navigation, route }) => ({
+        options={({ navigation }) => ({
           title: 'Select State',
           headerTitle: 'Select State',
           headerStyle: { backgroundColor: '#405ce8' },
@@ -149,7 +148,7 @@ function AccountStack({route}) {
       <Stack.Screen
         name="aRegProvider"
         component={aRegProvider}
-        options={({ navigation, route }) => ({
+        options={({ navigation }) => ({
           title: 'Register Provider',
           headerTitle: 'Register Provider',
           headerStyle: { backgroundColor: '#405ce8' },
@@ -179,7 +178,7 @@ function AccountStack({route}) {
       <Stack.Screen
         name="aRegPhone"
         component={aRegPhone}
-        options={({ navigation, route }) => ({
+        options={({ navigation }) => ({
           title: 'Register Phone',
           headerTitle: 'Register Phone',
           headerStyle: { backgroundColor: '#405ce8' },
@@ -209,7 +208,7 @@ function AccountStack({route}) {
       <Stack.Screen
         name="aProfile"
         component={aProfile}
-        options={({ navigation, route }) => ({
+        options={({ navigation }) => ({
           title: 'User Profile',
           headerTitle: 'User Profile',
           headerStyle: { backgroundColor: '#405ce8' },
@@ -239,7 +238,7 @@ function AccountStack({route}) {
       <Stack.Screen
         name="aActivate"
         component={aActivate}
-        options={({ navigation, route }) => ({
+        options={({ navigation }) => ({
           title: 'Activate App',
           headerTitle: 'Activate App',
           headerStyle: { backgroundColor: '#405ce8' },
@@ -250,7 +249,7 @@ function AccountStack({route}) {
             <View style={styles.innerContainer}>
               <TouchableHighlight
                 onPress={() => navigation.popToTop()}
-                >
+              >
                 <View style={[styles.touch, { justifyContent: 'flex-start' }]}>
                   <Icon
                     name={'ios-arrow-back'}
@@ -266,10 +265,10 @@ function AccountStack({route}) {
         })}
       />
 
-<Stack.Screen
+      <Stack.Screen
         name="aRegFinish"
         component={aRegFinish}
-        options={({ navigation, route }) => ({
+        options={({ navigation }) => ({
           title: 'Finish Registration',
           headerTitle: 'Finish Registration',
           headerStyle: { backgroundColor: '#405ce8' },
@@ -296,10 +295,10 @@ function AccountStack({route}) {
         })}
       />
 
-<Stack.Screen
+      <Stack.Screen
         name="aLogin"
         component={aLogin}
-        options={({ navigation, route }) => ({
+        options={({ navigation }) => ({
           title: 'Login',
           headerTitle: 'Login',
           headerStyle: { backgroundColor: '#405ce8' },
@@ -326,10 +325,10 @@ function AccountStack({route}) {
         })}
       />
 
-<Stack.Screen
+      <Stack.Screen
         name="aChangePw"
         component={aChangePw}
-        options={({ navigation, route }) => ({
+        options={({ navigation }) => ({
           title: 'Change Password',
           headerTitle: 'Change Password',
           headerStyle: { backgroundColor: '#405ce8' },
@@ -356,10 +355,10 @@ function AccountStack({route}) {
         })}
       />
 
-<Stack.Screen
+      <Stack.Screen
         name="aResetPw"
         component={aResetPw}
-        options={({ navigation, route }) => ({
+        options={({ navigation }) => ({
           title: 'Reset Password',
           headerTitle: 'Reset Password',
           headerStyle: { backgroundColor: '#405ce8' },
@@ -386,10 +385,10 @@ function AccountStack({route}) {
         })}
       />
 
-<Stack.Screen
+      <Stack.Screen
         name="aUserMode"
         component={aUserMode}
-        options={({ navigation, route }) => ({
+        options={({ navigation }) => ({
           title: 'User Mode',
           headerTitle: 'User Mode',
           headerStyle: { backgroundColor: '#405ce8' },
@@ -416,7 +415,7 @@ function AccountStack({route}) {
         })}
       />
 
-   </Stack.Navigator>
+    </Stack.Navigator>
   );
 }
 

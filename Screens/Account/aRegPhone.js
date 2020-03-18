@@ -95,7 +95,7 @@ export class aRegPhone extends React.Component {
   }
 
   _finishAddPhone = (response) => {
-    const { success, payLoad, code, err } = response;
+    const { success, payLoad } = response;
     const { navigation } = this.props;
     if (success) {
       this.setState({
@@ -169,7 +169,7 @@ export class aRegPhone extends React.Component {
   }
 
   _finishValidatePhone = (response) => {
-    const { success, payLoad, code, err } = response;
+    const { success, payLoad } = response;
     console.log('_finishValidatePhone response ', payLoad);
     const { navigation } = this.props;
 

@@ -64,18 +64,13 @@ export class pDrugs extends React.Component {
   }
 
   componentDidUpdate() {
-    const { drugCount, userProfile, myDrugs, activeListDirty, animating, doDelete, navigation, route } = this.props;
+    const { drugCount, userProfile, myDrugs, activeListDirty, animating, navigation, route } = this.props;
     console.log('pDrugs did update, activeListDirty = ', activeListDirty, ', drugCount = ', drugCount);
 
     if (activeListDirty && !animating) {
       saveDrugList(this._handleSaveActive, userProfile, 'Active List', 'Saved on every change', 'System', myDrugs, 'activePlanDrugs')
     }
 
-    // if (doDelete) {
-    //   const { drugToDelete } = this.state;
-    //   this._handleDeleteFromMyDrugs(drugToDelete);
-    // }
-    // const { key } = navigation.state;
 
     const refresh = route.params?.refresh ?? false;
     console.log('pDrugs Update refresh = ', refresh);
@@ -125,7 +120,7 @@ export class pDrugs extends React.Component {
   // ToDo: make this a utility function across components??
   _onFindPlansComplete = (response) => {
     const { handleUpdatePlanList, updateFlowState } = this.props;
-    const { success, payLoad, code, err } = response;
+    const { payLoad, code } = response;
     console.log('pDrugs onFindPlansComplete planList size = ', code);
     handleUpdatePlanList(payLoad);
     // setState in pHome, updateFlowState elsewhere
@@ -487,8 +482,6 @@ export class pDrugs extends React.Component {
 pDrugs.propTypes = {
   activeListDirty: PropTypes.bool.isRequired,
   animating: PropTypes.bool.isRequired,
-  askDelete: PropTypes.bool.isRequired,
-  doDelete: PropTypes.bool.isRequired,
   doMailState: PropTypes.bool.isRequired,
   drugCount: PropTypes.number.isRequired,
   handleDeleteFromMyDrugs: PropTypes.func.isRequired,
@@ -510,8 +503,6 @@ const mapStateToProps = (state) => {
   return {
     activeListDirty: state.flowState['activeListDirty'] ?? false,
     animating: state.flowState['animating'] ?? false,
-    askDelete: state.flowState['askDelete'] ?? false,
-    doDelete: state.flowState['doDelete'] ?? false,
     doMailState: state.flowState['doMailState'] ?? false,
     drugCount: size(state.myDrugs),
     myConfigList: flatMap(state.myDrugs, (d) => d.configDetail),

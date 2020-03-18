@@ -1,7 +1,6 @@
 import React from 'react'
 import {
   View,
-  Text,
   StyleSheet,
   TouchableHighlight
 } from 'react-native';
@@ -21,7 +20,7 @@ function DataStack() {
       <Stack.Screen
         name="dManager"
         component={dManager}
-        options={({ navigation, route }) => ({
+        options={({ navigation }) => ({
           title: 'Data Management',
           headerTitle: 'Data Management',
           headerStyle: { backgroundColor: '#405ce8' },
@@ -50,7 +49,7 @@ function DataStack() {
       <Stack.Screen
         name="dSave"
         component={dSave}
-        options={({ navigation, route }) => ({
+        options={({ navigation }) => ({
           title: 'Save Data',
           headerTitle: 'Save Data',
           headerStyle: { backgroundColor: '#405ce8' },
@@ -80,7 +79,7 @@ function DataStack() {
       <Stack.Screen
         name="dLoad"
         component={dLoad}
-        options={({ navigation, route }) => ({
+        options={({ navigation }) => ({
           title: 'Load Data',
           headerTitle: 'Load Data',
           headerStyle: { backgroundColor: '#405ce8' },
@@ -110,7 +109,7 @@ function DataStack() {
       <Stack.Screen
         name="dStorage"
         component={dStorage}
-        options={({ navigation, route }) => ({
+        options={({ navigation }) => ({
           title: 'Storage',
           headerTitle: 'Storage',
           headerStyle: { backgroundColor: '#405ce8' },
@@ -140,7 +139,7 @@ function DataStack() {
       <Stack.Screen
         name="dClear"
         component={dClear}
-        options={({ navigation, route }) => ({
+        options={({ navigation }) => ({
           title: 'Clear Data',
           headerTitle: 'Clear Data',
           headerStyle: { backgroundColor: '#405ce8' },

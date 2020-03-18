@@ -16,7 +16,7 @@ function pHomeStack() {
       <Stack.Screen
         name="pHome"
         component={pHome}
-        options={({ navigation, route }) => ({
+        options={({ navigation }) => ({
           title: 'My Home',
           headerTitle: "EZPartD Plan Finder",
           headerStyle: { backgroundColor: '#405ce8' },
@@ -40,7 +40,8 @@ function pHomeStack() {
               </TouchableHighlight>
             </View>
           ),
-        })} />
+        })}
+      />
     </Stack.Navigator>
   );
 }

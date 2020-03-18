@@ -51,7 +51,7 @@ export class aRegFinish extends React.Component {
   }
 
   _finishRegisterUser = (response) => {
-    const { success, payLoad, code, err } = response;
+    const { success, payLoad } = response;
     console.log('_finishRegisterUser success = ', success, ', response = ', payLoad);
     if (success) {
       let newUserProfile;

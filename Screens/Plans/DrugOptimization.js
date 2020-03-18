@@ -10,7 +10,6 @@ import {
   View,
   Dimensions,
   Platform,
-  ScrollView
 } from 'react-native';
 import { Icon } from 'react-native-elements';
 import capitalize from 'lodash/capitalize';

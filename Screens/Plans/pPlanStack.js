@@ -17,7 +17,7 @@ function pPlanStack() {
       <Stack.Screen
         name="pPlans"
         component={pPlans}
-        options={({ navigation, route }) => ({
+        options={({ navigation }) => ({
           title: 'My Plans',
           headerTitle: "Plans Header",
           headerStyle: { backgroundColor: '#405ce8' },
@@ -47,7 +47,7 @@ function pPlanStack() {
       <Stack.Screen
         name="pPlanBreakdown"
         component={pPlanBreakdown}
-        options={({ navigation, route }) => ({
+        options={({ navigation }) => ({
           title: 'Plan Breakdown',
           headerTitle: "Plan Breakdown",
           headerStyle: { backgroundColor: '#405ce8' },
@@ -71,7 +71,8 @@ function pPlanStack() {
               </TouchableHighlight>
             </View>
           ),
-        })} />
+        })}
+      />
 
     </Stack.Navigator>
   );

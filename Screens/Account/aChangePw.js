@@ -125,7 +125,7 @@ export class aChangePw extends React.Component {
   }
 
   _finishChangePassword = (response) => {
-    const { success, payLoad, code, err } = response;
+    const { success, payLoad } = response;
     if (success) {
       this._handleExit();
     }

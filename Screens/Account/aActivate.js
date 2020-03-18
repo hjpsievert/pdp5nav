@@ -10,7 +10,6 @@ import {
 import { Icon } from 'react-native-elements';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import * as Dispatch from '../../Redux/Dispatches';
 import { Input } from 'react-native-elements';
 import { loadDBProfile } from '../../Utils/Api';
 import { saveUserProfile } from '../../Utils/SaveData';
@@ -54,7 +53,7 @@ export class aActivate extends React.Component {
 
   _processProfile = (response, userIsSubscribed) => {
     const { navigation } = this.props;
-    const { success, payLoad, code, err } = response;
+    const { success, payLoad } = response;
 
     if (!success) {
       // Alert.alert(
@@ -119,7 +118,7 @@ export class aActivate extends React.Component {
     }
   }
 
-  _finishSaveProfile = (currentUserProfile) => {
+  _finishSaveProfile = () => {
     console.log('aActivate _activateApp complete ');
     this.setState({
       activationComplete: true,
@@ -143,9 +142,7 @@ export class aActivate extends React.Component {
   }
 
   render() {
-    const { adjust, noActivation2, activationComplete2, activationPending, validationError, activationError } = this.state;
-    const activationComplete = true;
-    const noActivation = false;
+    const { adjust, noActivation, activationComplete, activationPending, validationError } = this.state;
     const { userProfile, navigation } = this.props;
     // console.log('aActivate render userProfile ' + JSON.stringify(this.props.userProfile));
 
