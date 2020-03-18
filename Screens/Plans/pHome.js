@@ -213,7 +213,7 @@ export class pHome extends React.Component {
       }, JSON.stringify(myConfigList), stateId, doMailState, startDate);
     }
     if (!emailVerified && userMode != usrMode.anon) {
-      navigation.navigate('Account', {screen : 'aRegState'});
+      navigation.navigate('Account', { screen: 'aRegState' });
     }
   }
 
@@ -239,16 +239,19 @@ export class pHome extends React.Component {
   }
 
   _toggleShowActive = () => {
-    this.setState({
-      showActive: !this.state.showActive,
-      showGreeting: this.state.showActive ? this.state.showGreeting : false,
-    });
+    const { drugCount } = this.props;
+    if (drugCount > 0) {
+      this.setState({
+        showActive: !this.state.showActive,
+        showGreeting: this.state.showActive ? this.state.showGreeting : false,
+      });
+    }
   }
 
-  // _handleAdd = () => {
-  //   const { navigation } = this.props;
-  //   navigation.navigate('Top', { screen: 'Drugs', params: { screen: 'pSearch' } });
-  // }
+  _handleAdd = () => {
+    const { navigation } = this.props;
+    navigation.navigate('Top', { screen: 'Drugs', params: { screen: 'pDrugSearch' } });
+  }
 
   _renderDrugItem = (item) => {
     return (
@@ -297,13 +300,13 @@ export class pHome extends React.Component {
       // currDate = Platform.OS==='web' ? new Date(previousLogin).toLocaleString(Localization.locale, {timeZone: Localization.timezone}) :  new Date(previousLogin);
       currDate = new Date(previousLogin);
     }
-    else{
+    else {
       currDate = new Date();
       // currDate = Platform.OS==='web' ? new Date().toLocaleString(Localization.locale, {timeZone: Localization.timezone}) : new Date();
     }
     console.log('currDate(', Platform.OS, ') = ', currDate);
     // const prevLogin = Platform.OS==='web' ? new Date().toLocaleString(Localization.locale) : (currDate.getMonth() + 1) + '/' + (currDate.getDate()) + '/' + currDate.getFullYear() + ' ' + (currDate.getHours()) + ':' + (currDate.getMinutes() + 1);
-    const prevLogin = (currDate.getMonth() + 1) + '/' + (currDate.getDate()) + '/' + currDate.getFullYear() + ' ' + (currDate.getHours()) + ':' + (currDate.getMinutes() + 1);    const { displayName, userMode, userStateName } = userProfile;
+    const prevLogin = (currDate.getMonth() + 1) + '/' + (currDate.getDate()) + '/' + currDate.getFullYear() + ' ' + (currDate.getHours()) + ':' + (currDate.getMinutes() + 1); const { displayName, userMode, userStateName } = userProfile;
 
     return (
       <View>
@@ -341,36 +344,38 @@ export class pHome extends React.Component {
             <View style={{ flexShrink: 1, flexDirection: 'column', justifyContent: 'center' }}>
               <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingLeft: 10, backgroundColor: '#ddd', borderBottomColor: '#bbb', paddingTop: 5, paddingBottom: 5, borderBottomWidth: 1 }}>
                 <TouchableHighlight
-                  onPress={this._toggleShowActive}
+                  onPress={drugCount > 0 ? this._toggleShowActive : () => ({})}
                 >
                   <View style={{ flexDirection: 'row', justifyContent: 'flex-start', alignItems: 'center' }}>
-                    <Icon
-                      name={showActive ? 'triangle-down' : 'triangle-right'}
-                      type={'entypo'}
-                      color={'black'}
-                      size={20}
-                    />
+                    {drugCount > 0 &&
+                      <Icon
+                        name={showActive ? 'triangle-down' : 'triangle-right'}
+                        type={'entypo'}
+                        color={'black'}
+                        size={20}
+                      />
+                    }
                     <Text style={{ fontSize: 14, color: 'black', textAlign: 'left', paddingLeft: 5, paddingTop: 3, paddingBottom: 3 }}>
                       {'Active List, ' + drugCount + ' drug' + (drugCount != 1 ? 's' : '')}</Text>
                   </View>
                 </TouchableHighlight>
-                {/* {showActive &&
+                {drugCount === 0 &&
                   <TouchableHighlight
                     onPress={this._handleAdd}
                   >
-                    <View style={{ flexDirection: 'column', paddingRight: 10 }}>
+                    <View style={{ flexDirection: 'row', paddingRight: 10 }}>
+                      <Text style={styles.topTabText}>
+                        {'Add Drug'}
+                      </Text>
                       <Icon
                         name={'add'}
                         type={'material'}
                         color={'black'}
                         size={20}
                       />
-                      <Text style={styles.topTabText}>
-                        {'Add Drug'}
-                      </Text>
                     </View>
                   </TouchableHighlight>
-                } */}
+                }
               </View>
 
               {showActive &&
