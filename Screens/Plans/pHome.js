@@ -132,7 +132,7 @@ export class pHome extends React.Component {
   }
 
   _finishUpdateDevice = (response) => {
-    const { success, payLoad} = response;
+    const { success, payLoad } = response;
     console.log('pHome _finishUpdateDevice success = ', success, ', prev login = ', payLoad.previousLogin);
     this.props.updateFlowState({
       isStarted: true,
@@ -293,19 +293,26 @@ export class pHome extends React.Component {
     const { showActive, showPlans, showGreeting, adjust, drugsLoaded, animating } = this.state;
     const { drugCount, planCount, myPlans, activeDrugs, userProfile, previousLogin } = this.props;
     let currDate;
-    console.log('previousLogin(', Platform.OS, ') = ', previousLogin);
     if (previousLogin) {
-      // currDate = Platform.OS==='web' ? new Date(previousLogin).toLocaleString(Localization.locale, {timeZone: Localization.timezone}) :  new Date(previousLogin);
       currDate = new Date(previousLogin);
     }
     else {
       currDate = new Date();
-      // currDate = Platform.OS==='web' ? new Date().toLocaleString(Localization.locale, {timeZone: Localization.timezone}) : new Date();
     }
-    console.log('currDate(', Platform.OS, ') = ', currDate);
-    // const prevLogin = Platform.OS==='web' ? new Date().toLocaleString(Localization.locale) : (currDate.getMonth() + 1) + '/' + (currDate.getDate()) + '/' + currDate.getFullYear() + ' ' + (currDate.getHours()) + ':' + (currDate.getMinutes() + 1);
-    const prevLogin = (currDate.getMonth() + 1) + '/' + (currDate.getDate()) + '/' + currDate.getFullYear() + ' ' + (currDate.getHours()) + ':' + (currDate.getMinutes() + 1); const { displayName, userMode, userStateName } = userProfile;
 
+    if (Platform.OS === 'web') {
+      const hour = currDate.getHours();
+      const offset = currDate.getTimezoneOffset() / 60;
+      if (hour >= offset) {
+        currDate.setHours(hour - offset);
+      }
+      else {
+        currDate.setHours(hour + 24 - offset);
+        currDate.setDate(currDate.getDate() - 1);
+      }
+    }
+    const { displayName, userMode, userStateName } = userProfile;
+    
     return (
       <View>
         {!drugsLoaded ?
@@ -334,7 +341,7 @@ export class pHome extends React.Component {
             </TouchableHighlight>
             {showGreeting &&
               <View style={{ paddingBottom: 5, backgroundColor: '#a4c6fc' }}>
-                <Text style={[styles.body, { textAlign: 'center', paddingBottom: 3 }]}>{(displayName ? displayName : 'Mode') + ': ' + userMode + ', last access ' + prevLogin}</Text>
+                <Text style={[styles.body, { textAlign: 'center', paddingBottom: 3 }]}>{(displayName ? displayName : 'Mode') + ': ' + userMode + ', last access ' + currDate.toLocaleString(Localization.locale)}</Text>
                 <Text style={styles.body}>{'You are currently not subscribed to any plan. You can use '}<Text style={styles.textBold}>{'Add Drug'}</Text>{' to ' + (drugCount > 0 ? 'extend your list' : 'build a list') + '. The plans available for your state will be updated as your drugs are updated.'}</Text>
                 <Text style={styles.body}>{'You can configure the list for various "what if" scenarios switching to '}<Text style={styles.textBold}>{'Drugs'}</Text>{' and analyze your plans to identify the most cost efficient choice for your needs from '}<Text style={styles.textBold}>{'Plans'}</Text>{'.'}</Text>
               </View>
