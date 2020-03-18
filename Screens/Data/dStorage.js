@@ -616,6 +616,7 @@ export class dStorage extends Component {
                       type: l.type,
                       color: 'black'
                     }}
+                    // eslint-disable-next-line react/no-array-index-key
                     key={i}
                     title={l.title}
                     titleStyle={{ fontSize: 14 }}

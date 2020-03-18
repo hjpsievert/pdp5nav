@@ -114,6 +114,7 @@ export default class SystemInfo extends React.Component {
           {
             sysInfo.map((l, i) => (
               <ListItem
+                // eslint-disable-next-line react/no-array-index-key
                 key={i}
                 title={l.title}
                 titleStyle={{ fontSize: 14, paddingBottom: 3 }}

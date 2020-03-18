@@ -1,15 +1,13 @@
 import React from 'react'
 import {
   View,
-  StyleSheet,
   ScrollView,
   Dimensions,
   Platform
 } from 'react-native';
-import { Icon, ListItem } from 'react-native-elements';
+import { ListItem } from 'react-native-elements';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { refreshDrugs } from '../../Utils/Api';
 
 export class aProfile extends React.Component {
   constructor(props, context) {
@@ -71,6 +69,7 @@ export class aProfile extends React.Component {
           {
             profileInfo.map((l, i) => (
               <ListItem
+                // eslint-disable-next-line react/no-array-index-key
                 key={i}
                 title={l.title}
                 containerStyle={{padding: 0}}

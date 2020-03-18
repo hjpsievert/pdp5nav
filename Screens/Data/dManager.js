@@ -37,6 +37,7 @@ function dManager({ route, navigation }) {
               type: l.type,
               color: l.active ? '#405ce8' : 'grey'
             }}
+            // eslint-disable-next-line react/no-array-index-key
             key={i}
             title={l.title}
             titleStyle={{ paddingLeft: 20, fontSize: 16, color: l.active ? 'black' : '#86939e' }}
