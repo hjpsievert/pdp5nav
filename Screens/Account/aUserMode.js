@@ -95,7 +95,7 @@ export class aUserMode extends React.Component {
   // called from both _renderState for iOS flatList and Picker in render() for Android pick list
   _pickState = (itemIndex, itemStateName) => {
     const { stateData } = this.state;
-    console.log('pick state value = ', itemIndex, ', name = ', itemStateName);
+    console.log('pick state value = ', itemIndex, ', name = ', itemStateName, 'stateId = ', stateData[itemIndex].stateCode);
     this.setState({
       stateId: stateData[itemIndex].stateCode,
       stateName: itemStateName,

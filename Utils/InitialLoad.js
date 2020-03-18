@@ -1,7 +1,7 @@
 import { loadObject } from './Storage';
 import { loadDBProfile, loadFromDB, refreshDrugs } from './Api';
 import Constants from 'expo-constants';
-import { defaultProfile, defaultProfileSave, defaultConfigDetail } from './Constants';
+import { defaultProfile, defaultProfileSave } from './Constants';
 import { saveUserProfile, saveDrugList } from './SaveData';
 import size from 'lodash/size';
 import flatMap from 'lodash/flatMap';
@@ -15,65 +15,59 @@ export const loadAllData = function (callBack) {
 }
 
 const _handleLoadProfileDB = (callBack, response) => {
-  // if we get a profile back (response array length >0), we will save it to redux state and then update storage, otherwise we take the profile we loaded and save it to redux state
-  const {success, payLoad, code, err} = response;
-  if (success && code > 0) {
-    console.log('InitialLoad _handleLoadProfileDB, success = ', success, ', count = ', code); // + ', dbProfile = ' + JSON.stringify(response.payload));
+  // if we get a profile back (success true), we will save it to redux state and then update local storage
+  const { success, payLoad } = response;
+  if (success) {
     const dbProfile = payLoad;
-    const doSave = {...defaultProfileSave};
+    console.log('InitialLoad _handleLoadProfileDB success, dbProfile = ', JSON.stringify(dbProfile));
+    const doSave = { ...defaultProfileSave };
     doSave.cloud = false; // no need to save, we just loaded from cloud
     saveUserProfile((userProfile) => { _handleSaveProfileToStorage(callBack, userProfile) }, dbProfile, doSave, 'InitialLoad');
   }
   else {
+    console.log('InitialLoad _handleLoadProfileDB failed, exit with empty drug list and default profile');
     const finalDrugs = {};
     callBack(defaultProfile, finalDrugs);
   }
 }
 
 const _handleSaveProfileToStorage = (callBack, userProfile) => {
-  console.log('InitialLoad _handleSaveProfileToStorage started'); //,  profile ', JSON.stringify(userProfile));
+  // console.log('InitialLoad _handleSaveProfileToStorage started'); //,  profile ', JSON.stringify(userProfile));
 
   const { userEmail, userStateId, userIsSubscribed } = userProfile;
   const activeListIndex = 0;
   if (!!userEmail && !!userStateId) {
-    if (!userIsSubscribed) {
-      console.log('InitialLoad user is not subscribed');
-      loadObject((response) => { _handleLoadActiveStorage(response, callBack, userStateId, userEmail, userProfile) }, activeListIndex, 'activePlanDrugs')
-    }
-    else {
-      console.log('InitialLoad user is subscribed');
-      loadObject((response) => { _handleLoadActiveStorage(response, callBack, userStateId, userEmail, userProfile) }, activeListIndex, 'activeFindDrugs')
-    }
+    console.log('InitialLoad _handleSaveProfileToStorage user is subscribed: ', userIsSubscribed, ', load respective drug list from local storage');
+    loadObject((response) => { _handleLoadActiveStorage(response, callBack, userStateId, userEmail, userProfile) }, activeListIndex, !userIsSubscribed ? 'activePlanDrugs' : 'activeFindDrugs')
   }
   else {
     // there is no drug list, return profile and empty drug list in the callBack
-    console.log('InitialLoad user not registered');
+    console.log('InitialLoad _handleSaveProfileToStorage user not registered, exit with empty drug list and loaded profile');
     const finalDrugs = {};
     callBack(userProfile, finalDrugs);
   }
 }
 
 const _handleLoadActiveStorage = (response, callBack, userStateId, userEmail, mergedProfile) => {
-  console.log('InitialLoad _handleSaveProfileToStorage completed'); //,  profile ', JSON.stringify(userProfile));
   console.log('InitialLoad _handleLoadActiveStorage success ', response.success, ', size = ', size(response.payload));
   const { userIsSubscribed } = mergedProfile;
   if (response.success && size(response.payload) > 0) {
     const drugList = response.payload;
-    if (userIsSubscribed) { 
-      console.log('InitialLoad user is subscribed, exit with loaded drug list');
+    if (userIsSubscribed) {
+      console.log('InitialLoad user is subscribed, exit with profile and loaded drug list');
       callBack(mergedProfile, flatMap(drugList, (d) => d));
     }
     else {
+      console.log('_handleLoadActiveStorage refresh findPlan drug list to pick up any data changes since last startup');
       refreshDrugs((response) => { // refresh drug list to pick up any data changes since last startup
-        console.log('_handleLoadActiveStorage refresh findPlan drug list to pick up any data changes since last startup');
         _handleRefresh(response, callBack, flatMap(drugList, (d) => d), userEmail, mergedProfile);
-      }, flatMap(drugList, (d) => d.drugId), userStateId); 
+      }, flatMap(drugList, (d) => d.drugId), userStateId);
     }
   }
   else {
     // console.log('InitialLoad _handleLoadActiveStorage load from DB');
     if (userIsSubscribed) { // if drugFind no DB storage of active list, exit with empty drug list
-      console.log('InitialLoad _handleLoadActiveStorage user is subscribed, exit with empty drug list');
+      console.log('InitialLoad _handleLoadActiveStorage user is subscribed, but no drugs, exit with profile and empty drug list');
       const finalDrugs = {};
       callBack(mergedProfile, finalDrugs);
     }
@@ -88,46 +82,51 @@ const _handleLoadActiveStorage = (response, callBack, userStateId, userEmail, me
 }
 
 const _handleLoadActiveDB = (response, callBack, userStateId, userEmail, mergedProfile) => {
-  const {success, payLoad, code, err} = response;
-  // console.log('InitialLoad _handleLoadActiveDB, response items ' + code);
+  const { success, payLoad, code } = response;
   if (success) {
+    // console.log('InitialLoad _handleLoadActiveDB, response items ' + code);
     const drugList = JSON.parse(payLoad[0].payload); // pick first response in case multiple instances are returned
     console.log('_handleLoadActiveDB successful, refresh findPlan drug list to pick up any data changes since last startup');
     refreshDrugs((response) => {
       _handleRefresh(response, callBack, flatMap(drugList, (d) => d), userEmail, mergedProfile);
-    }, flatMap(drugList, (d) => d.drugId), userStateId); 
+    }, flatMap(drugList, (d) => d.drugId), userStateId);
   }
   else {
-    // console.log('InitialLoad _handleLoadActiveDB, no data, return empty drug list, set drugsLoaded to true');
+    console.log('InitialLoad _handleLoadActiveDB, no data, exit with empty drug list and user profile');
     const finalDrugs = {};
     callBack(mergedProfile, finalDrugs);
   }
 }
 
 const _handleRefresh = (response, callBack, drugListOld, userEmail, mergedProfile) => {
-  const {success, payLoad, code, err} = response;
-  const drugListNew = payLoad;
-  // console.log('InitialLoad _handleRefresh drugListOld = ', flatMap(drugListOld, (d) => d.drugId + ', ' + d.planDetail.avePrice90*30), ', druglistNew = ', flatMap(drugListNew, (d) => d.drugId + ', ' + d.planDetail.avePrice90*30));
+  const { success, payLoad } = response;
   let drugList = [];
-  const oldSorted = sortBy(drugListOld, 'drugId');
-  const newSorted = sortBy(drugListNew, 'drugId')
-  // console.log('InitialLoad oldSorted ', JSON.stringify(flatMap(oldSorted, (d) => d.drugId)), ', newSorted ', JSON.stringify(flatMap(newSorted, (d) => d.drugId)));
-  let i;
-  for (i = 0; i < oldSorted.length; i++) {
-    if (newSorted[i].ndc === 'discontinued'){
-      drugList.push({ ...oldSorted[i], ndc: 'discontinued' }); // oldSorted retains configDetails, drugDetail and planDetail are overwritten from newSorted
+  if (success) {
+    const drugListNew = payLoad;
+    // console.log('InitialLoad _handleRefresh drugListOld = ', flatMap(drugListOld, (d) => d.drugId + ', ' + d.planDetail.avePrice90*30), ', druglistNew = ', flatMap(drugListNew, (d) => d.drugId + ', ' + d.planDetail.avePrice90*30));
+    const oldSorted = sortBy(drugListOld, 'drugId');
+    const newSorted = sortBy(drugListNew, 'drugId')
+    // console.log('InitialLoad oldSorted ', JSON.stringify(flatMap(oldSorted, (d) => d.drugId)), ', newSorted ', JSON.stringify(flatMap(newSorted, (d) => d.drugId)));
+    let i;
+    for (i = 0; i < oldSorted.length; i++) {
+      if (newSorted[i].ndc === 'discontinued') {
+        drugList.push({ ...oldSorted[i], ndc: 'discontinued' }); // oldSorted retains configDetails, drugDetail and planDetail are overwritten from newSorted
+      }
+      else {
+        drugList.push({ ...oldSorted[i], ...newSorted[i] }); // oldSorted retains configDetails, drugDetail and planDetail are overwritten from newSorted
+      }
     }
-    else {
-      drugList.push({ ...oldSorted[i], ...newSorted[i] }); // oldSorted retains configDetails, drugDetail and planDetail are overwritten from newSorted
-    }
+    console.log('InitialLoad _handleRefresh succeeded, saving refreshed list into Active');
   }
-  // console.log('InitialLoad _handleRefresh new drugList = ', flatMap(drugList, (d) => d.drugId + ', ' + d.ndc));
-  saveDrugList((response) => {_handleSaveActive(response, callBack, drugList, mergedProfile)}, mergedProfile, 'Active List', 'Saved on every change', 'System', drugList, 'activePlanDrugs')
+  else {
+    drugList = drugListOld;
+    console.log('InitialLoad _handleRefresh failed, saving old list into Active');
+  }
 
-  console.log('InitialLoad _handleRefresh reached end');
+  saveDrugList((response) => { _handleSaveActive(response, callBack, drugList, mergedProfile) }, mergedProfile, 'Active List', 'Saved on every change', 'System', drugList, 'activePlanDrugs')
 }
 
 const _handleSaveActive = (response, callBack, drugList, mergedProfile) => {
-  console.log('InitialLoad _handleSaveActive successful ' + response, ', calling final callBack');
+  console.log('InitialLoad _handleSaveActive success: ' + response, ', calling final callBack');
   callBack(mergedProfile, drugList);
 }

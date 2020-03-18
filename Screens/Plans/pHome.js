@@ -47,7 +47,7 @@ export class pHome extends React.Component {
     // console.log('Localization region = ', Localization.region, ', timezone = ', Localization.timezone,' current time = ', new Date().toLocaleString(Localization.locale, {timeZone: Localization.timezone}));
 
     const { userProfile, isStarted } = this.props;
-    console.log('pHome componentDidMount isStarted = ', isStarted, ', profile = ', JSON.stringify(userProfile));
+    console.log('pHome componentDidMount isStarted = ', isStarted, ', local profile = ', JSON.stringify(userProfile));
 
     this._authFunction();
 
@@ -110,6 +110,7 @@ export class pHome extends React.Component {
   _authFunction = async () => {
     const { isStarted, updatePlatformValue } = this.props;
     if (!isStarted) {
+      // only execute if this app has been newly started
       const updateLogin = true;
       updateDevice((response) => { this._finishUpdateDevice(response) }
         , Constants.installationId, null, null, updateLogin);
@@ -132,6 +133,7 @@ export class pHome extends React.Component {
   }
 
   _finishUpdateDevice = (response) => {
+    // may finish after loadAllData, but only impacts previous login displayed
     const { success, payLoad } = response;
     console.log('pHome _finishUpdateDevice success = ', success, ', prev login = ', payLoad.previousLogin);
     this.props.updateFlowState({

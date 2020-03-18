@@ -42,7 +42,7 @@ const _handleSaveProfile = (callBack, userProfile, response, component) => {
 
 export const saveError = (callBack, err) => {
   const { code, message } = err;
-  const {userProfile} = err;
+  const { userProfile } = err;
   const up = JSON.parse(userProfile);
   const errorInfo = find(errorCodes, (ei) => ei.code === code);
 
@@ -59,7 +59,7 @@ export const saveError = (callBack, err) => {
     storageIndex: -1,
   }
 
-  console.log('SaveData userData:',userData);
+  console.log('SaveData userData:', userData);
 
   saveErrorToDB((response) => { _handleSaveErrorToDB(callBack, userData, response) }, JSON.stringify(userData));
 }
@@ -76,7 +76,7 @@ const _handleSaveErrorToDB = (callBack, userData, response) => {
     // send email to support and user
     console.log('SaveData error saved to DB, payLoad = ', payLoad);
     callBack(success, 'DB');
-    }
+  }
 }
 
 const _handlesaveErrorLocally = (callBack, response) => {
@@ -100,9 +100,15 @@ export const saveDrugList = (callBack, userProfile, inputTitle, inputDescription
 const _processIndex = (response, callBack, userProfile, inputTitle, inputDescription, inputCategory, myDrugs, contentType) => {
   const { userEmail, storageMode, userId } = userProfile;
   let storageIndex = 0;
-  if (contentType != 'activePlanDrugs' && contentType != 'findPlanDrugs') {
-    storageIndex = response.index;
+  if (contentType != 'activePlanDrugs' && contentType != 'activeFindDrugs') {
+    if (response.success) {
+      storageIndex = response.index;
+    }
+    else {
+      console.log('saveDrugList _processIndex failed');
+    }
   }
+
   console.log('saveDrugList storageIndex = ', storageIndex);
 
   const userData = {
