@@ -291,9 +291,10 @@ export class pHome extends React.Component {
   }
 
   render() {
-    console.log('pHome render');
     const { showActive, showPlans, showGreeting, adjust, drugsLoaded, animating } = this.state;
     const { drugCount, planCount, myPlans, activeDrugs, userProfile, previousLogin } = this.props;
+    console.log('pHome render'); //, user profile = ', JSON.stringify(userProfile));
+
     let currDate;
     if (previousLogin) {
       currDate = new Date(previousLogin);

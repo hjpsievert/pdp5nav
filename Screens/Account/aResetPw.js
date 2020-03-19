@@ -570,7 +570,6 @@ aResetPw.propTypes = {
 const mapStateToProps = (state) => {
   return {
     userProfile: state.profile,
-    windowHeight: state.platform['WindowHeight'] ? state.platform['WindowHeight'] / state.platform['PixelRatio'] : 0,
   }
 }
 
