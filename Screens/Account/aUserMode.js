@@ -12,6 +12,8 @@ import { Icon } from 'react-native-elements';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import * as Dispatch from '../../Redux/Dispatches';
+import Constants from 'expo-constants';
+import { usrMode } from '../../Utils/Constants';
 import { loadStates, loadStatePlans } from '../../Utils/Api';
 import { saveUserProfile } from '../../Utils/SaveData';
 import { defaultProfileSave } from '../../Utils/Constants';
@@ -158,7 +160,10 @@ export class aUserMode extends React.Component {
 
   _saveProfile = () => {
     const { userProfile } = this.props;
-    const { stateId, planId, planName, contractId, drugFind, planSelected, stateSelected } = this.state;
+    const {userMode} = userProfile;
+    const {installationId} = Constants;
+    console.log('aUserMode _saveProfile, user profile = ', JSON.stringify(userProfile));
+    const { stateId, stateName, planId, planName, contractId, drugFind, planSelected, stateSelected } = this.state;
     let newProfile = { ...userProfile };
     if (drugFind) {
       if (!planSelected || !stateSelected) {
@@ -169,17 +174,19 @@ export class aUserMode extends React.Component {
       }
       else {
         newProfile.userStateId = stateId;
+        newProfile.userStateName = stateName;
         newProfile.userPlanId = planId;
         newProfile.userContractId = contractId;
         newProfile.userPlanName = planName;
         newProfile.userIsSubscribed = true;
-        saveUserProfile(() => { this._finishSaveProfile() }, newProfile, defaultProfileSave, 'RegisterUserMode');
+        saveUserProfile(() => { this._finishSaveProfile() }, newProfile, defaultProfileSave, 'aUserMode', userMode === usrMode.anon ? installationId : null);
       }
     }
     else {
       newProfile.userStateId = stateId;
+      newProfile.userStateName = stateName;
       newProfile.userIsSubscribed = false;
-      saveUserProfile(() => { this._finishSaveProfile() }, newProfile, defaultProfileSave, 'RegisterUserMode');
+      saveUserProfile(() => { this._finishSaveProfile() }, newProfile, defaultProfileSave, 'aUserMode', userMode === usrMode.anon ? installationId : null);
     }
   }
 

@@ -6,7 +6,7 @@ import { store } from '../App';
 import { saveProfile, saveDrugs, getIndex, saveIndex, saveErrorLocally, readKeys } from './Storage';
 import find from 'lodash/find';
 
-export const saveUserProfile = (callBack, userProfile, doSave, component) => {
+export const saveUserProfile = (callBack, userProfile, doSave, component, installationId = null) => {
   // console.log('SaveData doSave = ', JSON.stringify(doSave));
 
   if (doSave.store) {
@@ -17,7 +17,7 @@ export const saveUserProfile = (callBack, userProfile, doSave, component) => {
   if (doSave.cloud) {
     saveDBProfile((response) => {
       _handleSaveProfileDB(response, component);
-    }, JSON.stringify(userProfile));
+    }, JSON.stringify(userProfile), installationId);
   }
   else {
     console.log(component, ': saveUserProfile to DB skipped');

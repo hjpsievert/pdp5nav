@@ -94,11 +94,12 @@ export class aRegState extends React.Component {
 
   _finishCreateAnonymous = (response, userProfile) => {
     const { success, payLoad } = response;
+    const { installationId } = Constants;
     console.log('_finishCreateAnonymous success = ' + success + ', data ' + payLoad);
     const { navigation } = this.props;
 
     if (success) {
-      saveUserProfile(() => { this._finishSaveProfile() }, userProfile, defaultProfileSave, 'RegisterState');
+      saveUserProfile(() => { this._finishSaveProfile() }, userProfile, defaultProfileSave, 'RegisterState', installationId);
       this.setState({
         registerState: 'anonymous'
       })
