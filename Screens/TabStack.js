@@ -87,6 +87,7 @@ export class TabStack extends React.Component {
           name="Drugs"
           component={pDrugStack}
           options={({ navigation }) => ({
+            unmountOnBlur: true,
             tabBarIcon: ({ focused, color, size }) => {
               return (
                 <View style={{ width: 24, height: 24, margin: 5 }}>
@@ -125,6 +126,7 @@ export class TabStack extends React.Component {
           name="Plans"
           component={pPlanStack}
           options={() => ({
+            unmountOnBlur: true,
             tabBarIcon: ({ focused, color, size }) => {
               return (
                 <View style={{ width: 24, height: 24, margin: 5 }}>
