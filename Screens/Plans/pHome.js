@@ -182,7 +182,7 @@ export class pHome extends React.Component {
       });
       this.setState({
         animating: false,
-        planListDirty: false,
+        planListDirty: true,
       });
     }
     // common flowState settings across all cases
@@ -205,7 +205,7 @@ export class pHome extends React.Component {
     const stateId = userStateId;
     console.log('pHome _findPlans, drugCount ', drugCount, ', planListDirty = ', planListDirty); // , ', userProfile = ' , JSON.stringify(userProfile));
 
-    if (drugCount > 0 && planListDirty && stateId) {
+    if (planListDirty && stateId) {
       this.setState({ animating: true });
       // console.log('pHome _findPlans config = ', myConfigList);
       findPlans((response) => {
