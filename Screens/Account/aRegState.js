@@ -63,10 +63,11 @@ export class aRegState extends React.Component {
 
   }
 
-  _pickState = (itemValue, itemStateName) => {
-    // console.log('pick value = ', itemValue, ', name = ', itemStateName);
+  _pickState = (itemIndex, itemStateName) => {
+    // console.log('pick value = ', itemIndex, ', name = ', itemStateName);
+    const { stateData } = this.state;
     this.setState({
-      stateId: itemValue,
+      stateId: stateData[itemIndex].stateCode,
       stateName: itemStateName,
       stateListVisible: false,
       stateSelected: true,
@@ -318,33 +319,6 @@ export class aRegState extends React.Component {
                 </View>
               </TouchableHighlight>
             </View>
-
-
-            {/* 
-            <View style={{ flexDirection: 'row', justifyContent: 'space-around', paddingTop: 25 }}>
-              <View style={{ width: 2 * Dimensions.get('window').width / 4 }}>
-                <Button
-                  raised={true}
-                  icon={{ name: 'ios-arrow-dropright', type: 'ionicon' }}
-                  iconRight
-                  backgroundColor={'green'}
-                  color={'white'}
-                  title={'Anonymous'}
-                  onPress={() => navigation.navigate(userIsSubscribed ? 'fsHomeScreen' : 'fpHomeScreen')}
-                />
-              </View>
-              <View style={{ width: 2 * Dimensions.get('window').width / 4 }}>
-                <Button
-                  raised={true}
-                  icon={{ name: 'ios-arrow-dropright', type: 'ionicon' }}
-                  iconRight
-                  backgroundColor={'green'}
-                  color={'white'}
-                  title={'Register'}
-                  onPress={() => navigation.navigate('registerCreate')}
-                />
-              </View>
-            </View> */}
 
           </View>
         }
