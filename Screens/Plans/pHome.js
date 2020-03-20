@@ -250,7 +250,8 @@ export class pHome extends React.Component {
 
   _handleAdd = () => {
     const { navigation } = this.props;
-    navigation.navigate('Top', { screen: 'Drugs', params: { screen: 'pDrugSearch' } });
+    // navigation.navigate('Top', { screen: 'Drugs', params: { screen: 'pDrugSearch' } });
+    navigation.navigate('Drugs', { screen: 'pDrugSearch' });
   }
 
   _renderDrugItem = (item) => {
@@ -315,7 +316,7 @@ export class pHome extends React.Component {
       }
     }
     const { displayName, userMode, userStateName } = userProfile;
-    
+
     return (
       <View>
         {!drugsLoaded ?
