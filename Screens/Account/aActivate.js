@@ -87,7 +87,8 @@ export class aActivate extends React.Component {
 
   _validationOK = (validation) => {
     let { verificationCode } = this.props.userProfile;
-    console.log('aActivate _validationOK validation = "', validation, '", verificationCode "', verificationCode, '"');
+    verificationCode = parseInt(verificationCode);
+    // console.log('aActivate _validationOK validation = "', validation, '", verificationCode "', verificationCode, '", OK = ', validation === verificationCode);
     return validation === verificationCode;
   }
 
@@ -219,13 +220,6 @@ export class aActivate extends React.Component {
             </View>
           }
 
-          {validationError &&
-            <View style={{ marginTop: 10, borderColor: '#bbb', borderWidth: 1, backgroundColor: 'linen', paddingTop: 10, paddingBottom: 10, paddingLeft: 20, paddingRight: 20 }}>
-              <Text style={{ paddingBottom: 3 }}>{'Incorrect activation code!'}</Text>
-              <Text>{'You entered an incorrect activation code. Please check the eight digit code provided to you by ' + userProfile.provider + ' and enter it again.'}</Text>
-            </View>
-          }
-
           {activationPending &&
             <View>
               {validationError ?
@@ -266,7 +260,7 @@ export class aActivate extends React.Component {
               >
                 <TouchableHighlight
                   underlayColor={'#ccc'}
-                  onPress={this._handleRegister}
+                  onPress={this._activateApp}
                 >
                   <View style={{ flexDirection: 'column', justifyContent: 'center', paddingBottom: 5 }}>
                     <Icon
@@ -282,7 +276,7 @@ export class aActivate extends React.Component {
                     <Text
                       style={styles.topTabText}
                     >
-                      {'CONTINUE'}
+                      {'ACTIVATE'}
                     </Text>
                   </View>
                 </TouchableHighlight>
