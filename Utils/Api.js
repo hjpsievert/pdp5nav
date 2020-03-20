@@ -18,7 +18,7 @@ const processRequest = function (cb, mode = 'GET', path, load = null) {
       cb({ ...data, uri: path, load: myLoad });
 
     } else {
-      console.log(mode + ": status = " + request.status + " url = " + url + path + ", load = " + load);
+      // console.log(mode + ": status = " + request.status + " url = " + url + path + ", load = " + load, 'data = ', request.responseText);
       cb({ uri: path, load: myLoad, success: false, code: -2, err: (request.status + ' ' + request.statusText).trim(), payLoad: 'API Request' });
     }
   }

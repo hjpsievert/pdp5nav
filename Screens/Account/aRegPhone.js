@@ -287,21 +287,6 @@ export class aRegPhone extends React.Component {
               </View>
             </TouchableHighlight>
           </View>
-
-          {/* <View style={{ flexDirection: 'row', justifyContent: 'center', paddingTop: 25 }}>
-            <View style={{ width: 2 * Dimensions.get('window').width / 3 }}>
-              <Button
-                raised={true}
-                icon={{ name: 'ios-arrow-dropright', type: 'ionicon' }}
-                iconRight
-                backgroundColor={'green'}
-                color={'white'}
-                title={'Continue'}
-                onPress={usePhone ? this._validatePhone : this._addPhone}
-              />
-            </View>
-          </View> */}
-
         </View>
       </View>
     )
