@@ -138,7 +138,7 @@ export class aRegCreate extends React.Component {
   }
 
   _processCreateUser = (response) => {
-    const { success, payLoad } = response;
+    const { success, payLoad, err } = response;
     console.log('_processCreateUser success = ' + success + ', data ' + payLoad);
     const { email } = this.state;
     const { installationId } = Constants;
@@ -153,7 +153,7 @@ export class aRegCreate extends React.Component {
     }
     else {
       userProfile.emailVerified = true;
-      if (response === 'Duplicate Email') {
+      if (err === 'Duplicate Email') {
         this.setState({
           duplicateEmail: true,
         });
