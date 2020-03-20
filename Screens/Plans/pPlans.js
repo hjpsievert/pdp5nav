@@ -79,7 +79,7 @@ export class pPlans extends React.Component {
   }
 
   componentWillUnmount() {
-    console.log('pPlans will unmount');
+    console.log('pPlans did unmount');
     Dimensions.removeEventListener('change', this._handleDimChange);
   }
 

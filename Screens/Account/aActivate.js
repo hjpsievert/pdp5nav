@@ -37,7 +37,7 @@ export class aActivate extends React.Component {
   }
 
   componentWillUnmount() {
-    console.log('pDrugSearch will unmount');
+    console.log('pDrugSearch did unmount');
     Dimensions.removeEventListener('change', this._handleDimChange);
   }
 

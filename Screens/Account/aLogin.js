@@ -50,7 +50,7 @@ export class aLogin extends React.Component {
   }
 
   componentWillUnmount() {
-    console.log('aLogin will unmount');
+    console.log('aLogin did unmount');
     Dimensions.removeEventListener('change', this._handleDimChange);
   }
 

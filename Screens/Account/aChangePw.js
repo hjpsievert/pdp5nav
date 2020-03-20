@@ -42,7 +42,7 @@ export class aChangePw extends React.Component {
   }
 
   componentWillUnmount() {
-    console.log('aChangePw will unmount');
+    console.log('aChangePw did unmount');
     Dimensions.removeEventListener('change', this._handleDimChange);
   }
 

@@ -37,7 +37,7 @@ export class dSave extends Component {
   }
 
   componentWillUnmount() {
-    console.log('dSave will unmount');
+    console.log('dSave did unmount');
     Dimensions.removeEventListener('change', this._handleDimChange);
   }
 

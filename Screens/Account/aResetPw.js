@@ -44,7 +44,7 @@ export class aResetPw extends React.Component {
   }
 
   componentWillUnmount() {
-    console.log('aResetPw will unmount');
+    console.log('aResetPw did unmount');
     Dimensions.removeEventListener('change', this._handleDimChange);
   }
 

@@ -76,7 +76,7 @@ export class aUserMode extends React.Component {
   }
 
   componentWillUnmount() {
-    console.log('aUserMode will unmount');
+    console.log('aUserMode did unmount');
     Dimensions.removeEventListener('change', this._handleDimChange);
   }
 

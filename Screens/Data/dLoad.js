@@ -46,7 +46,7 @@ export class dLoad extends Component {
   }
 
   componentWillUnmount() {
-    console.log('dLoad will unmount');
+    console.log('dLoad did unmount');
     Dimensions.removeEventListener('change', this._handleDimChange);
   }
 

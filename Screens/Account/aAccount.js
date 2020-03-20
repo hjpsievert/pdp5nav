@@ -25,7 +25,7 @@ export class aAccount extends React.Component {
 
 
   componentWillUnmount() {
-    console.log('aAccount will unmount');
+    console.log('aAccount did unmount');
     Dimensions.removeEventListener('change', this._handleDimChange);
   }
 

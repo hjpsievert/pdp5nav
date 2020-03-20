@@ -73,7 +73,7 @@ export class dStorage extends Component {
   }
 
   componentWillUnmount() {
-    console.log('dStorage will unmount');
+    console.log('dStorage did unmount');
     Dimensions.removeEventListener('change', this._handleDimChange);
   }
 

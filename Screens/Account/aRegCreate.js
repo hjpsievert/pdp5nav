@@ -44,7 +44,7 @@ export class aRegCreate extends React.Component {
 
 
   componentWillUnmount() {
-    console.log('aRegCreate will unmount');
+    console.log('aRegCreate did unmount');
     Dimensions.removeEventListener('change', this._handleDimChange);
   }
 

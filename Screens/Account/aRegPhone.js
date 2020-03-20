@@ -34,7 +34,7 @@ export class aRegPhone extends React.Component {
   }
 
   componentWillUnmount() {
-    console.log('aRegCheck will unmount');
+    console.log('aRegCheck did unmount');
     Dimensions.removeEventListener('change', this._handleDimChange);
   }
 
