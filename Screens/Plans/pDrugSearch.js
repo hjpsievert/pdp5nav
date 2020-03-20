@@ -88,7 +88,8 @@ export class pDrugSearch extends React.Component {
     else {
       handleBaseDrugSearchComplete(payLoad);
       this._handleSearchTextChanged('');
-      code === 1 ? navigation.navigate('pDrugSelect') : navigation.navigate('pDrugPick')
+      console.log('_onBaseDrugSearchComplete code = ', code);
+      code === 1 ? navigation.navigate('Drugs', {screen: 'pDrugSelect'}) : navigation.navigate('Drugs', {screen: 'pDrugPick'})
     }
   }
 
@@ -117,6 +118,7 @@ export class pDrugSearch extends React.Component {
     const { adjust, emptySearch, validStateId, repeatSearch, lastSearch, entryComplete, useWildcard, searchString } = this.state;
     const { userProfile } = this.props;
     const { userStateName } = userProfile;
+    console.log('pDrugSearch render entryComplete ',entryComplete);
     return (
       <View style={{ height: Dimensions.get('window').height - 75 - (adjust ? 0 : 35) }} >
         {!validStateId &&
