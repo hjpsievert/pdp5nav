@@ -185,7 +185,7 @@ export const saveDBProfile = function (cb, userData, deviceIdentifier = null) {
 
 export const updateAnonymous = function (cb, deviceIdentifier, userData) {
   const mode = 'POST';
-  return processRequest(cb, mode, `ManageProfile?code=hs5RnPswRXhEsA9X/Dn8WwT8OoXia3QI7PlsXViKmz9nACNem58xbQ==&FunctionType=Update&DeviceIdentifier=${deviceIdentifier}`, userData);
+  return processRequest(cb, mode, `ManageAnonymous?code=GLKdKFW0DQm0fZluAMcSjMi3VXSJer2B8gy7yfZ/W3cocTKaSOUVUw==&FunctionType=Update&DeviceIdentifier=${deviceIdentifier}`, userData);
 }
 
 export const createAnonymous = function (cb, deviceIdentifier, deviceName, userData) {
