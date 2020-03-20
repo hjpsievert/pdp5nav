@@ -41,19 +41,19 @@ export class pDrugs extends React.Component {
 
   componentDidMount() {
     Dimensions.addEventListener('change', this._handleDimChange);
-    const { route, navigation } = this.props;
-    let refresh = false;
-    refresh = route.params?.refresh ?? false;
-    console.log('pDrugs Mount refresh = ', refresh);
-    if (refresh) {
-      this.props.updateFlowState({
-        showDosage: false,
-        showOptimize: false,
-        showMode: false,
-        askDelete: false,
-      });
-      navigation.dispatch(CommonActions.setParams({ refresh: false }));
-    }
+    // const { route, navigation } = this.props;
+    // let refresh = false;
+    // refresh = route.params?.refresh ?? false;
+    // console.log('pDrugs Mount refresh = ', refresh);
+    // if (refresh) {
+    //   this.props.updateFlowState({
+    //     showDosage: false,
+    //     showOptimize: false,
+    //     showMode: false,
+    //     askDelete: false,
+    //   });
+    //   navigation.dispatch(CommonActions.setParams({ refresh: false }));
+    // }
 
     const { drugCount, userProfile, myDrugs, activeListDirty, animating } = this.props;
     console.log('pDrugs did mount, activeListDirty = ', activeListDirty, ', drugCount = ', drugCount);
@@ -72,16 +72,16 @@ export class pDrugs extends React.Component {
     }
 
 
-    const refresh = route.params?.refresh ?? false;
-    console.log('pDrugs Update refresh = ', refresh);
-    if (refresh) {
-      this.props.updateFlowState({
-        showDosage: false,
-        showOptimize: false,
-        showMode: false,
-      });
-      navigation.dispatch(CommonActions.setParams({ refresh: false }));
-    }
+    // const refresh = route.params?.refresh ?? false;
+    // console.log('pDrugs Update refresh = ', refresh);
+    // if (refresh) {
+    //   this.props.updateFlowState({
+    //     showDosage: false,
+    //     showOptimize: false,
+    //     showMode: false,
+    //   });
+    //   navigation.dispatch(CommonActions.setParams({ refresh: false }));
+    // }
   }
 
 

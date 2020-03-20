@@ -19,7 +19,7 @@ function pDrugStack() {
       <Stack.Screen
         name="pDrugs"
         component={pDrugs}
-        initialParams={{ refresh: true }}
+        // initialParams={{ refresh: true }}
         options={({ navigation }) => ({
           title: 'My Drugs',
           headerTitle: "Your Drug List",
@@ -62,7 +62,8 @@ function pDrugStack() {
             <View style={styles.innerContainer}>
               <TouchableHighlight
                 underlayColor={'#ccc'}
-                onPress={() => navigation.navigate('pDrugs', { refresh: true })}
+                // onPress={() => navigation.navigate('pDrugs', { refresh: true })}
+                onPress={() => navigation.navigate('pDrugs')}
               >
                 <View style={[styles.touch, { justifyContent: 'flex-start' }]}>
                   <Icon
