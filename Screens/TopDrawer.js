@@ -19,11 +19,12 @@ export default function TopDrawer() {
       initialRouteName={'Top'}
       // drawerType={ Platform.OS === 'web' ? 'permanent' : 'front'}
       drawerType={'front'}
-      edgeWidth={25}
-      minSwipeDistance={100}
+      edgeWidth={Platform.OS === 'web' ? 0 : 25}
+      minSwipeDistance={Platform.OS === 'web' ? 0 : 100}
       drawerStyle={{
         backgroundColor: '#c6cbef',
-        width: Platform.OS === 'web' ? 300 : 200,
+        width: Platform.OS === 'web' ? Dimensions.get('window').width/4 : 200,
+        minWidth: Platform.OS === 'web' ? 300 : 200
       }}
     >
       <Drawer.Screen
