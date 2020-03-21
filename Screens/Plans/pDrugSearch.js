@@ -34,10 +34,20 @@ export class pDrugSearch extends React.Component {
 
   componentDidMount() {
     Dimensions.addEventListener('change', this._handleDimChange);
+    console.log('pDrugSearch did mount');
+  }
+
+  componentDidUpdate() {
+    console.log('pDrugSearch did update');
+    const { entryComplete } = this.state;
+    if (entryComplete)
+      this.setState({
+        entryComplete: false,
+      })
   }
 
   componentWillUnmount() {
-    console.log('pDrugSearch will unmount');
+    console.log('pDrugSearch did unmount');
     Dimensions.removeEventListener('change', this._handleDimChange);
   }
 
@@ -89,7 +99,7 @@ export class pDrugSearch extends React.Component {
       handleBaseDrugSearchComplete(payLoad);
       this._handleSearchTextChanged('');
       console.log('_onBaseDrugSearchComplete code = ', code);
-      code === 1 ? navigation.navigate('Drugs', {screen: 'pDrugSelect'}) : navigation.navigate('Drugs', {screen: 'pDrugPick'})
+      code === 1 ? navigation.navigate('Drugs', { screen: 'pDrugSelect', params: { doPick: false } }) : navigation.navigate('Drugs', { screen: 'pDrugPick', params: { doPick: true } })
     }
   }
 
@@ -118,7 +128,7 @@ export class pDrugSearch extends React.Component {
     const { adjust, emptySearch, validStateId, repeatSearch, lastSearch, entryComplete, useWildcard, searchString } = this.state;
     const { userProfile } = this.props;
     const { userStateName } = userProfile;
-    console.log('pDrugSearch render entryComplete ',entryComplete);
+    console.log('pDrugSearch render entryComplete ', entryComplete);
     return (
       <View style={{ height: Dimensions.get('window').height - 75 - (adjust ? 0 : 35) }} >
         {!validStateId &&
