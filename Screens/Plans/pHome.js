@@ -250,7 +250,6 @@ export class pHome extends React.Component {
 
   _handleAdd = () => {
     const { navigation } = this.props;
-    // navigation.navigate('Top', { screen: 'Drugs', params: { screen: 'pDrugSearch' } });
     navigation.navigate('Drugs', { screen: 'pDrugSearch' });
   }
 
