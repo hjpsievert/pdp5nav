@@ -160,8 +160,8 @@ export class aUserMode extends React.Component {
 
   _saveProfile = () => {
     const { userProfile } = this.props;
-    const {userMode} = userProfile;
-    const {installationId} = Constants;
+    const { userMode } = userProfile;
+    const { installationId } = Constants;
     console.log('aUserMode _saveProfile, user profile = ', JSON.stringify(userProfile));
     const { stateId, stateName, planId, planName, contractId, drugFind, planSelected, stateSelected } = this.state;
     let newProfile = { ...userProfile };
@@ -196,8 +196,9 @@ export class aUserMode extends React.Component {
     // navigation.navigate('top');
     updateFlowState({
       reloadMain: true,
+      planListDirty: true
     })
-    navigation.popToTop();
+    navigation.navigate('Home');
   }
 
   render() {
