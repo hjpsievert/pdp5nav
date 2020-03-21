@@ -3,7 +3,6 @@ import {
   View,
   Text,
   Platform,
-  Dimensions
 } from 'react-native';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
@@ -13,7 +12,6 @@ import size from 'lodash/size';
 import pHomeStack from './Plans/pHomeStack';
 import pDrugStack from './Plans/pDrugStack';
 import pPlanStack from './Plans/pPlanStack';
-import { TouchableHighlight } from 'react-native-gesture-handler';
 
 export class TabStack extends React.Component {
   constructor(props, context) {
@@ -22,12 +20,12 @@ export class TabStack extends React.Component {
 
   render() {
     let Tab = createBottomTabNavigator();
-    const { drugCount, planCount } = this.props;
-    console.log('Tab Stack'); // route = ', this.props.route);
+    const { drugCount, planCount, route } = this.props;
+    // console.log('Tab Stack route = ', route);
 
     return (
       <Tab.Navigator
-        initialRouteName={'Home'}
+        // initialRouteName={'Home'}
         showIcon={true}
         lazy={true}
         labelStyle={{
