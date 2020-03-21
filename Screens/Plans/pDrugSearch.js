@@ -99,7 +99,7 @@ export class pDrugSearch extends React.Component {
       handleBaseDrugSearchComplete(payLoad);
       this._handleSearchTextChanged('');
       console.log('_onBaseDrugSearchComplete code = ', code);
-      code === 1 ? navigation.navigate('Drugs', { screen: 'pDrugSelect', params: { doPick: false } }) : navigation.navigate('Drugs', { screen: 'pDrugPick', params: { doPick: true } })
+      code === 1 ? navigation.navigate('pDrugSelect', { params: { doPick: false } }) : navigation.navigate('pDrugPick', { params: { doPick: true } })
     }
   }
 
@@ -109,12 +109,10 @@ export class pDrugSearch extends React.Component {
     if (emailVerified || appVerified) {
       console.log('pDrugSearch navigate to regCheck');
       this.props.navigation.navigate('Account', { screen: 'aRegCheck' });
-      // this.props.navigation.navigate('aRegCheck');
     }
     else {
       console.log('pDrugSearch navigate to regCreate');
       this.props.navigation.navigate('Account', { screen: 'aRegCreate' });
-      // this.props.navigation.navigate('aRegCreate');
     }
   }
 
