@@ -43,7 +43,9 @@ export class pHome extends React.Component {
   }
 
   componentDidMount() {
+    console.log('pHome did mount');
     Dimensions.addEventListener('change', this._handleDimChange);
+
     // console.log('Localization region = ', Localization.region, ', timezone = ', Localization.timezone,' current time = ', new Date().toLocaleString(Localization.locale, {timeZone: Localization.timezone}));
 
     const { userProfile, isStarted } = this.props;
@@ -89,12 +91,13 @@ export class pHome extends React.Component {
   // }
 
   componentDidUpdate() {
+    console.log('pHome did update');
 
   }
 
   componentWillUnmount() {
-    console.log('pHome unmounting');
     Dimensions.removeEventListener('change', this._handleDimChange);
+    console.log('pHome did unmount');
   }
 
   _handleDimChange = ({ window }) => {
@@ -220,11 +223,10 @@ export class pHome extends React.Component {
   // ToDo: make this a utility function across components??
   onFindPlansComplete = (response) => {
     const { payLoad, code } = response;
-    console.log('pHome onFindPlansComplete planList size = ', code);
-    const { handleUpdatePlanList, updateFlowState } = this.props;
+    const { handleUpdatePlanList } = this.props;
     handleUpdatePlanList(payLoad);
-    updateFlowState({
-    });
+    console.log('pHome onFindPlansComplete planList size = ', code);
+
     // setState in pHome, updateFlowState elsewhere
     this.setState({
       planListDirty: false,
