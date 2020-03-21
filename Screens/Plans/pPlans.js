@@ -96,9 +96,10 @@ export class pPlans extends React.Component {
   // ToDo: make this a utility function across components??
   onFindPlansComplete = (response) => {
     const { success, payLoad, code, err } = response;
-    const { handleUpdatePlanList, updateFlowState, myPlans, plansToShow } = this.props;
-    console.log('pPlans onFindPlansComplete planList size = ', code);
+    const { handleUpdatePlanList } = this.props;
     handleUpdatePlanList(payLoad);
+    const { updateFlowState, myPlans, plansToShow } = this.props;
+    console.log('pPlans onFindPlansComplete planList size = ', code);
     // only in pPlans
     this.setState({
       dataSource: take(sortBy(flatMap(myPlans, (d) => d), 'totalCost'), plansToShow),
