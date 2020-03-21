@@ -306,10 +306,7 @@ export class aActivate extends React.Component {
               >
                 <TouchableHighlight
                   underlayColor={'#ccc'}
-                  onPress={navigation.popToTop}
-                //onPress={() => navigation.popToTop()}
-                // onPress={() => navigation.navigate('Top', { screen: 'Home', params: { screen: 'pHome' } })}
-
+                  onPress={navigation.navigate('Home')}
                 >
                   <View style={{ flexDirection: 'column', justifyContent: 'center', paddingBottom: 5 }}>
                     <Icon
