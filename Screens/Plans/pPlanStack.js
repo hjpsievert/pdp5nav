@@ -27,7 +27,7 @@ function pPlanStack() {
           headerLeft: () => (
             <View style={styles.innerContainer}>
               <TouchableHighlight
-                onPress={() => navigation.navigate('Home', {screen: 'pHome'})}
+                onPress={() => navigation.navigate('Home')}
               >
                 <View style={[styles.touch, { justifyContent: 'flex-start' }]}>
                   <Icon
