@@ -5,7 +5,8 @@ import {
   FlatList,
   TouchableHighlight,
   Dimensions,
-  Platform
+  Platform,
+  StyleSheet
 } from 'react-native';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
@@ -27,23 +28,22 @@ export class pDrugPick extends React.Component {
     this.setState({
       dataSource: this.props.searchResults,
     });
+    console.log('pDrugPick did mount');
   }
 
   componentDidUpdate(prevProps) {
-    const { navigation, selectionCount, searchResults } = this.props;
+    const { navigation, selectionCount, searchResults, route } = this.props;
+    // console.log('pDrugPick didUpdate route = ', route);
     if (prevProps.searchResults != searchResults) {
       this.setState({
         dataSource: searchResults,
       });
     }
-    if (prevProps.selectionCount != selectionCount) {
-      navigation.setParams({ drugsPicked: selectionCount })
-    }
     console.log('pDrugPick componentDidUpdate');
   }
 
   componentWillUnmount() {
-    console.log('pDrugPick will unmount');
+    console.log('pDrugPick did unmount');
     Dimensions.removeEventListener('change', this._handleDimChange);
   }
 
@@ -57,21 +57,21 @@ export class pDrugPick extends React.Component {
     })
   }
 
-  _handleBaseDrugSelectionComplete = () => {
-    const { navigation, selectionCount } = this.props;
-    if (selectionCount > 0) {
-      navigation.navigate('pDrugSelect');
-    }
-    // else {
-    //   navigation.navigate('pDrugSearch');
-    // }
-  }
+  // _handleBaseDrugSelectionComplete = () => {
+  //   const { navigation, selectionCount } = this.props;
+  //   if (selectionCount > 0) {
+  //     navigation.navigate('pDrugSelect');
+  //   }
+  //   else {
+  //     navigation.navigate('pDrugSearch');
+  //   }
+  // }
 
   _renderBaseDrug = (item) => {
     const { handleBaseDrugClick } = this.props;
     const { baseName, drugCount, isSelected } = item;
-    console.log('pDrugPick _renderBaseDrug baseName = ', baseName, ', selected = ', isSelected)
-    const theTitle = baseName + '(' + drugCount + ')';
+    // console.log('pDrugPick _renderBaseDrug baseName = ', baseName, ', selected = ', isSelected)
+    const theTitle = baseName + ' (' + drugCount + ')';
     return (
       <TouchableHighlight
         onPress={() => handleBaseDrugClick(item)}
@@ -98,10 +98,11 @@ export class pDrugPick extends React.Component {
   }
 
   render() {
+    const { navigation, selectionCount } = this.props;
     const { adjust } = this.state;
     return (
       <View style={{ height: Dimensions.get('window').height - 75 - (adjust ? 0 : 35), flexDirection: 'column', alignItems: 'stretch' }} >
-        <View style={{ flex: 1, borderBottomColor: '#bbb', borderBottomWidth: 1 }}>
+        <View style={{ flexShrink: 1, borderBottomColor: '#bbb', borderBottomWidth: 1 }}>
           <FlatList
             data={this.state.dataSource}
             extraData={adjust}
@@ -109,7 +110,43 @@ export class pDrugPick extends React.Component {
             renderItem={({ item }) => this._renderBaseDrug(item)}
           />
         </View>
-
+        {selectionCount > 0 &&
+          <View style={{
+            marginTop: 10,
+            flexDirection: 'row',
+            justifyContent: 'space-around',
+            paddingTop: 3,
+            backgroundColor: 'rgb(183, 211, 255)',
+            borderBottomWidth: 1,
+            borderBottomColor: 'black',
+            borderTopWidth: 1,
+            borderTopColor: 'black'
+          }}
+          >
+            <TouchableHighlight
+              underlayColor={'#ccc'}
+              onPress={() => navigation.navigate('pDrugSelect')}
+            >
+              <View style={{ flexDirection: 'column', justifyContent: 'space-between' }}>
+                <Icon
+                  name={'ios-arrow-dropright'}
+                  type={'ionicon'}
+                  color={'black'}
+                  size={25}
+                  containerStyle={{
+                    paddingLeft: 10,
+                    paddingRight: 10,
+                  }}
+                />
+                <Text
+                  style={[styles.topTabText, { color: 'black' }]}
+                >
+                  {'CONTINUE'}
+                </Text>
+              </View>
+            </TouchableHighlight>
+          </View>
+        }
       </View>)
   }
 
@@ -135,3 +172,13 @@ const mapDispatchToProps = {
 
 export default connect(mapStateToProps, mapDispatchToProps)(pDrugPick);
 
+
+const styles = StyleSheet.create({
+  topTabText: {
+    fontSize: 8,
+    //fontWeight: 'bold',
+    textAlign: 'center',
+    color: 'black',
+    paddingTop: 2,
+  },
+});
