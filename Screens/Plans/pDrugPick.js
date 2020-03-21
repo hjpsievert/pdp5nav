@@ -57,16 +57,6 @@ export class pDrugPick extends React.Component {
     })
   }
 
-  // _handleBaseDrugSelectionComplete = () => {
-  //   const { navigation, selectionCount } = this.props;
-  //   if (selectionCount > 0) {
-  //     navigation.navigate('pDrugSelect');
-  //   }
-  //   else {
-  //     navigation.navigate('pDrugSearch');
-  //   }
-  // }
-
   _renderBaseDrug = (item) => {
     const { handleBaseDrugClick } = this.props;
     const { baseName, drugCount, isSelected } = item;
