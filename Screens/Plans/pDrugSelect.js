@@ -5,7 +5,8 @@ import {
   FlatList,
   TouchableHighlight,
   Dimensions,
-  Platform
+  Platform,
+  StyleSheet
 } from 'react-native';
 import { Icon } from 'react-native-elements';
 import { loadDrugsByBaseId } from '../../Utils/Api';
@@ -27,25 +28,25 @@ export class pDrugSelect extends React.Component {
       drugsLoaded: false,
       userData: '',
       response: '',
+      mainDrugs: [],
+      drugsSelected: 0
     };
   }
 
   componentDidMount() {
     Dimensions.addEventListener('change', this._handleDimChange);
     const { baseList, userStateId, navigation } = this.props;
-    navigation.setParams({
-      // handleLeft: this._handleGoBack,
-      handleRight: this._handleAddSelection,
-    });
-    //console.log('pDrugSelect componentDidMount');
+    console.log('pDrugSelect componentDidMount');
     loadDrugsByBaseId((response) => {
       this._handleLoadDrugs(response)
     }, userStateId, baseList);
   }
 
   componentDidUpdate(prevProps) {
-    const { baseList, userStateId, searchResultCount, navigation } = this.props;
+    const { baseList, userStateId, searchResultCount, navigation, route } = this.props;
     const { drugsLoaded } = this.state;
+    console.log('pDrugSelect didUpdate');
+
     // console.log('Prev: ', prevProps.baseList, ', current: ', baseList);
     if (isEqual(prevProps.baseList, baseList) && drugsLoaded) return;
 
@@ -56,11 +57,10 @@ export class pDrugSelect extends React.Component {
     if (prevProps.searchResultCount != searchResultCount) {
       navigation.setParams({ resultCount: searchResultCount })
     }
-    console.log('pDrugSelect componentDidUpdate');
   }
 
   componentWillUnmount() {
-    console.log('pDrugSelect will unmount');
+    console.log('pDrugSelect did unmount');
     Dimensions.removeEventListener('change', this._handleDimChange);
   }
 
@@ -109,11 +109,6 @@ export class pDrugSelect extends React.Component {
     // }
   }
 
-  // _handleGoBack = () => {
-  //   const { navigation, searchResultCount } = this.props;
-  //   searchResultCount === 1 ? navigation.navigate('pDrugSearch') : navigation.navigate('pDrugPick');
-  // }
-
   _handleAddSelection = () => {
     const { mainDrugs } = this.state;
     const { addSelectionToMyDrugs, navigation, updateFlowState } = this.props;
@@ -125,9 +120,9 @@ export class pDrugSelect extends React.Component {
         planListDirty: true,
         activeListDirty: true,
       });
+      console.log('pDrugSelect _handleAddSelection size =', size(selected));
       navigation.navigate('pDrugs');
     }
-    // console.log('pDrugSelect _handleAddSelection size =', size(selected));
   }
 
   _handleDrugClick = (drug) => {
@@ -139,7 +134,9 @@ export class pDrugSelect extends React.Component {
     let checked = [...mainDrugs];
     if (drugIndex > -1) {
       checked[drugIndex].isSelected = !drug.isSelected;
-      navigation.setParams({ drugsSelected: size(checked.filter((r) => r.isSelected)) });
+      this.setState({
+        drugsSelected: size(checked.filter((r) => r.isSelected))
+      });
     }
 
     let updated;
@@ -255,11 +252,11 @@ export class pDrugSelect extends React.Component {
   }
 
   render() {
-    const { adjust, doCombo, showGeneric, showBrand, showAll } = this.state;
+    const { adjust, doCombo, showGeneric, showBrand, showAll, drugsSelected } = this.state;
 
     return (
       <View style={{ height: Dimensions.get('window').height - 75 - (adjust ? 0 : 35) }} >
-        <View style={{ flex: 1, flexDirection: 'column', alignItems: 'stretch', paddingTop: 5, paddingBottom: 5, backgroundColor: '#ddd' }}>
+        <View style={{ flex: 1, flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'stretch', paddingTop: 5, paddingBottom: 5, backgroundColor: 'white' }}>
 
           <Text style={{ fontSize: 14, color: 'black', textAlign: 'center' }}>
             {'Filter Results'}</Text>
@@ -334,14 +331,51 @@ export class pDrugSelect extends React.Component {
               </View>
             </TouchableHighlight>
           </View>
-
-          <FlatList
-            data={this.state.dataSource}
-            extraData={adjust}
-            keyExtractor={(item) => item.ndc.toString()}
-            renderItem={({ item }) => this._renderDrug(item)}
-          />
-
+          <View style={{ flexShrink: 1, borderTopWidth: 1, borderTopColor: '#666', borderBottomWidth: 1, borderBottomColor: '#666' }}>
+            <FlatList
+              data={this.state.dataSource}
+              extraData={adjust}
+              keyExtractor={(item) => item.ndc.toString()}
+              renderItem={({ item }) => this._renderDrug(item)}
+            />
+          </View>
+          {drugsSelected > 0 &&
+            <View style={{
+              marginTop: 10,
+              flexDirection: 'row',
+              justifyContent: 'space-around',
+              paddingTop: 3,
+              backgroundColor: 'rgb(183, 211, 255)',
+              borderBottomWidth: 1,
+              borderBottomColor: 'black',
+              borderTopWidth: 1,
+              borderTopColor: 'black'
+            }}
+            >
+              <TouchableHighlight
+                underlayColor={'#ccc'}
+                onPress={this._handleAddSelection}
+              >
+                <View style={{ flexDirection: 'column', justifyContent: 'space-between' }}>
+                  <Icon
+                    name={'ios-arrow-dropright'}
+                    type={'ionicon'}
+                    color={'black'}
+                    size={25}
+                    containerStyle={{
+                      paddingLeft: 10,
+                      paddingRight: 10,
+                    }}
+                  />
+                  <Text
+                    style={[styles.topTabText, { color: 'black' }]}
+                  >
+                    {'CONTINUE'}
+                  </Text>
+                </View>
+              </TouchableHighlight>
+            </View>
+          }
         </View>
 
       </View>)
@@ -376,3 +410,12 @@ const mapDispatchToProps = {
 
 export default connect(mapStateToProps, mapDispatchToProps)(pDrugSelect);
 
+const styles = StyleSheet.create({
+  topTabText: {
+    fontSize: 8,
+    //fontWeight: 'bold',
+    textAlign: 'center',
+    color: 'black',
+    paddingTop: 2,
+  },
+});
