@@ -13,7 +13,8 @@ import pDrugPick from './pDrugPick';
 
 const Stack = createStackNavigator();
 
-function pDrugStack() {
+function pDrugStack({route}) {
+  // console.log('pDrugStack route = ', route);
   return (
     <Stack.Navigator>
       <Stack.Screen
@@ -30,7 +31,7 @@ function pDrugStack() {
             <View style={styles.innerContainer}>
               <TouchableHighlight
                 underlayColor={'#ccc'}
-                onPress={() => navigation.navigate('Home', { screen: 'pHome' })}
+                onPress={() => navigation.navigate('Home')}
               >
                 <View style={[styles.touch, { justifyContent: 'flex-start' }]}>
                   <Icon
