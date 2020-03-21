@@ -93,10 +93,11 @@ export class pDrugs extends React.Component {
 
   // ToDo: make this a utility function across components??
   _onFindPlansComplete = (response) => {
-    const { handleUpdatePlanList, updateFlowState } = this.props;
     const { payLoad, code } = response;
-    console.log('pDrugs onFindPlansComplete planList size = ', code);
+    const { handleUpdatePlanList } = this.props;
     handleUpdatePlanList(payLoad);
+    const { updateFlowState } = this.props;
+    console.log('pDrugs onFindPlansComplete planList size = ', code);
     // setState in pHome, updateFlowState elsewhere
     updateFlowState({
       planListDirty: false,
