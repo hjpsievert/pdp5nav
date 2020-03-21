@@ -22,7 +22,6 @@ import flatMap from 'lodash/flatMap';
 import size from 'lodash/size';
 import capitalize from 'lodash/capitalize';
 import lowerCase from 'lodash/lowerCase';
-import { CommonActions } from '@react-navigation/native';
 
 export class pDrugs extends React.Component {
   constructor(props, context) {
@@ -41,20 +40,6 @@ export class pDrugs extends React.Component {
 
   componentDidMount() {
     Dimensions.addEventListener('change', this._handleDimChange);
-    // const { route, navigation } = this.props;
-    // let refresh = false;
-    // refresh = route.params?.refresh ?? false;
-    // console.log('pDrugs Mount refresh = ', refresh);
-    // if (refresh) {
-    //   this.props.updateFlowState({
-    //     showDosage: false,
-    //     showOptimize: false,
-    //     showMode: false,
-    //     askDelete: false,
-    //   });
-    //   navigation.dispatch(CommonActions.setParams({ refresh: false }));
-    // }
-
     const { drugCount, userProfile, myDrugs, activeListDirty, animating } = this.props;
     console.log('pDrugs did mount, activeListDirty = ', activeListDirty, ', drugCount = ', drugCount);
 
@@ -64,29 +49,18 @@ export class pDrugs extends React.Component {
   }
 
   componentDidUpdate() {
-    const { drugCount, userProfile, myDrugs, activeListDirty, animating, navigation, route } = this.props;
+    const { drugCount, userProfile, myDrugs, activeListDirty, animating, route } = this.props;
+    // console.log('pDrugs didUpdate route = '), route
     console.log('pDrugs did update, activeListDirty = ', activeListDirty, ', drugCount = ', drugCount);
 
     if (activeListDirty && !animating) {
       saveDrugList(this._handleSaveActive, userProfile, 'Active List', 'Saved on every change', 'System', myDrugs, 'activePlanDrugs')
     }
-
-
-    // const refresh = route.params?.refresh ?? false;
-    // console.log('pDrugs Update refresh = ', refresh);
-    // if (refresh) {
-    //   this.props.updateFlowState({
-    //     showDosage: false,
-    //     showOptimize: false,
-    //     showMode: false,
-    //   });
-    //   navigation.dispatch(CommonActions.setParams({ refresh: false }));
-    // }
   }
 
 
   componentWillUnmount() {
-    console.log('pDrugs will unmount');
+    console.log('pDrugs did unmount');
     Dimensions.removeEventListener('change', this._handleDimChange);
   }
 
