@@ -25,7 +25,7 @@ const Stack = createStackNavigator();
 function AccountStack() {
   // console.log('AccountStack route = ', route);
   return (
-    <Stack.Navigator initialRouteName="aAccount">
+    <Stack.Navigator>
       <Stack.Screen
         name="aAccount"
         component={aAccount}
@@ -68,7 +68,7 @@ function AccountStack() {
           headerLeft: () => (
             <View style={styles.innerContainer}>
               <TouchableHighlight
-                onPress={() => navigation.popToTop()}
+                onPress={() => navigation.Navigate('aAccount')}
               >
                 <View style={[styles.touch, { justifyContent: 'flex-start' }]}>
                   <Icon
@@ -218,7 +218,7 @@ function AccountStack() {
           headerLeft: () => (
             <View style={styles.innerContainer}>
               <TouchableHighlight
-                onPress={() => navigation.navigate('aAccount')}
+                onPress={() => navigation.navigate('Home')}
               >
                 <View style={[styles.touch, { justifyContent: 'flex-start' }]}>
                   <Icon
@@ -248,7 +248,7 @@ function AccountStack() {
           headerLeft: () => (
             <View style={styles.innerContainer}>
               <TouchableHighlight
-                onPress={() => navigation.popToTop()}
+                onPress={() => navigation.navigate('Home')}
               >
                 <View style={[styles.touch, { justifyContent: 'flex-start' }]}>
                   <Icon
@@ -398,7 +398,7 @@ function AccountStack() {
           headerLeft: () => (
             <View style={styles.innerContainer}>
               <TouchableHighlight
-                onPress={() => navigation.navigate('aAccount')}
+                onPress={() => navigation.navigate('Home')}
               >
                 <View style={[styles.touch, { justifyContent: 'flex-start' }]}>
                   <Icon
