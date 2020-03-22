@@ -78,7 +78,7 @@ export class aRegCheck extends React.Component {
               >
                 <TouchableHighlight
                   underlayColor={'#ccc'}
-                  onPress={navigation.navigate('Account')}
+                  onPress={() => navigation.navigate('Account')}
                 >
                   <View style={{ flexDirection: 'column', justifyContent: 'space-between' }}>
                     <Icon
@@ -131,7 +131,7 @@ export class aRegCheck extends React.Component {
               >
                 <TouchableHighlight
                   underlayColor={'#ccc'}
-                  onPress={navigation.navigate('Account')}
+                  onPress={() => navigation.navigate('Account')}
                 >
                   <View style={{ flexDirection: 'column', justifyContent: 'space-between' }}>
                     <Icon

@@ -306,7 +306,7 @@ export class aActivate extends React.Component {
               >
                 <TouchableHighlight
                   underlayColor={'#ccc'}
-                  onPress={navigation.navigate('Home')}
+                  onPress={() => navigation.navigate('Home')}
                 >
                   <View style={{ flexDirection: 'column', justifyContent: 'center', paddingBottom: 5 }}>
                     <Icon

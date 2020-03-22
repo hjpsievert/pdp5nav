@@ -277,7 +277,7 @@ export class aResetPw extends React.Component {
               >
                 <TouchableHighlight
                   underlayColor={'#ccc'}
-                  onPress={navigation.navigate('Account')}
+                  onPress={() => navigation.navigate('Account')}
                 >
                   <View style={{ flexDirection: 'column', justifyContent: 'center', paddingBottom: 5 }}>
                     <Icon
