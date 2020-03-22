@@ -119,7 +119,7 @@ export class aRegPhone extends React.Component {
           ]
         );
       }
-      navigation.navigate('Account');
+      navigation.navigate('aAccount');
     }
   }
 

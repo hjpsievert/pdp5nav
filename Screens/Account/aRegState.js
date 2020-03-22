@@ -156,7 +156,7 @@ export class aRegState extends React.Component {
             },
           ]
         );
-        navigation.navigate('Account');
+        navigation.navigate('aAccount');
       }
     }
   }

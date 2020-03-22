@@ -173,7 +173,7 @@ export class aRegCreate extends React.Component {
             ]
           );
         }
-        navigation.navigate('Account');
+        navigation.navigate('aAccount');
       }
     }
   }
@@ -199,7 +199,7 @@ export class aRegCreate extends React.Component {
           ]
         );
       }
-      navigation.navigate('Account');
+      navigation.navigate('aAccount');
     }
   }
 
@@ -244,7 +244,7 @@ export class aRegCreate extends React.Component {
                 >
                   <TouchableHighlight
                     underlayColor={'#ccc'}
-                    onPress={() => navigation.navigate('Account')}
+                    onPress={() => navigation.navigate('aAccount')}
                   >
                     <View style={{ flexDirection: 'column', justifyContent: 'space-between' }}>
                       <Icon
