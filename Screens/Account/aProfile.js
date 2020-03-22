@@ -52,12 +52,12 @@ export class aProfile extends React.Component {
     profileInfo.push({ key: i++, title: 'EMail', subtitle: userEmail ?? 'not defined' });
     profileInfo.push({ key: i++, title: 'State code', subtitle: userStateId ?? 'not defined' });
     profileInfo.push({ key: i++, title: 'Display Name', subtitle: displayName ?? 'not defined' });
-    profileInfo.push({ key: i++, title: 'EMail verified', subtitle: emailVerified ?? 'no' });
-    profileInfo.push({ key: i++, title: 'EZPartD activated', subtitle: appVerified ?? 'no' });
+    profileInfo.push({ key: i++, title: 'EMail verified', subtitle: emailVerified ? 'yes' : 'no' });
+    profileInfo.push({ key: i++, title: 'EZPartD activated', subtitle: appVerified ? 'yes' : 'no' });
     profileInfo.push({ key: i++, title: 'Two-factor authentication', subtitle: provider ?? 'not defined' });
     profileInfo.push({ key: i++, title: 'User mode', subtitle: userMode ?? 'not defined'  });
     profileInfo.push({ key: i++, title: 'Store to cloud', subtitle: (storageMode ?? 'not defined') === 'cloud' ? 'yes' : 'no' });
-    profileInfo.push({ key: i++, title: 'Plan selected', subtitle: userIsSubscribed ?? 'no' });
+    profileInfo.push({ key: i++, title: 'Plan selected', subtitle: userIsSubscribed ? 'yes' :  'no' });
     if (userIsSubscribed) {
       profileInfo.push({ key: i++, title: 'Contract/Plan ID', subtitle: userContractId ?? 'not defined' + '-' + userPlanId ?? '' });
       profileInfo.push({ key: i++, title: 'Plan Name', subtitle: userPlanName ?? 'not defined' });
