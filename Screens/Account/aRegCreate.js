@@ -149,7 +149,7 @@ export class aRegCreate extends React.Component {
       userProfile.loginId = payLoad;
       userProfile.userEmail = email;
       userProfile.userMode = usrMode.created;
-      updateAnonymous((response) => { this._finishCreateUser(response, userProfile) }, installationId, userProfile);
+      updateAnonymous((response) => { this._finishCreateUser(response, userProfile) }, installationId, JSON.stringify(userProfile));
     }
     else {
       userProfile.emailVerified = true;
@@ -244,7 +244,7 @@ export class aRegCreate extends React.Component {
                 >
                   <TouchableHighlight
                     underlayColor={'#ccc'}
-                    onPress={navigation.navigate('Account')}
+                    onPress={() => navigation.navigate('Account')}
                   >
                     <View style={{ flexDirection: 'column', justifyContent: 'space-between' }}>
                       <Icon
