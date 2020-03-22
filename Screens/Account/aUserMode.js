@@ -195,8 +195,7 @@ export class aUserMode extends React.Component {
     const { navigation, updateFlowState } = this.props;
     // navigation.navigate('top');
     updateFlowState({
-      reloadMain: true,
-      planListDirty: true
+      stateChanged: true,
     })
     navigation.navigate('Home');
   }
