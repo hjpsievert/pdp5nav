@@ -92,7 +92,10 @@ export class pHome extends React.Component {
 
   componentDidUpdate() {
     console.log('pHome did update');
-
+    const { stateChanged } = this.props;
+    if (stateChanged) {
+      this._findPlans();
+    }
   }
 
   componentWillUnmount() {
@@ -192,7 +195,6 @@ export class pHome extends React.Component {
     updateFlowState({
       doMailState: Defaults.doMailState,
       startDate: new Date().toLocaleDateString('en-US'),
-      plansToShow: Defaults.plansToShow,
       reloadMain: false,
     })
     this.setState({
@@ -202,14 +204,24 @@ export class pHome extends React.Component {
   }
 
   _findPlans = () => {
-    const { myConfigList, drugCount, doMailState, startDate, navigation, userProfile } = this.props;
+    const { myConfigList, drugCount, doMailState, startDate, navigation, userProfile, stateChanged, updateFlowState } = this.props;
     const { planListDirty } = this.state;
     const { emailVerified, userStateId, userMode } = userProfile;
     const stateId = userStateId;
-    console.log('pHome _findPlans, drugCount ', drugCount, ', planListDirty = ', planListDirty); // , ', userProfile = ' , JSON.stringify(userProfile));
+    console.log('pHome _findPlans, drugCount ', drugCount, ', planListDirty = ', planListDirty , ', stateChenged = ', stateChanged); //, 'userProfile = ' , JSON.stringify(userProfile));
+    
+    if (stateChanged) {
+      this.setState({
+        planListDirty: true
+      });
+    }
 
-    if (planListDirty && stateId) {
+    if (planListDirty || stateChanged && stateId) {
       this.setState({ animating: true });
+      updateFlowState({
+        stateChanged: false
+      })
+
       // console.log('pHome _findPlans config = ', myConfigList);
       findPlans((response) => {
         this.onFindPlansComplete(response);
@@ -463,6 +475,7 @@ pHome.propTypes = {
   planNumerator: PropTypes.number.isRequired,
   previousLogin: PropTypes.string.isRequired,
   startDate: PropTypes.string.isRequired,
+  stateChanged: PropTypes.bool.isRequired,
   updateContent: PropTypes.func.isRequired,
   updateFlowState: PropTypes.func.isRequired,
   updatePlatformValue: PropTypes.func.isRequired,
@@ -482,6 +495,7 @@ const mapStateToProps = (state) => {
     myPlans: size(state.myPlans) ? sortBy(flatMap(state.myPlans, (d) => d), 'totalCost').slice(0, 10) : [],
     planCount: size(state.myPlans) ?? 0,
     planDenominator: size(state.myPlans) ? sortBy(flatMap(state.myPlans, (d) => d), 'totalCost')[size(state.myPlans) - 1].totalCost - sortBy(flatMap(state.myPlans, (d) => d), 'totalCost')[0].totalCost : 1,
+    stateChanged: state.flowState['stateChanged'] ?? false,
     planNumerator: size(state.myPlans) ? sortBy(flatMap(state.myPlans, (d) => d), 'totalCost')[0].totalCost : 0,
   }
 }
