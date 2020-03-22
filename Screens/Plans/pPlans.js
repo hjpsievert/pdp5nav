@@ -14,6 +14,7 @@ import {
   TextInput,
   Alert,
 } from 'react-native';
+import { Defaults } from '../../Utils/Constants';
 import { findPlans } from '../../Utils/Api';
 import { Icon } from 'react-native-elements';
 import flatMap from 'lodash/flatMap';
@@ -29,16 +30,17 @@ export class pPlans extends React.Component {
       adjust: Dimensions.get('window').width > Dimensions.get('window').height && Platform.OS !== 'web',
       showPhases: true,
       compareSelected: [],
-      dataSource: take(sortBy(flatMap(props.myPlans, (d) => d), 'totalCost'), props.plansToShow),
+      dataSource: take(sortBy(flatMap(props.myPlans, (d) => d), 'totalCost'), Defaults.plansToShow),
       maxCompare: 5,
+      plansToShow: Defaults.plansToShow
     }
   }
 
   componentDidMount() {
     Dimensions.addEventListener('change', this._handleDimChange);
-    const { userProfile, myConfigList, doMailState, startDate, planListDirty, animating, planCount, myPlans, plansToShow, updateFlowState } = this.props;
+    const { userProfile, myConfigList, doMailState, startDate, planListDirty, animating, planCount, myPlans, updateFlowState } = this.props;
     const { userStateId, userStateName } = userProfile;
-    const { dataSource } = this.state;
+    const { dataSource, plansToShow } = this.state;
 
     console.log('pPlans did mount, doMailState = ', doMailState, ', startDate = ', startDate);
     this.props.navigation.setParams({
@@ -58,9 +60,9 @@ export class pPlans extends React.Component {
     }
   }
 
-  componentDidUpdate() {
-    const { planListDirty, animating, userProfile, myConfigList, doMailState, startDate, updateFlowState, planCount, myPlans, plansToShow } = this.props;
-    const { dataSource } = this.state;
+  componentDidUpdate(prevProps) {
+    const { planListDirty, animating, userProfile, myConfigList, doMailState, startDate, updateFlowState, planCount, myPlans } = this.props;
+    const { dataSource, plansToShow } = this.state;
 
     console.log('pPlans did update, planListDirty ', planListDirty, ', planCount = ', planCount); //, ', dataSource = ', size(dataSource));
     const userStateId = userProfile.userStateId;
@@ -71,7 +73,8 @@ export class pPlans extends React.Component {
         this.onFindPlansComplete(response);
       }, JSON.stringify(myConfigList), userStateId, doMailState, startDate);
     }
-    if (planCount > 0 && size(dataSource) === 0) {
+    if ((planCount > 0 && size(dataSource) === 0) || prevProps.myPlans != this.props.myPlans) {
+      console.log('pPlans myPlans has changed: ', prevProps.myPlans != this.props.myPlans)
       this.setState({
         dataSource: take(sortBy(flatMap(myPlans, (d) => d), 'totalCost'), plansToShow),
       })
@@ -98,14 +101,15 @@ export class pPlans extends React.Component {
     const { success, payLoad, code, err } = response;
     const { handleUpdatePlanList } = this.props;
     handleUpdatePlanList(payLoad);
-    const { updateFlowState, myPlans, plansToShow } = this.props;
+    const { updateFlowState, myPlans } = this.props;
+    const {plansToShow} = this.state;
     console.log('pPlans onFindPlansComplete planList size = ', code);
     // only in pPlans
     this.setState({
       dataSource: take(sortBy(flatMap(myPlans, (d) => d), 'totalCost'), plansToShow),
     });
-        // setState in pHome, updateFlowState elsewhere
-updateFlowState({
+    // setState in pHome, updateFlowState elsewhere
+    updateFlowState({
       planListDirty: false,
       animating: false,
     });
@@ -136,12 +140,11 @@ updateFlowState({
   }
 
   _handleShowPlans = (numPlans) => {
-    const { updateFlowState, planCount, myPlans } = this.props;
+    const { planCount, myPlans } = this.props;
     const plansToShow = Math.min(numPlans, planCount);
-    updateFlowState({
-      plansToShow: plansToShow
-    });
+
     this.setState({
+      plansToShow: plansToShow,
       dataSource: take(sortBy(flatMap(myPlans, (d) => d), 'totalCost'), plansToShow),
     })
     console.log('pPlans _handleShowPlans numPlans = ', numPlans, ', plansToShow = ', plansToShow);
@@ -191,7 +194,7 @@ updateFlowState({
     navigation.navigate('pPlanBreakdown', { planSelected: [item.planId] });
   }
 
-_handlePlanSelect = (item) => {
+  _handlePlanSelect = (item) => {
     const { compareSelected, maxCompare } = this.state;
     let index = compareSelected.indexOf(item.planId);
     if (index > -1) {
@@ -386,8 +389,8 @@ _handlePlanSelect = (item) => {
   }
 
   render() {
-    const { adjust, animating, showPhases, dataSource, compareSelected, flag } = this.state;
-    const { startDate, plansToShow, planCount, doMailState, planFullNumerator, planFullDenominator, planMax } = this.props;
+    const { adjust, animating, showPhases, dataSource, compareSelected, flag, plansToShow } = this.state;
+    const { startDate, planCount, doMailState, planFullNumerator, planFullDenominator, planMax } = this.props;
     console.log('pPlans render dataSource size = ', size(dataSource));
     if (size(dataSource) === 0) return null;
     const scale = Dimensions.get('window').width / planMax / 1.1;
@@ -518,7 +521,6 @@ pPlans.propTypes = {
   planFullNumerator: PropTypes.number.isRequired,
   planListDirty: PropTypes.bool.isRequired,
   planMax: PropTypes.number.isRequired,
-  plansToShow: PropTypes.number.isRequired,
   startDate: PropTypes.string.isRequired,
   updateFlowState: PropTypes.func.isRequired,
   userProfile: PropTypes.object.isRequired,
@@ -529,7 +531,6 @@ const mapStateToProps = (state) => {
     animating: state.flowState['animating'] ?? false,
     planListDirty: state.flowState['planListDirty'] ?? false,
     startDate: state.flowState['startDate'] ?? new Date().toLocaleDateString('en-US'),
-    plansToShow: state.flowState['plansToShow'] ?? 10,
     planCount: size(state.myPlans) ?? 0,
     doMailState: state.flowState['doMailState'] ?? false,
     myPlans: sortBy(state.myPlans, 'totalCost'),
