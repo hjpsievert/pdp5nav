@@ -110,6 +110,14 @@ export class aRegState extends React.Component {
     else return;
   }
 
+  _exitCreateAnonymous = () => {
+    const {updateFlowState, navigation} = this.props;
+    updateFlowState({
+      stateChanged: true
+    });
+    navigation.navigate('Home');
+  }
+
   _createAnonymous = () => {
     const { stateSelected, stateId, stateName } = this.state;
     const { installationId, deviceName } = Constants;
@@ -337,7 +345,7 @@ export class aRegState extends React.Component {
             >
               <TouchableHighlight
                 underlayColor={'#ccc'}
-                onPress={() => navigation.navigate('aAccount')}
+                onPress={this._exitCreateAnonymous}
               >
                 <View style={{ flexDirection: 'column', justifyContent: 'space-between', paddingBottom: 5 }}>
                   <Icon
