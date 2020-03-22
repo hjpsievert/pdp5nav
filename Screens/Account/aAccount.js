@@ -46,7 +46,7 @@ export class aAccount extends React.Component {
     listOptions.push({ key: i++, title: 'Change Password', subtitle: 'Change your password', icon: 'key-change', type: 'material-community', active: appVerified, target: 'aChangePw' });
     listOptions.push({ key: i++, title: 'Reset Password', subtitle: 'Reset your password', icon: 'redo-variant', type: 'material-community', active: appVerified, target: 'aResetPw' });
     listOptions.push({ key: i++, title: 'User Profile', subtitle: 'View and edit your information', icon: 'account-edit', type: 'material-community', active: true, target: 'aProfile' });
-    listOptions.push({ key: i++, title: 'User Mode', subtitle: 'Change the way you use EZPartD', icon: 'account-switch', type: 'material-community', active: true, target: 'aUserMode' });
+    listOptions.push({ key: i++, title: 'User Mode', subtitle: 'Change the way you use EZPartD', icon: 'account-switch', type: 'material-community', active: appVerified, target: 'aUserMode' });
     listOptions.push({ key: i++, title: 'Security', subtitle: 'Configure security options like password reset and two-factor authentication', icon: 'security', type: 'material-community', active: appVerified, target: 'Top' });
     return listOptions;
   }
