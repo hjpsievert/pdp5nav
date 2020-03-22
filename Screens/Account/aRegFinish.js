@@ -149,7 +149,7 @@ export class aRegFinish extends React.Component {
               </TouchableHighlight>
               <TouchableHighlight
                 underlayColor={'#ccc'}
-                onPress={navigation.popToTop}
+                onPress={navigation.navigate('Account')}
               >
                 <View style={{ flexDirection: 'column', justifyContent: 'space-between' }}>
                   <Icon

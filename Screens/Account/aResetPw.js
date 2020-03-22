@@ -238,7 +238,7 @@ export class aResetPw extends React.Component {
       );
     }
 
-    navigation.popToTop();
+    navigation.navigate('Account');
   }
 
   _handleRetry = () => {
@@ -277,7 +277,7 @@ export class aResetPw extends React.Component {
               >
                 <TouchableHighlight
                   underlayColor={'#ccc'}
-                  onPress={navigation.popToTop}
+                  onPress={navigation.navigate('Account')}
                 >
                   <View style={{ flexDirection: 'column', justifyContent: 'center', paddingBottom: 5 }}>
                     <Icon

@@ -173,7 +173,7 @@ export class aRegCreate extends React.Component {
             ]
           );
         }
-        navigation.popToTop();
+        navigation.navigate('Account');
       }
     }
   }
@@ -199,7 +199,7 @@ export class aRegCreate extends React.Component {
           ]
         );
       }
-      navigation.popToTop();
+      navigation.navigate('Account');
     }
   }
 
@@ -244,7 +244,7 @@ export class aRegCreate extends React.Component {
                 >
                   <TouchableHighlight
                     underlayColor={'#ccc'}
-                    onPress={navigation.popToTop}
+                    onPress={navigation.navigate('Account')}
                   >
                     <View style={{ flexDirection: 'column', justifyContent: 'space-between' }}>
                       <Icon
@@ -294,7 +294,7 @@ export class aRegCreate extends React.Component {
             {!duplicateEmail &&
               <ScrollView>
                 <View style={{ marginTop: 10, borderColor: '#bbb', borderWidth: 1, backgroundColor: 'linen', paddingTop: 10, paddingBottom: 10, paddingLeft: 20, paddingRight: 20 }}>
-                  <Text style={{ paddingBottom: 3 }}>{'Registering with email and password ensures that you are the only person able to access your data.'}</Text>
+                <Text style={{ paddingBottom: 3 }}>{'Registering with email and password ensures that you are the only person able to access your data.'}</Text>
                 </View>
                 <Input
                   containerStyle={{ marginTop: 10 }}

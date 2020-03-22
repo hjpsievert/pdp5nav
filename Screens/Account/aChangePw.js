@@ -181,7 +181,7 @@ export class aChangePw extends React.Component {
         ]
       );
     }
-    navigation.popToTop();
+    navigation.navigate('Account');
   }
 
   render() {
