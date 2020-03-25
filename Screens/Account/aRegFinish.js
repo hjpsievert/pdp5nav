@@ -29,14 +29,15 @@ export class aRegFinish extends React.Component {
     Dimensions.addEventListener('change', this._handleDimChange);
     //console.log('aRegFinish componentDidMount');
     const { route, userProfile } = this.props;
-    const provider = route.params?.provider ?? '';
-
-    console.log('aRegFinish route = ', route);
-    registerUser((response) => { this._finishRegisterUser(response) }, userProfile.loginId, provider);
+    const { userMode } = userProfile;
+    if (userMode != usrMode.created) {
+      const provider = route.params?.provider ?? '';
+      registerUser((response) => { this._finishRegisterUser(response) }, userProfile.loginId, provider);
+    }
   }
 
   componentWillUnmount() {
-    console.log('aRegCheck did unmount');
+    console.log('aRegFinish did unmount');
     Dimensions.removeEventListener('change', this._handleDimChange);
   }
 
@@ -149,7 +150,7 @@ export class aRegFinish extends React.Component {
               </TouchableHighlight>
               <TouchableHighlight
                 underlayColor={'#ccc'}
-                onPress={() => navigation.navigate('Account')}
+                onPress={() => navigation.navigate('aAccount')}
               >
                 <View style={{ flexDirection: 'column', justifyContent: 'space-between' }}>
                   <Icon
