@@ -208,8 +208,8 @@ export class pHome extends React.Component {
     const { planListDirty } = this.state;
     const { emailVerified, userStateId, userMode } = userProfile;
     const stateId = userStateId;
-    console.log('pHome _findPlans, drugCount ', drugCount, ', planListDirty = ', planListDirty , ', stateChenged = ', stateChanged); //, 'userProfile = ' , JSON.stringify(userProfile));
-    
+    console.log('pHome _findPlans, drugCount ', drugCount, ', planListDirty = ', planListDirty, ', stateChenged = ', stateChanged); //, 'userProfile = ' , JSON.stringify(userProfile));
+
     if (stateChanged) {
       this.setState({
         planListDirty: true
@@ -227,8 +227,13 @@ export class pHome extends React.Component {
         this.onFindPlansComplete(response);
       }, JSON.stringify(myConfigList), stateId, doMailState, startDate);
     }
-    if (!emailVerified && userMode != usrMode.anon) {
-      navigation.navigate('Account', { screen: 'aRegState' });
+    if (userMode === usrMode.created) {
+      navigation.navigate('Account', { screen: 'aRegFinish' });
+    }
+    else {
+      if (!emailVerified && userMode != usrMode.anon) {
+        navigation.navigate('Account', { screen: 'aRegState' });
+      }
     }
   }
 
