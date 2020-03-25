@@ -59,7 +59,7 @@ export class aRegState extends React.Component {
   }
 
   componentWillUnmount() {
-    console.log('aRegCheck did unmount');
+    console.log('aRegState did unmount');
     Dimensions.removeEventListener('change', this._handleDimChange);
   }
 
@@ -123,7 +123,6 @@ export class aRegState extends React.Component {
     const { installationId, deviceName } = Constants;
     const { userProfile } = this.props;
     if (stateSelected) {
-      userProfile.userMode = usrMode.anon;
       userProfile.userStateId = stateId;
       userProfile.userStateName = stateName;
       createAnonymous((response) => { this._finishCreateAnonymous(response, userProfile) }, installationId, deviceName, JSON.stringify(userProfile));
@@ -138,6 +137,7 @@ export class aRegState extends React.Component {
     const { navigation } = this.props;
 
     if (success) {
+      userProfile.userMode = usrMode.anon;
       saveUserProfile(() => { this._finishSaveProfile() }, userProfile, defaultProfileSave, 'RegisterState', installationId);
       this.setState({
         registerState: 'anonymous'
@@ -192,7 +192,7 @@ export class aRegState extends React.Component {
               :
               <View style={{ marginTop: 10, marginBottom: 10, borderColor: '#bbb', borderWidth: 1, backgroundColor: 'linen', paddingTop: 10, paddingBottom: 10, paddingLeft: 20, paddingRight: 20 }}>
                 <Text style={{ paddingBottom: 3 }}>{'You are here because this is either the first time you are using EZPartD on this device or because you uninstalled and then reinstalled EZPartD. If you have already registered EZPartD, please '}<Text style={styles.textBold}>{'Login'}</Text>{' to your account and your data will be recovered.'}</Text>
-                <Text style={{ paddingBottom: 3 }}>{'If you have never used EZPartD before, you must first provide your state of residence. This is required since all prescription plan premiums and drug prices are state specific. Press '}<Text style={styles.textBold}>{'Continue'}</Text>{' to save your state.'}</Text>
+                <Text style={{ paddingBottom: 3 }}>{'If you have not registered EZPartD before, you must first provide your state of residence. This is required since all prescription plan premiums and drug prices are state specific. Press '}<Text style={styles.textBold}>{'Continue'}</Text>{' to save your state.'}</Text>
               </View>
             }
 
