@@ -103,28 +103,10 @@ export class pDrugSearch extends React.Component {
     }
   }
 
-  _handleRegister = () => {
-    const { userProfile } = this.props;
-    const { emailVerified, appVerified } = userProfile;
-    if (emailVerified || appVerified) {
-      console.log('pDrugSearch navigate to regCheck');
-      this.props.navigation.navigate('Account', { screen: 'aRegCheck' });
-    }
-    else {
-      console.log('pDrugSearch navigate to regCreate');
-      this.props.navigation.navigate('Account', { screen: 'aRegCreate' });
-    }
-  }
-
-  _handleProfile = () => {
-    console.log('pDrugSearch navigate to profile');
-    this.props.navigation.navigate('Account', { screen: 'aProfile' });
-  }
-
   render() {
     console.log('pDrugSearch render');
     const { adjust, emptySearch, validStateId, repeatSearch, lastSearch, entryComplete, useWildcard, searchString } = this.state;
-    const { userProfile } = this.props;
+    const { userProfile, navigation } = this.props;
     const { userStateName } = userProfile;
     console.log('pDrugSearch render entryComplete ', entryComplete);
     return (
@@ -133,7 +115,7 @@ export class pDrugSearch extends React.Component {
           <View>
             <View style={{ padding: 15, backgroundColor: 'rgb(204, 223, 255)', borderBottomColor: '#bbb', borderBottomWidth: 1 }}>
               <Text>{'You currently have no state of residence identified in your profile.'}</Text>
-              <Text>{'In order to be able to search for drugs, you either need to register with your state or you can set your state in the Profile setting under the Account menu.'}</Text>
+              <Text>{'In order to be able to search for drugs, you either need to Register your state or you can set your state in the Profile setting under the Account menu.'}</Text>
             </View>
 
             <View style={{
@@ -149,7 +131,7 @@ export class pDrugSearch extends React.Component {
             >
               <TouchableHighlight
                 underlayColor={'#ccc'}
-                onPress={this._handleRegister}
+                onPress={() => navigation.navigate('Account', { screen: 'aRegFinish' })}
               >
                 <View style={{ flexDirection: 'column', justifyContent: 'space-between', paddingBottom: 5 }}>
                   <Icon
@@ -171,7 +153,7 @@ export class pDrugSearch extends React.Component {
               </TouchableHighlight>
               <TouchableHighlight
                 underlayColor={'#ccc'}
-                onPress={this._handleProfile}
+                onPress={() => navigation.navigate('Account', { screen: 'aProfile' })}
               >
                 <View style={{ flexDirection: 'column', justifyContent: 'space-between' }}>
                   <Icon
@@ -192,38 +174,6 @@ export class pDrugSearch extends React.Component {
                 </View>
               </TouchableHighlight>
             </View>
-
-
-            {/* <View style={{ flexDirection: 'row', justifyContent: 'space-around', paddingTop: 25 }}>
-              <View style={{ width: 2 * Dimensions.get('window').width / 6 }}>
-                <Button
-                  raised={true}
-                  icon={{ 
-                    name: 'user-plus', 
-                    type: 'feather', 
-                    color: 'white' }}
-                  iconRight
-                  backgroundColor={'green'}
-                  color={'white'}
-                  title={'Register'}
-                  onPress={this._handleRegister}
-                />
-              </View>
-              <View style={{ width: 2 * Dimensions.get('window').width / 6 }}>
-                <Button
-                  raised={true}
-                  icon={{ 
-                    name: 'account-outline', 
-                    type: 'material-community', 
-                    color: 'white' }}
-                  iconRight
-                  backgroundColor={'green'}
-                  color={'white'}
-                  title={'Update Profile'}
-                  onPress={this._handleProfile}
-                />
-              </View>
-            </View> */}
 
           </View>
         }
