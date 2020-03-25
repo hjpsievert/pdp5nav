@@ -9,6 +9,7 @@ import {
 import { ListItem } from 'react-native-elements';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { usrMode } from '../../Utils/Constants';
 
 export class aAccount extends React.Component {
   constructor(props, context) {
@@ -30,19 +31,19 @@ export class aAccount extends React.Component {
   }
 
   _buildList = () => {
-    const {userProfile} = this.props;
-    const {emailVerified,appVerified} = userProfile;
+    const { userProfile } = this.props;
+    const { emailVerified, appVerified, userMode } = userProfile;
     let listOptions = [];
     let i = 0;
-    listOptions.push({ key: i++, title: 'Register', subtitle: 'Register for a new account', icon: 'user-plus', type: 'font-awesome', active: !emailVerified, target: (emailVerified || appVerified) ? 'aRegCheck' : 'aRegCreate' });
-    listOptions.push({ key: i++, title: 'Register State', subtitle: 'Register your state', icon: 'user-plus', type: 'font-awesome', active: !emailVerified, target: 'aRegState' });
-    // listOptions.push({ key: i++, title: 'Register Create', subtitle: 'For test only', icon: 'user-plus', type: 'font-awesome', active: true, target: 'aRegCreate' });
+    listOptions.push({ key: i++, title: 'Select State', subtitle: 'Specify your state of residence', icon: 'select1', type: 'antdesign', active: !emailVerified, target: 'aRegState' });
+     listOptions.push({ key: i++, title: 'Register', subtitle: 'Register for a new account', icon: 'user-plus', type: 'font-awesome', active: !(emailVerified && appVerified), target: userMode === usrMode.created ? 'aRegFinish' : 'aRegCreate' });
+   // listOptions.push({ key: i++, title: 'Register Create', subtitle: 'For test only', icon: 'user-plus', type: 'font-awesome', active: true, target: 'aRegCreate' });
     // listOptions.push({ key: i++, title: 'Register Provider', subtitle: 'For test only', icon: 'user-plus', type: 'font-awesome', active: true, target: 'aRegProvider' });
     // listOptions.push({ key: i++, title: 'Register Phone', subtitle: 'For test only', icon: 'user-plus', type: 'font-awesome', active: true, target: 'aRegPhone', paramName: 'provider', param: 'Phone' });
     // listOptions.push({ key: i++, title: 'Register Finish Phone', subtitle: 'For test only', icon: 'user-plus', type: 'font-awesome', active: true, target: 'aRegFinish', paramName: 'provider', param: 'Phone' });
     // listOptions.push({ key: i++, title: 'Register Finish Email', subtitle: 'For test only', icon: 'user-plus', type: 'font-awesome', active: true, target: 'aRegFinish', paramName: 'provider', param: 'Email' });
     listOptions.push({ key: i++, title: 'Activate', subtitle: 'Unlock the EZPartD Application', icon: 'key', type: 'font-awesome', active: emailVerified && !appVerified, target: 'aActivate' });
-    listOptions.push({ key: i++, title: 'Login', subtitle: 'Login to your account', icon: 'login', type: 'material-community', active: appVerified, target: 'aLogin' });
+    listOptions.push({ key: i++, title: 'Login', subtitle: 'Login to your account', icon: 'login', type: 'material-community', active: true, target: 'aLogin' });
     listOptions.push({ key: i++, title: 'Change Password', subtitle: 'Change your password', icon: 'key-change', type: 'material-community', active: appVerified, target: 'aChangePw' });
     listOptions.push({ key: i++, title: 'Reset Password', subtitle: 'Reset your password', icon: 'redo-variant', type: 'material-community', active: appVerified, target: 'aResetPw' });
     listOptions.push({ key: i++, title: 'User Profile', subtitle: 'View and edit your information', icon: 'account-edit', type: 'material-community', active: true, target: 'aProfile' });
@@ -51,8 +52,11 @@ export class aAccount extends React.Component {
     return listOptions;
   }
 
-  _handlePress = (navigation, target, paramName, param) => {
+  _handlePress = (active, navigation, target, paramName, param) => {
 
+    if (!active) {
+      return
+    }
     navigation.navigate(target, paramName ? { [paramName]: param } : {});
 
     // console.log('handlePress ' + paramName + ': ' + param);
@@ -60,7 +64,7 @@ export class aAccount extends React.Component {
 
 
   render() {
-    const {navigation} = this.props;
+    const { navigation } = this.props;
     const myList = this._buildList();
     return (
       <ScrollView>
@@ -80,7 +84,7 @@ export class aAccount extends React.Component {
                 subtitle={l.subtitle.length ? l.subtitle : null}
                 subtitleNumberOfLines={2}
                 subtitleStyle={{ paddingLeft: 20, fontSize: 14, color: l.active ? '#86939e' : '#bdc6cf' }}
-                onPress={() => this._handlePress(navigation, l.target, l.paramName, l.param)}
+                onPress={() => this._handlePress(l.active, navigation, l.target, l.paramName, l.param)}
                 hideChevron={!l.active}
               />
             ))
