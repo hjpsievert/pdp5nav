@@ -20,6 +20,7 @@ export const usrMode = {
   anon: 'anonymous',
   created: 'created',
   verifying: 'verification pending',
+  activating: 'activation pending',
   resetting: 'password reset pending',
   reset: 'password reset validated',
 }
