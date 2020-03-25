@@ -24,7 +24,7 @@ export class aRegCheck extends React.Component {
     Dimensions.addEventListener('change', this._handleDimChange);
     //console.log('aLogin componentDidMount');
     const { userProfile, navigation } = this.props;
-    const { emailVerified, } = userProfile;
+    const { emailVerified } = userProfile;
     // const emailVerified = false; // for testing
     console.log('RegisterCheck will mount');
     if (!emailVerified) {
@@ -108,12 +108,12 @@ export class aRegCheck extends React.Component {
               {newDevice ?
                 <View style={{ marginTop: 10, borderColor: '#bbb', borderWidth: 1, backgroundColor: 'linen', paddingTop: 10, paddingBottom: 10, paddingLeft: 20, paddingRight: 20 }}>
                   <Text style={{ paddingBottom: 3 }}>{'You can activate EZPartD?'}</Text>
-                  <Text>{'Your email has already been validated, but it looks like you are accessing EZPartD from a new device. Please login in to activate EZPartD on this device.'}</Text>
+                  <Text>{'Your email has previously been validated, but it looks like you are accessing EZPartD from a new device. Please login in to activate EZPartD on this device.'}</Text>
                 </View>
                 :
                 <View style={{ marginTop: 10, borderColor: '#bbb', borderWidth: 1, backgroundColor: 'linen', paddingTop: 10, paddingBottom: 10, paddingLeft: 20, paddingRight: 20 }}>
                   <Text style={{ paddingBottom: 3 }}>{'Did you forget to activate EZPartD?'}</Text>
-                  <Text>{'Your email has been validated, but it looks like you did not activate EZPartD with the code you received by ' + provider + '. Please login in to continue the activation process.'}</Text>
+                  <Text>{'Your email has been validated, but it looks like you did not activate EZPartD with the code you received by ' + provider + '. Please continue with the activation process.'}</Text>
                 </View>
               }
 
@@ -147,13 +147,13 @@ export class aRegCheck extends React.Component {
                     <Text
                       style={[styles.topTabText, { color: 'black' }]}
                     >
-                      {'EXIT'}
+                      {'CONTINUE'}
                     </Text>
                   </View>
                 </TouchableHighlight>
                 <TouchableHighlight
                   underlayColor={'#ccc'}
-                  onPress={() => navigation.navigate('aLogin')}
+                  onPress={() => navigation.navigate('aActivate')}
                 >
                   <View style={{ flexDirection: 'column', justifyContent: 'space-between', paddingBottom: 5 }}>
                     <Icon
