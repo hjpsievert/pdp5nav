@@ -152,7 +152,6 @@ export class aRegCreate extends React.Component {
       updateAnonymous((response) => { this._finishCreateUser(response, userProfile) }, installationId, JSON.stringify(userProfile));
     }
     else {
-      userProfile.emailVerified = true;
       if (err === 'Duplicate Email') {
         this.setState({
           duplicateEmail: true,
@@ -228,7 +227,7 @@ export class aRegCreate extends React.Component {
               <View>
                 <View style={{ marginTop: 10, marginBottom: 10, borderColor: '#bbb', borderWidth: 1, backgroundColor: 'linen', paddingTop: 10, paddingBottom: 10, paddingLeft: 20, paddingRight: 20 }}>
                   <Text>{'Registration email already exists.'}</Text>
-                  <Text>{'If you are a registered user of EZPartD, you can simply login and activate this device. You will be able to retrieve information you may have stored on another device.'}</Text>
+                  <Text>{'If you are a registered user of EZPartD, you can simply login to activate this device. You will be able to retrieve information you may have stored on another device.'}</Text>
                 </View>
 
                 <View style={{
