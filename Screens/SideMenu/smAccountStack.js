@@ -7,7 +7,6 @@ import {
 import { Icon } from 'react-native-elements';
 import { createStackNavigator } from '@react-navigation/stack';
 import aAccount from '../Account/aAccount';
-import aRegCheck from '../Account/aRegCheck';
 import aRegCreate from '../Account/aRegCreate';
 import aRegState from '../Account/aRegState';
 import aRegProvider from '../Account/aRegProvider';
@@ -40,35 +39,6 @@ function AccountStack() {
             <View style={styles.innerContainer}>
               <TouchableHighlight
                 onPress={() => navigation.navigate('Home')}
-              >
-                <View style={[styles.touch, { justifyContent: 'flex-start' }]}>
-                  <Icon
-                    name={'ios-arrow-back'}
-                    type={'ionicon'}
-                    color={'white'}
-                    size={24}
-                    style={{ padding: 5 }}
-                  />
-                </View>
-              </TouchableHighlight>
-            </View>
-          ),
-        })}
-      />
-      <Stack.Screen
-        name="aRegCheck"
-        component={aRegCheck}
-        options={({ navigation }) => ({
-          title: 'Register Check',
-          headerTitle: 'Register Check',
-          headerStyle: { backgroundColor: '#405ce8' },
-          headerTitleStyle: { fontWeight: 'normal' },
-          headerTintColor: 'white',
-          headerTitleAlign: 'center',
-          headerLeft: () => (
-            <View style={styles.innerContainer}>
-              <TouchableHighlight
-                onPress={() => navigation.Navigate('aAccount')}
               >
                 <View style={[styles.touch, { justifyContent: 'flex-start' }]}>
                   <Icon
