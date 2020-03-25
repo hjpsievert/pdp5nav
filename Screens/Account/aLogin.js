@@ -188,7 +188,7 @@ export class aLogin extends React.Component {
 
     const { loginId } = this.state;
     let updatedUserProfile = {
-      appVerified: true,
+      // appVerified: true, // move to _finishActivateApp
       emailVerified: true,
       verificationCode: 0,
       provider: provider,
@@ -202,7 +202,8 @@ export class aLogin extends React.Component {
     const { success, payLoad } = response;
     console.log('_finishActivateApp success = ', success, ', payload = ', payLoad);
     if (success) {
-      loadAppData((profile, drugList) => { this._finishAppLoad(profile, drugList) }, updatedUserProfile);
+      updatedUserProfile.appVerified = true,
+        loadAppData((profile, drugList) => { this._finishAppLoad(profile, drugList) }, updatedUserProfile);
     }
   }
 
@@ -226,12 +227,12 @@ export class aLogin extends React.Component {
 
   _handleRegister = () => {
     const { userProfile } = this.props;
-    const { emailVerified, appVerified } = userProfile;
-    if (emailVerified || appVerified) {
-      this.props.navigation.navigate('regCheck');
+    const { userMode } = userProfile;
+    if (userMode===usrMode.created) {
+      this.props.navigation.navigate('aRegFinish');
     }
     else {
-      this.props.navigation.navigate('regCreate');
+      this.props.navigation.navigate('aRegCreate');
     }
   }
 
@@ -240,7 +241,6 @@ export class aLogin extends React.Component {
       loginState: 'initial'
     })
   }
-
 
   render() {
     const { adjust, loginBad, hidePwd, validationBad, loginState, userProvider, loginId } = this.state;
@@ -371,7 +371,7 @@ export class aLogin extends React.Component {
                   ref={input => this.myInput = input}
                   label={'Password'}
                   labelStyle={{ fontSize: 14 }}
-                  placeholder={'Enter a password ...'}
+                  placeholder={'Enter your password ...'}
                   inputStyle={{ fontSize: 14 }}
                   onChangeText={this._savePwd}
                   editable={true}
@@ -421,7 +421,7 @@ export class aLogin extends React.Component {
           {loginState === 'loginProcessed' &&
             <View>
               <View style={{ marginTop: 10, borderColor: '#bbb', borderWidth: 1, backgroundColor: 'linen', paddingTop: 10, paddingBottom: 10, paddingLeft: 20, paddingRight: 20 }}>
-                <Text>{'Please enter the six digit validation code you received by ' + userProvider.toLowerCase()}</Text>
+                <Text>{'Your login was processed successfully, but requires an additional validation step. Please enter the six digit validation code you received by ' + userProvider.toLowerCase()}</Text>
               </View>
               <View style={{ paddingTop: 10 }}>
                 <Input
