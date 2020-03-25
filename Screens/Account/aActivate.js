@@ -25,7 +25,6 @@ export class aActivate extends React.Component {
       activationComplete: false,
       validationError: false,
       activationPending: false,
-      noActivation: true,
     };
   }
 
@@ -68,12 +67,11 @@ export class aActivate extends React.Component {
       navigation.navigate(userIsSubscribed ? 'fdHomeScreen' : 'fpHomeScreen');
     }
     else {
-      const { emailVerified, verificationCode } = payLoad;
+      const { userMode } = payLoad;
 
-      if (emailVerified && parseInt(verificationCode) > 0) {
+      if (userMode === usrMode.activating) {
         this.setState({
           activationPending: true,
-          noActivation: false,
         });
       }
     }
@@ -114,7 +112,6 @@ export class aActivate extends React.Component {
     else {
       this.setState({
         validationError: true,
-        noActivation: false,
       });
     }
   }
@@ -127,24 +124,10 @@ export class aActivate extends React.Component {
     });
   }
 
-  _handleRegister = () => {
-    const { userProfile, navigation } = this.props;
-    const { emailVerified, appVerified } = userProfile;
-    if (emailVerified || appVerified) {
-      navigation.navigate('aRegCheck');
-    }
-    else {
-      navigation.navigate('aRegCreate');
-    }
-  }
-
-  _exitToTop = () => {
-    // const { navigation, route, updateFlowState } = this.props;
-  }
-
   render() {
-    const { adjust, noActivation, activationComplete, activationPending, validationError } = this.state;
+    const { adjust, activationComplete, activationPending, validationError } = this.state;
     const { userProfile, navigation } = this.props;
+    const { userMode } = userProfile;
     // console.log('aActivate render userProfile ' + JSON.stringify(this.props.userProfile));
 
     return (
@@ -153,11 +136,11 @@ export class aActivate extends React.Component {
           flexDirection: 'column', paddingHorizontal: 15, flex: 1
         }}
         >
-          {noActivation &&
+          {userMode === usrMode.verifying &&
             <View>
               <View style={{ marginTop: 10, borderColor: '#bbb', borderWidth: 1, backgroundColor: 'linen', paddingTop: 10, paddingBottom: 10, paddingLeft: 20, paddingRight: 20 }}>
-                <Text style={{ paddingBottom: 3 }}>{'EZPartD Activation is not available.'}</Text>
-                <Text>{'You must first register or, if you previously registered, you can login to restart activation.'}</Text>
+                <Text style={{ paddingBottom: 3 }}>{'EMail Verification incomplete.'}</Text>
+                <Text>{'The verification email was sent, but you either have not received it yet or you have not clicked on the link that will generate and transmit your final activation code. Come back here once you are ready to enter the validation code.'}</Text>
               </View>
 
               <View style={{
@@ -173,7 +156,7 @@ export class aActivate extends React.Component {
               >
                 <TouchableHighlight
                   underlayColor={'#ccc'}
-                  onPress={this._handleRegister}
+                  onPress={navigation.navigate('aAccount')}
                 >
                   <View style={{ flexDirection: 'column', justifyContent: 'space-between', paddingBottom: 5 }}>
                     <Icon
@@ -189,29 +172,7 @@ export class aActivate extends React.Component {
                     <Text
                       style={styles.topTabText}
                     >
-                      {'REGISTER'}
-                    </Text>
-                  </View>
-                </TouchableHighlight>
-                <TouchableHighlight
-                  underlayColor={'#ccc'}
-                  onPress={() => navigation.navigate('aLogin')}
-                >
-                  <View style={{ flexDirection: 'column', justifyContent: 'space-between' }}>
-                    <Icon
-                      name={'login'}
-                      type={'material-community'}
-                      color={'black'}
-                      size={25}
-                      containerStyle={{
-                        paddingLeft: 10,
-                        paddingRight: 10,
-                      }}
-                    />
-                    <Text
-                      style={[styles.topTabText, { color: 'black' }]}
-                    >
-                      {'LOGIN'}
+                      {'EXIT'}
                     </Text>
                   </View>
                 </TouchableHighlight>
