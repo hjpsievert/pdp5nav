@@ -37,7 +37,7 @@ export const defaultProfile = {
   userPlanId: '',
   userContractId: '',
   userPlanName: '',
-  userStateId: 'NV',
+  userStateId: '',
   verificationCode: '',
   userIsSubscribed: false
 }
