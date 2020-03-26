@@ -22,6 +22,7 @@ export class aAccount extends React.Component {
 
   componentDidMount() {
     Dimensions.addEventListener('change', this._handleDimChange);
+    // console.log('aAccount componentDidMount');
   }
 
 
@@ -36,7 +37,7 @@ export class aAccount extends React.Component {
     let listOptions = [];
     let i = 0;
     listOptions.push({ key: i++, title: 'Select State', subtitle: 'Specify your state of residence', icon: 'select1', type: 'antdesign', active: !emailVerified, target: 'aRegState' });
-     listOptions.push({ key: i++, title: 'Register', subtitle: 'Register for a new account', icon: 'user-plus', type: 'font-awesome', active: (userMode===usrMode.reg || userMode===usrMode.anon) && userStateId, target: userMode === usrMode.created ? 'aRegFinish' : 'aRegCreate' });
+     listOptions.push({ key: i++, title: 'Register', subtitle: 'Register for a new account', icon: 'user-plus', type: 'font-awesome', active: (userMode===usrMode.anon) && userStateId, target: userMode === usrMode.created ? 'aRegFinish' : 'aRegCreate' });
    // listOptions.push({ key: i++, title: 'Register Create', subtitle: 'For test only', icon: 'user-plus', type: 'font-awesome', active: true, target: 'aRegCreate' });
     // listOptions.push({ key: i++, title: 'Register Provider', subtitle: 'For test only', icon: 'user-plus', type: 'font-awesome', active: true, target: 'aRegProvider' });
     // listOptions.push({ key: i++, title: 'Register Phone', subtitle: 'For test only', icon: 'user-plus', type: 'font-awesome', active: true, target: 'aRegPhone', paramName: 'provider', param: 'Phone' });
@@ -103,7 +104,6 @@ aAccount.propTypes = {
 const mapStateToProps = (state) => {
   return {
     userProfile: state.profile,
-    reloadMain: state.flowState['reloadMain'],
   }
 }
 

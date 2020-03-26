@@ -28,7 +28,7 @@ function AccountStack() {
       <Stack.Screen
         name="aAccount"
         component={aAccount}
-        options={({ navigation }) => ({
+        options={({ navigation, route }) => ({
           title: 'Account Management',
           headerTitle: 'Account Management',
           headerStyle: { backgroundColor: '#405ce8' },
@@ -56,17 +56,18 @@ function AccountStack() {
       />
 
       <Stack.Screen
-        name="aRegCreate"
-        component={aRegCreate}
-        options={({ navigation }) => ({
-          title: 'Register',
-          headerTitle: 'Register',
+        name="aLogin"
+        component={aLogin}
+        options={({ navigation, route }) => ({
+          title: 'Login',
+          headerTitle: 'Login',
           headerStyle: { backgroundColor: '#405ce8' },
           headerTitleStyle: { fontWeight: 'normal' },
           headerTintColor: 'white',
           headerTitleAlign: 'center',
           headerLeft: () => (
             <View style={styles.innerContainer}>
+
               <TouchableHighlight
                 onPress={() => navigation.navigate('aAccount')}
               >
@@ -80,6 +81,7 @@ function AccountStack() {
                   />
                 </View>
               </TouchableHighlight>
+
             </View>
           ),
         })}
@@ -88,7 +90,7 @@ function AccountStack() {
       <Stack.Screen
         name="aRegState"
         component={aRegState}
-        options={({ navigation }) => ({
+        options={({ navigation, route }) => ({
           title: 'Select State',
           headerTitle: 'Select State',
           headerStyle: { backgroundColor: '#405ce8' },
@@ -97,6 +99,40 @@ function AccountStack() {
           headerTitleAlign: 'center',
           headerLeft: () => (
             <View style={styles.innerContainer}>
+
+              <TouchableHighlight
+                onPress={() => navigation.navigate('aAccount')}
+              >
+                <View style={[styles.touch, { justifyContent: 'flex-start' }]}>
+                  <Icon
+                    name={'ios-arrow-back'}
+                    type={'ionicon'}
+                    color={'white'}
+                    size={24}
+                    style={{ padding: 5 }
+                    }
+                  />
+                </View>
+              </TouchableHighlight>
+
+            </View>
+          ),
+        })}
+      />
+
+      <Stack.Screen
+        name="aRegCreate"
+        component={aRegCreate}
+        options={({ navigation, route }) => ({
+          title: 'Register',
+          headerTitle: 'Register',
+          headerStyle: { backgroundColor: '#405ce8' },
+          headerTitleStyle: { fontWeight: 'normal' },
+          headerTintColor: 'white',
+          headerTitleAlign: 'center',
+          headerLeft: () => (
+            <View style={styles.innerContainer}>
+
               <TouchableHighlight
                 onPress={() => navigation.navigate('aAccount')}
               >
@@ -110,6 +146,7 @@ function AccountStack() {
                   />
                 </View>
               </TouchableHighlight>
+
             </View>
           ),
         })}
@@ -188,7 +225,7 @@ function AccountStack() {
           headerLeft: () => (
             <View style={styles.innerContainer}>
               <TouchableHighlight
-                onPress={() => navigation.navigate('Home')}
+                onPress={() => navigation.navigate('aAccount')}
               >
                 <View style={[styles.touch, { justifyContent: 'flex-start' }]}>
                   <Icon
@@ -218,7 +255,7 @@ function AccountStack() {
           headerLeft: () => (
             <View style={styles.innerContainer}>
               <TouchableHighlight
-                onPress={() => navigation.navigate('Home')}
+                onPress={() => navigation.navigate('aAccount')}
               >
                 <View style={[styles.touch, { justifyContent: 'flex-start' }]}>
                   <Icon
@@ -241,36 +278,6 @@ function AccountStack() {
         options={({ navigation }) => ({
           title: 'Finish Registration',
           headerTitle: 'Finish Registration',
-          headerStyle: { backgroundColor: '#405ce8' },
-          headerTitleStyle: { fontWeight: 'normal' },
-          headerTintColor: 'white',
-          headerTitleAlign: 'center',
-          headerLeft: () => (
-            <View style={styles.innerContainer}>
-              <TouchableHighlight
-                onPress={() => navigation.navigate('aAccount')}
-              >
-                <View style={[styles.touch, { justifyContent: 'flex-start' }]}>
-                  <Icon
-                    name={'ios-arrow-back'}
-                    type={'ionicon'}
-                    color={'white'}
-                    size={24}
-                    style={{ padding: 5 }}
-                  />
-                </View>
-              </TouchableHighlight>
-            </View>
-          ),
-        })}
-      />
-
-      <Stack.Screen
-        name="aLogin"
-        component={aLogin}
-        options={({ navigation }) => ({
-          title: 'Login',
-          headerTitle: 'Login',
           headerStyle: { backgroundColor: '#405ce8' },
           headerTitleStyle: { fontWeight: 'normal' },
           headerTintColor: 'white',
@@ -368,7 +375,7 @@ function AccountStack() {
           headerLeft: () => (
             <View style={styles.innerContainer}>
               <TouchableHighlight
-                onPress={() => navigation.navigate('Home')}
+                onPress={() => navigation.navigate('aAccount')}
               >
                 <View style={[styles.touch, { justifyContent: 'flex-start' }]}>
                   <Icon

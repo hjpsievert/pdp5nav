@@ -64,36 +64,21 @@ export class pHome extends React.Component {
     });
   }
 
+  componentDidUpdate(prevProps) {
+    // const { userProfile, navigation } = this.props;
+    // const { userMode } = userProfile;
+    console.log('pHome componentDidUpdate');
+    // // if (prevProps.userProfile.userMode != userMode && userMode === usrMode.init) {
+    // //   navigation.navigate('Account', { screen: 'aRegState' });
+    // // }
+    // if (userMode === usrMode.init) {
+    //   console.log('pHome componentDidUpdate navigating to aRegState');
+    //   navigation.navigate('Account', { screen: 'aRegState' });
+    // }    
+    const { stateSelectionChanged } = this.props;
+    // this._handleRegister();
 
-  // shouldComponentUpdate(nextProps, nextState) {
-  //   const { updateFlowState, refreshRoutes } = this.props;
-  //   if (refreshRoutes) {
-  //     updateFlowState({
-  //       refreshRoutes: false
-  //     });
-  //     console.log('pHome refresh routes');
-  //     return true;
-  //   }
-  //   else {
-  //     const before = { ...this.props, ...this.state };
-  //     const after = { ...nextProps, ...nextState };
-  //     const diff = reduce(before, function (result, value, key) { return isEqual(value, after[key]) ? result : result.concat(key); }, []);
-  //     console.log('pHome Update diff = ', diff);
-  //     if (isEqual(before, after)) {
-  //       console.log('pHome will not update, no change');
-  //       return false;
-  //     }
-  //     else {
-  //       console.log('pHome will update');
-  //       return true;
-  //     }
-  //   }
-  // }
-
-  componentDidUpdate() {
-    console.log('pHome did update');
-    const { stateChanged } = this.props;
-    if (stateChanged) {
+    if (stateSelectionChanged) {
       this._findPlans();
     }
   }
@@ -195,7 +180,6 @@ export class pHome extends React.Component {
     updateFlowState({
       doMailState: Defaults.doMailState,
       startDate: new Date().toLocaleDateString('en-US'),
-      reloadMain: false,
     })
     this.setState({
       drugsLoaded: true,
@@ -204,22 +188,22 @@ export class pHome extends React.Component {
   }
 
   _findPlans = () => {
-    const { myConfigList, drugCount, doMailState, startDate, navigation, userProfile, stateChanged, updateFlowState } = this.props;
+    const { myConfigList, drugCount, doMailState, startDate, userProfile, stateSelectionChanged, updateFlowState } = this.props;
     const { planListDirty } = this.state;
-    const { emailVerified, userStateId, userMode } = userProfile;
+    const { userStateId } = userProfile;
     const stateId = userStateId;
-    console.log('pHome _findPlans, drugCount ', drugCount, ', planListDirty = ', planListDirty, ', stateChenged = ', stateChanged); //, 'userProfile = ' , JSON.stringify(userProfile));
+    console.log('pHome _findPlans, drugCount ', drugCount, ', planListDirty = ', planListDirty, ', stateChenged = ', stateSelectionChanged); //, 'userProfile = ' , JSON.stringify(userProfile));
 
-    if (stateChanged) {
+    if (stateSelectionChanged) {
       this.setState({
         planListDirty: true
       });
     }
 
-    if (planListDirty || stateChanged && stateId) {
+    if ((planListDirty || stateSelectionChanged) && stateId) {
       this.setState({ animating: true });
       updateFlowState({
-        stateChanged: false
+        stateSelectionChanged: false
       })
 
       // console.log('pHome _findPlans config = ', myConfigList);
@@ -227,11 +211,22 @@ export class pHome extends React.Component {
         this.onFindPlansComplete(response);
       }, JSON.stringify(myConfigList), stateId, doMailState, startDate);
     }
+    else {
+      // this._handleRegister();
+    }
+  }
+
+  _handleRegister = () => {
+    const { navigation, userProfile } = this.props;
+    const { emailVerified, userMode } = userProfile;
+
     if (userMode === usrMode.created) {
+      console.log('pHome _handleRegister navigating to aRegFinish');
       navigation.navigate('Account', { screen: 'aRegFinish' });
     }
     else {
       if (!emailVerified && userMode != usrMode.anon) {
+        console.log('pHome _handleRegister navigating to aRegState');
         navigation.navigate('Account', { screen: 'aRegState' });
       }
     }
@@ -311,8 +306,8 @@ export class pHome extends React.Component {
 
   render() {
     const { showActive, showPlans, showGreeting, adjust, drugsLoaded, animating } = this.state;
-    const { drugCount, planCount, myPlans, activeDrugs, userProfile, previousLogin } = this.props;
-    console.log('pHome render'); //, user profile = ', JSON.stringify(userProfile));
+    const { drugCount, planCount, myPlans, activeDrugs, userProfile, previousLogin, navigation } = this.props;
+    console.log('pHome render, user profile = ', JSON.stringify(userProfile));
 
     let currDate;
     if (previousLogin) {
@@ -348,20 +343,94 @@ export class pHome extends React.Component {
           </View>
           :
           <View style={{ height: Dimensions.get('window').height - 75 - (adjust ? 0 : 35) }} >
+
             <TouchableHighlight
               underlayColor={'#ccc'}
               onPress={this._toggleShowGreeting}
             >
               <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingLeft: 10, paddingTop: 5, paddingBottom: 5, backgroundColor: '#75aaff', borderBottomColor: '#bbb', borderBottomWidth: 1 }}>
                 <Text style={{ fontSize: 18, color: 'black', textAlign: 'left', paddingLeft: 5, paddingTop: 3, paddingBottom: 3 }}>
-                  {'Welcome to EZPartD'}
+                  {'Welcome to EZPartD' + (userStateName ? ' for ' + userStateName : '')}
                 </Text>
-                <Text style={{ fontSize: 10, color: 'black', textAlign: 'right', paddingRight: 10, paddingTop: 3, paddingBottom: 3 }}>
-                  {showGreeting ? 'hide ...' : 'more ...'}
-                </Text>
+                {userMode != usrMode.init &&
+                  <Text style={{ fontSize: 10, color: 'black', textAlign: 'right', paddingRight: 10, paddingTop: 3, paddingBottom: 3 }}>
+                    {showGreeting ? 'hide ...' : 'more ...'}
+                  </Text>
+                }
               </View>
             </TouchableHighlight>
-            {showGreeting &&
+
+            {userMode === usrMode.init &&
+              <View style={{ flex: 1, flexDirection: 'column', justifyContent:'space-between'}}>
+                <View style={{ paddingBottom: 5, backgroundColor: '#a4c6fc' }}>
+                  <Text style={styles.body}>{'You are here because this is either the first time you are using EZPartD on this device or because you uninstalled and then reinstalled EZPartD. \n\nIf you have already registered EZPartD, please '}<Text style={styles.textBold}>{'Login'}</Text>{' to your account and your data will be recovered.\n\nIf you have not registered EZPartD before, you must first provide your state of residence. This is required since all prescription plan premiums and drug prices are state specific. Press '}<Text style={styles.textBold}>{'Register'}</Text>{' to procede.'}</Text>
+                </View>
+
+                <View style={{
+                  flexShrink: 1,
+                  marginBottom: 20,
+                  marginHorizontal: 10,
+                  flexDirection: 'row',
+                  justifyContent: 'space-around',
+                  paddingTop: 3,
+                  backgroundColor: 'rgb(183, 211, 255)',
+                  borderBottomWidth: 1,
+                  borderBottomColor: 'black',
+                  borderTopWidth: 1,
+                  borderTopColor: 'black'
+                }}
+                >
+
+                  <TouchableHighlight
+                    underlayColor={'#ccc'}
+                    onPress={() => navigation.navigate('Account', { screen: 'aRegState' })}
+                  >
+                    <View style={{ flexDirection: 'column', justifyContent: 'space-between', paddingBottom: 5 }}>
+                      <Icon
+                        name={'user-plus'}
+                        type={'feather'}
+                        color={'black'}
+                        size={25}
+                        containerStyle={{
+                          paddingLeft: 10,
+                          paddingRight: 10,
+                        }}
+                      />
+                      <Text
+                        style={styles.topTabText}
+                      >
+                        {'REGISTER'}
+                      </Text>
+                    </View>
+                  </TouchableHighlight>
+
+                  <TouchableHighlight
+                    underlayColor={'#ccc'}
+                    onPress={() => navigation.navigate('Account', { screen: 'aLogin' })}
+                  >
+                    <View style={{ flexDirection: 'column', justifyContent: 'space-between', paddingBottom: 5 }}>
+                      <Icon
+                        name={'login'}
+                        type={'material-community'}
+                        color={'black'}
+                        size={25}
+                        containerStyle={{
+                          paddingLeft: 10,
+                          paddingRight: 10,
+                        }}
+                      />
+                      <Text
+                        style={styles.topTabText}
+                      >
+                        {'LOGIN'}
+                      </Text>
+                    </View>
+                  </TouchableHighlight>
+                </View>
+              </View>
+            }
+
+            {showGreeting && userMode != usrMode.init &&
               <View style={{ paddingBottom: 5, backgroundColor: '#a4c6fc' }}>
                 <Text style={[styles.body, { textAlign: 'center', paddingBottom: 3 }]}>{(displayName ? displayName : 'Mode') + ': ' + userMode + ', last access ' + currDate.toLocaleString(Localization.locale)}</Text>
                 <Text style={styles.body}>{'You are currently not subscribed to any plan. You can use '}<Text style={styles.textBold}>{'Add Drug'}</Text>{' to ' + (drugCount > 0 ? 'extend your list' : 'build a list') + '. The plans available for your state will be updated as your drugs are updated.'}</Text>
@@ -369,55 +438,57 @@ export class pHome extends React.Component {
               </View>
             }
 
-            <View style={{ flexShrink: 1, flexDirection: 'column', justifyContent: 'center' }}>
-              <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingLeft: 10, backgroundColor: '#ddd', borderBottomColor: '#bbb', paddingTop: 5, paddingBottom: 5, borderBottomWidth: 1 }}>
-                <TouchableHighlight
-                  underlayColor={'#ccc'}
-                  onPress={drugCount > 0 ? this._toggleShowActive : () => ({})}
-                >
-                  <View style={{ flexDirection: 'row', justifyContent: 'flex-start', alignItems: 'center' }}>
-                    {drugCount > 0 &&
-                      <Icon
-                        name={showActive ? 'triangle-down' : 'triangle-right'}
-                        type={'entypo'}
-                        color={'black'}
-                        size={20}
-                      />
-                    }
-                    <Text style={{ fontSize: 14, color: 'black', textAlign: 'left', paddingLeft: 5, paddingTop: 3, paddingBottom: 3 }}>
-                      {'Active List, ' + drugCount + ' drug' + (drugCount != 1 ? 's' : '')}</Text>
-                  </View>
-                </TouchableHighlight>
-                {drugCount === 0 &&
+            {userMode != usrMode.init &&
+              <View style={{ flexShrink: 1, flexDirection: 'column', justifyContent: 'center' }}>
+                <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingLeft: 10, backgroundColor: '#ddd', borderBottomColor: '#bbb', paddingTop: 5, paddingBottom: 5, borderBottomWidth: 1 }}>
                   <TouchableHighlight
                     underlayColor={'#ccc'}
-                    onPress={this._handleAdd}
+                    onPress={drugCount > 0 ? this._toggleShowActive : () => { }}
                   >
-                    <View style={{ flexDirection: 'row', paddingRight: 10 }}>
-                      <Text style={styles.topTabText}>
-                        {'Add Drug'}
-                      </Text>
-                      <Icon
-                        name={'add'}
-                        type={'material'}
-                        color={'black'}
-                        size={20}
-                      />
+                    <View style={{ flexDirection: 'row', justifyContent: 'flex-start', alignItems: 'center' }}>
+                      {drugCount > 0 &&
+                        <Icon
+                          name={showActive ? 'triangle-down' : 'triangle-right'}
+                          type={'entypo'}
+                          color={'black'}
+                          size={20}
+                        />
+                      }
+                      <Text style={{ fontSize: 14, color: 'black', textAlign: 'left', paddingLeft: 5, paddingTop: 3, paddingBottom: 3 }}>
+                        {'Active List, ' + drugCount + ' drug' + (drugCount != 1 ? 's' : '')}</Text>
                     </View>
                   </TouchableHighlight>
+                  {drugCount === 0 &&
+                    <TouchableHighlight
+                      underlayColor={'#ccc'}
+                      onPress={this._handleAdd}
+                    >
+                      <View style={{ flexDirection: 'row', paddingRight: 10 }}>
+                        <Text style={styles.topTabText}>
+                          {'Add Drug'}
+                        </Text>
+                        <Icon
+                          name={'add'}
+                          type={'material'}
+                          color={'black'}
+                          size={20}
+                        />
+                      </View>
+                    </TouchableHighlight>
+                  }
+                </View>
+
+                {showActive &&
+                  <FlatList
+                    data={activeDrugs}
+                    renderItem={({ item, index }) => this._renderDrugItem(item, index)}
+                    keyExtractor={(item) => item.drugId.toString()}
+                    horizontal={false}
+                    extraData={this.state.flag}
+                  />
                 }
               </View>
-
-              {showActive &&
-                <FlatList
-                  data={activeDrugs}
-                  renderItem={({ item, index }) => this._renderDrugItem(item, index)}
-                  keyExtractor={(item) => item.drugId.toString()}
-                  horizontal={false}
-                  extraData={this.state.flag}
-                />
-              }
-            </View>
+            }
 
             {animating &&
               <View >
@@ -480,7 +551,7 @@ pHome.propTypes = {
   planNumerator: PropTypes.number.isRequired,
   previousLogin: PropTypes.string.isRequired,
   startDate: PropTypes.string.isRequired,
-  stateChanged: PropTypes.bool.isRequired,
+  stateSelectionChanged: PropTypes.bool.isRequired,
   updateContent: PropTypes.func.isRequired,
   updateFlowState: PropTypes.func.isRequired,
   updatePlatformValue: PropTypes.func.isRequired,
@@ -500,7 +571,7 @@ const mapStateToProps = (state) => {
     myPlans: size(state.myPlans) ? sortBy(flatMap(state.myPlans, (d) => d), 'totalCost').slice(0, 10) : [],
     planCount: size(state.myPlans) ?? 0,
     planDenominator: size(state.myPlans) ? sortBy(flatMap(state.myPlans, (d) => d), 'totalCost')[size(state.myPlans) - 1].totalCost - sortBy(flatMap(state.myPlans, (d) => d), 'totalCost')[0].totalCost : 1,
-    stateChanged: state.flowState['stateChanged'] ?? false,
+    stateSelectionChanged: state.flowState['stateSelectionChanged'] ?? false,
     planNumerator: size(state.myPlans) ? sortBy(flatMap(state.myPlans, (d) => d), 'totalCost')[0].totalCost : 0,
   }
 }
@@ -537,5 +608,11 @@ const styles = StyleSheet.create({
   progress: {
     height: 40,
   },
-
+  topTabText: {
+    fontSize: 10,
+    //fontWeight: 'bold',
+    textAlign: 'center',
+    color: 'black',
+    paddingTop: 2,
+  },
 })

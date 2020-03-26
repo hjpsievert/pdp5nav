@@ -35,7 +35,6 @@ export class aRegState extends React.Component {
 
   componentDidMount() {
     Dimensions.addEventListener('change', this._handleDimChange);
-    //console.log('aRegState componentDidMount');
     const { userProfile } = this.props;
     const { userMode, userStateId, userStateName } = userProfile;
 
@@ -49,7 +48,6 @@ export class aRegState extends React.Component {
     });
     if (userMode === usrMode.anon) {
       this.setState({
-        isAnonymous: true,
         stateId: userStateId,
         stateName: userStateName,
         stateSelected: true,
@@ -103,7 +101,7 @@ export class aRegState extends React.Component {
       userProfile.userStateName = stateName;
       saveUserProfile(() => { this._finishSaveProfile() }, userProfile, defaultProfileSave, 'RegisterState', installationId);
       updateFlowState({
-        stateChanged: true
+        stateSelectionChanged: true
       });
       navigation.navigate('Home');
     }
@@ -111,9 +109,9 @@ export class aRegState extends React.Component {
   }
 
   _exitCreateAnonymous = () => {
-    const {updateFlowState, navigation} = this.props;
+    const { updateFlowState, navigation } = this.props;
     updateFlowState({
-      stateChanged: true
+      stateSelectionChanged: true
     });
     navigation.navigate('Home');
   }
@@ -167,8 +165,9 @@ export class aRegState extends React.Component {
 
   render() {
 
-    const { navigation } = this.props;
-    const { adjust, stateListVisible, stateName, stateData, stateSelected, registerState, isAnonymous } = this.state;
+    const { navigation, userProfile } = this.props;
+    const { userMode } = userProfile;
+    const { adjust, stateListVisible, stateName, stateData, stateSelected, registerState } = this.state;
     let serviceItems;
     if (stateData) {
       serviceItems = stateData.map((s) => {
@@ -184,15 +183,16 @@ export class aRegState extends React.Component {
             flexDirection: 'column', paddingLeft: 15, paddingRight: 15, flex: 1
           }}
           >
-            {isAnonymous ?
+            {userMode === usrMode.anon &&
               <View style={{ marginTop: 10, marginBottom: 10, borderColor: '#bbb', borderWidth: 1, backgroundColor: 'linen', paddingTop: 10, paddingBottom: 10, paddingLeft: 20, paddingRight: 20 }}>
                 <Text style={{ paddingBottom: 3 }}>{'You are currently set up as anonymous user. If you want to change your state of registry, select the new state from the list and then press '}<Text style={styles.textBold}>{'Continue'}</Text>{' to save your selection.'}</Text>
                 <Text style={{ paddingBottom: 3 }}>{'If you would like to become a fully registered user which will allow you to save drug and plan information, press '}<Text style={styles.textBold}>{'Register'}</Text>{'.'}</Text>
               </View>
-              :
+            }
+            {userMode === usrMode.init &&
               <View style={{ marginTop: 10, marginBottom: 10, borderColor: '#bbb', borderWidth: 1, backgroundColor: 'linen', paddingTop: 10, paddingBottom: 10, paddingLeft: 20, paddingRight: 20 }}>
-                <Text style={{ paddingBottom: 3 }}>{'You are here because this is either the first time you are using EZPartD on this device or because you uninstalled and then reinstalled EZPartD. If you have already registered EZPartD, please '}<Text style={styles.textBold}>{'Login'}</Text>{' to your account and your data will be recovered.'}</Text>
-                <Text style={{ paddingBottom: 3 }}>{'If you have not registered EZPartD before, you must first provide your state of residence. This is required since all prescription plan premiums and drug prices are state specific. Press '}<Text style={styles.textBold}>{'Continue'}</Text>{' to save your state.'}</Text>
+                <Text style={{ paddingBottom: 3 }}>{'If you have already registered EZPartD, please '}<Text style={styles.textBold}>{'Login'}</Text>{' to your account and your data will be recovered.'}</Text>
+                <Text style={{ paddingBottom: 3 }}>{'If you have not registered EZPartD before, you must first provide your state of residence. Once you have done that, you will be given the option to remain anonymous or to register with your eMail. Press '}<Text style={styles.textBold}>{'Continue'}</Text>{' to save your state.'}</Text>
               </View>
             }
 
@@ -250,29 +250,8 @@ export class aRegState extends React.Component {
               borderTopColor: 'black'
             }}
             >
-              <TouchableHighlight
-                underlayColor={'#ccc'}
-                onPress={isAnonymous ? this._updateAnonymous : this._createAnonymous}
-              >
-                <View style={{ flexDirection: 'column', justifyContent: 'space-between' }}>
-                  <Icon
-                    name={'skip-forward'}
-                    type={'feather'}
-                    color={'black'}
-                    size={25}
-                    containerStyle={{
-                      paddingLeft: 10,
-                      paddingRight: 10,
-                    }}
-                  />
-                  <Text
-                    style={[styles.topTabText, { color: 'black' }]}
-                  >
-                    {'CONTINUE'}
-                  </Text>
-                </View>
-              </TouchableHighlight>
-              {isAnonymous ?
+
+              {userMode === usrMode.anon &&
                 <TouchableHighlight
                   underlayColor={'#ccc'}
                   onPress={() => navigation.navigate('aRegCreate')}
@@ -295,7 +274,8 @@ export class aRegState extends React.Component {
                     </Text>
                   </View>
                 </TouchableHighlight>
-                :
+              }
+              {userMode === usrMode.init &&
                 <TouchableHighlight
                   underlayColor={'#ccc'}
                   onPress={() => navigation.navigate('aLogin')}
@@ -319,6 +299,32 @@ export class aRegState extends React.Component {
                   </View>
                 </TouchableHighlight>
               }
+
+              {(userMode === usrMode.init || userMode === usrMode.anon) &&
+                <TouchableHighlight
+                  underlayColor={'#ccc'}
+                  onPress={stateSelected ? (userMode === usrMode.anon ? this._updateAnonymous : this._createAnonymous) : null}
+                >
+                  <View style={{ flexDirection: 'column', justifyContent: 'space-between' }}>
+                    <Icon
+                      name={'skip-forward'}
+                      type={'feather'}
+                      color={stateSelected ? 'black' : 'grey'}
+                      size={25}
+                      containerStyle={{
+                        paddingLeft: 10,
+                        paddingRight: 10,
+                      }}
+                    />
+                    <Text
+                      style={[styles.topTabText, { color: stateSelected ? 'black' : 'grey' }]}
+                    >
+                      {'CONTINUE'}
+                    </Text>
+                  </View>
+                </TouchableHighlight>
+              }
+
             </View>
           </View>
         }
@@ -345,6 +351,29 @@ export class aRegState extends React.Component {
             >
               <TouchableHighlight
                 underlayColor={'#ccc'}
+                onPress={() => navigation.navigate('aRegCreate')}
+              >
+                <View style={{ flexDirection: 'column', justifyContent: 'space-between' }}>
+                  <Icon
+                    name={'user-plus'}
+                    type={'feather'}
+                    color={'black'}
+                    size={25}
+                    containerStyle={{
+                      paddingLeft: 10,
+                      paddingRight: 10,
+                    }}
+                  />
+                  <Text
+                    style={[styles.topTabText, { color: 'black' }]}
+                  >
+                    {'REGISTER'}
+                  </Text>
+                </View>
+              </TouchableHighlight>
+
+              <TouchableHighlight
+                underlayColor={'#ccc'}
                 onPress={this._exitCreateAnonymous}
               >
                 <View style={{ flexDirection: 'column', justifyContent: 'space-between', paddingBottom: 5 }}>
@@ -366,28 +395,6 @@ export class aRegState extends React.Component {
                 </View>
               </TouchableHighlight>
 
-              <TouchableHighlight
-                underlayColor={'#ccc'}
-                onPress={() => navigation.navigate('aRegCreate')}
-              >
-                <View style={{ flexDirection: 'column', justifyContent: 'space-between' }}>
-                  <Icon
-                    name={'user-plus'}
-                    type={'feather'}
-                    color={'black'}
-                    size={25}
-                    containerStyle={{
-                      paddingLeft: 10,
-                      paddingRight: 10,
-                    }}
-                  />
-                  <Text
-                    style={[styles.topTabText, { color: 'black' }]}
-                  >
-                    {'REGISTRATION'}
-                  </Text>
-                </View>
-              </TouchableHighlight>
             </View>
 
           </View>
@@ -420,7 +427,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(aRegState);
 
 const styles = StyleSheet.create({
   topTabText: {
-    fontSize: 8,
+    fontSize: 10,
     //fontWeight: 'bold',
     textAlign: 'center',
     color: 'black',
