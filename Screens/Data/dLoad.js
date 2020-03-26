@@ -85,9 +85,6 @@ export class dLoad extends Component {
     }
   }
 
-  _empty = () => {
-  }
-
   _confirmDeleteSaved = () => {
     const { showItem, isDB } = this.state;
     //console.log('Delete Saved');

@@ -39,7 +39,7 @@ export class aRegCreate extends React.Component {
 
   componentDidMount() {
     Dimensions.addEventListener('change', this._handleDimChange);
-    //console.log('aRegCreate componentDidMount');
+    // console.log('aRegCreate componentDidMount');
   }
 
 
@@ -151,6 +151,7 @@ export class aRegCreate extends React.Component {
       userProfile.userMode = usrMode.created;
       updateAnonymous((response) => { this._finishCreateUser(response, userProfile) }, installationId, JSON.stringify(userProfile));
     }
+
     else {
       if (err === 'Duplicate Email') {
         this.setState({

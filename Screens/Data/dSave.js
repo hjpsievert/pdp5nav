@@ -51,10 +51,6 @@ export class dSave extends Component {
     })
   }
 
-
-  _empty = () => {
-  }
-
   _saveTitle = (title) => {
     this.setState({
       inputTitle: title,
