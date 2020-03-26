@@ -145,7 +145,7 @@ export class dSave extends Component {
                   }}
                 />
                 <Text
-                  style={[styles.topTabText, { color: 'black' }]}
+                  style={[myStyles.topTabText, { color: 'black' }]}
                 >
                   {'SAVE'}
                 </Text>

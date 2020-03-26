@@ -6,12 +6,12 @@ import {
   TouchableHighlight,
   Dimensions,
   Platform,
-  StyleSheet
 } from 'react-native';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import * as Dispatch from '../../Redux/Dispatches';
 import { Icon } from 'react-native-elements';
+import { myStyles } from '../../Utils/Styles';
 
 export class pDrugPick extends React.Component {
   constructor(props, context) {
@@ -129,7 +129,7 @@ export class pDrugPick extends React.Component {
                   }}
                 />
                 <Text
-                  style={[styles.topTabText, { color: 'black' }]}
+                  style={[myStyles.topTabText, { color: 'black' }]}
                 >
                   {'CONTINUE'}
                 </Text>
@@ -161,14 +161,3 @@ const mapDispatchToProps = {
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(pDrugPick);
-
-
-const styles = StyleSheet.create({
-  topTabText: {
-    fontSize: 8,
-    //fontWeight: 'bold',
-    textAlign: 'center',
-    color: 'black',
-    paddingTop: 2,
-  },
-});

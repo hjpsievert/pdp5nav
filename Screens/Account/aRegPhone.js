@@ -2,7 +2,6 @@ import React from 'react'
 import {
   View,
   Text,
-  StyleSheet,
   TouchableHighlight,
   Dimensions,
   Platform,
@@ -10,6 +9,7 @@ import {
 } from 'react-native';
 import { Input, Icon } from 'react-native-elements';
 import { addPhone, verifyPhone } from '../../Utils/Api';
+import { myStyles } from '../../Utils/Styles';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
@@ -280,7 +280,7 @@ export class aRegPhone extends React.Component {
                   }}
                 />
                 <Text
-                  style={[styles.topTabText, { color: 'black' }]}
+                  style={[myStyles.topTabText, { color: 'black' }]}
                 >
                   {'CONTINUE'}
                 </Text>
@@ -308,13 +308,3 @@ const mapDispatchToProps = {
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(aRegPhone);
-
-const styles = StyleSheet.create({
-  topTabText: {
-    fontSize: 8,
-    //fontWeight: 'bold',
-    textAlign: 'center',
-    color: 'black',
-    paddingTop: 2,
-  },
-});

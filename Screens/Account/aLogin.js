@@ -5,7 +5,6 @@ import {
   Text,
   Dimensions,
   Platform,
-  StyleSheet,
   TouchableHighlight
 } from 'react-native';
 import PropTypes from 'prop-types';
@@ -16,6 +15,7 @@ import { loginUser, validateLogin, getProvider, addUserDevice } from '../../Util
 import { saveUserProfile } from '../../Utils/SaveData';
 import { loadAppData } from '../../Utils/AppLoad';
 import { defaultProfileSave, usrMode } from '../../Utils/Constants';
+import { myStyles } from '../../Utils/Styles';
 import size from 'lodash/size';
 import Constants from 'expo-constants';
 
@@ -38,10 +38,9 @@ export class aLogin extends React.Component {
 
   componentDidMount() {
     Dimensions.addEventListener('change', this._handleDimChange);
-    //console.log('aLogin componentDidMount');
     const { userProfile } = this.props;
     const { emailVerified } = userProfile;
-
+    // console.log('aLogin componentDidMount');
     if (emailVerified) {
       this.setState({
         loginState: 'initial',
@@ -228,7 +227,7 @@ export class aLogin extends React.Component {
   _handleRegister = () => {
     const { userProfile } = this.props;
     const { userMode } = userProfile;
-    if (userMode===usrMode.created) {
+    if (userMode === usrMode.created) {
       this.props.navigation.navigate('aRegFinish');
     }
     else {
@@ -297,7 +296,7 @@ export class aLogin extends React.Component {
                       }}
                     />
                     <Text
-                      style={styles.topTabText}
+                      style={myStyles.topTabText}
                     >
                       {'LOGIN'}
                     </Text>
@@ -319,7 +318,7 @@ export class aLogin extends React.Component {
                       }}
                     />
                     <Text
-                      style={[styles.topTabText, { color: 'black' }]}
+                      style={[myStyles.topTabText, { color: 'black' }]}
                     >
                       {'REGISTER'}
                     </Text>
@@ -408,7 +407,7 @@ export class aLogin extends React.Component {
                       }}
                     />
                     <Text
-                      style={[styles.topTabText, { color: 'black' }]}
+                      style={[myStyles.topTabText, { color: 'black' }]}
                     >
                       {'CONTINUE'}
                     </Text>
@@ -466,7 +465,7 @@ export class aLogin extends React.Component {
                       }}
                     />
                     <Text
-                      style={[styles.topTabText, { color: 'black' }]}
+                      style={[myStyles.topTabText, { color: 'black' }]}
                     >
                       {'CONTINUE'}
                     </Text>
@@ -516,7 +515,7 @@ export class aLogin extends React.Component {
                       }}
                     />
                     <Text
-                      style={styles.topTabText}
+                      style={myStyles.topTabText}
                     >
                       {'RETRY LOGIN'}
                     </Text>
@@ -538,7 +537,7 @@ export class aLogin extends React.Component {
                       }}
                     />
                     <Text
-                      style={[styles.topTabText, { color: 'black' }]}
+                      style={[myStyles.topTabText, { color: 'black' }]}
                     >
                       {'RESET PASSWORD'}
                     </Text>
@@ -583,7 +582,7 @@ export class aLogin extends React.Component {
                       }}
                     />
                     <Text
-                      style={[styles.topTabText, { color: 'black' }]}
+                      style={[myStyles.topTabText, { color: 'black' }]}
                     >
                       {'EXIT'}
                     </Text>
@@ -618,13 +617,3 @@ const mapDispatchToProps = {
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(aLogin);
-
-const styles = StyleSheet.create({
-  topTabText: {
-    fontSize: 8,
-    //fontWeight: 'bold',
-    textAlign: 'center',
-    color: 'black',
-    paddingTop: 2,
-  },
-});

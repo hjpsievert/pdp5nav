@@ -1,6 +1,5 @@
 import React from 'react'
 import {
-  StyleSheet,
   Text,
   View,
   TouchableHighlight,
@@ -10,6 +9,7 @@ import {
 } from 'react-native';
 import { Icon, SearchBar } from 'react-native-elements';
 import { searchBaseDrugs } from '../../Utils/Api';
+import { myStyles } from '../../Utils/Styles';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import * as Dispatch from '../../Redux/Dispatches';
@@ -145,7 +145,7 @@ export class pDrugSearch extends React.Component {
                     }}
                   />
                   <Text
-                    style={styles.topTabText}
+                    style={myStyles.topTabText}
                   >
                     {'REGISTER'}
                   </Text>
@@ -167,7 +167,7 @@ export class pDrugSearch extends React.Component {
                     }}
                   />
                   <Text
-                    style={[styles.topTabText, { color: 'black' }]}
+                    style={[myStyles.topTabText, { color: 'black' }]}
                   >
                     {'UPDATE PROFILE'}
                   </Text>
@@ -242,13 +242,3 @@ const mapDispatchToProps = {
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(pDrugSearch);
-
-const styles = StyleSheet.create({
-  topTabText: {
-    fontSize: 8,
-    //fontWeight: 'bold',
-    textAlign: 'center',
-    color: 'black',
-    paddingTop: 2,
-  },
-});

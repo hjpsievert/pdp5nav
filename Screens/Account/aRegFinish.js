@@ -2,7 +2,6 @@ import React from 'react'
 import {
   View,
   Text,
-  StyleSheet,
   TouchableHighlight,
   Dimensions,
   Platform,
@@ -12,6 +11,7 @@ import { Icon } from 'react-native-elements';
 import { registerUser } from '../../Utils/Api';
 import { saveUserProfile } from '../../Utils/SaveData';
 import { defaultProfileSave, usrMode } from '../../Utils/Constants';
+import { myStyles } from '../../Utils/Styles';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
@@ -142,7 +142,7 @@ export class aRegFinish extends React.Component {
                     }}
                   />
                   <Text
-                    style={styles.topTabText}
+                    style={myStyles.topTabText}
                   >
                     {'ACTIVATE'}
                   </Text>
@@ -164,7 +164,7 @@ export class aRegFinish extends React.Component {
                     }}
                   />
                   <Text
-                    style={[styles.topTabText, { color: 'black' }]}
+                    style={[myStyles.topTabText, { color: 'black' }]}
                   >
                     {'EXIT'}
                   </Text>
@@ -194,13 +194,3 @@ const mapDispatchToProps = {
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(aRegFinish);
-
-const styles = StyleSheet.create({
-  topTabText: {
-    fontSize: 8,
-    //fontWeight: 'bold',
-    textAlign: 'center',
-    color: 'black',
-    paddingTop: 2,
-  },
-});

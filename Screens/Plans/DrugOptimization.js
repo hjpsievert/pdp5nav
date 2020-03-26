@@ -5,12 +5,12 @@ import { connect } from 'react-redux';
 import SlideInView from '../../Components/SlideInView';
 import {
   TouchableHighlight,
-  StyleSheet,
   Text,
   View,
   Dimensions,
   Platform,
 } from 'react-native';
+import { myStyles } from '../../Utils/Styles';
 import { Icon } from 'react-native-elements';
 import capitalize from 'lodash/capitalize';
 import find from 'lodash/find';
@@ -307,7 +307,7 @@ export class DrugOptimization extends Component {
                         }}
                       />
                       <Text
-                        style={styles.topTabText}
+                        style={myStyles.topTabText}
                       >
                         {'CANCEL'}
                       </Text>
@@ -329,7 +329,7 @@ export class DrugOptimization extends Component {
                         }}
                       />
                       <Text
-                        style={[styles.topTabText, { color: 'black' }]}
+                        style={[myStyles.topTabText, { color: 'black' }]}
                       >
                         {'APPLY'}
                       </Text>
@@ -370,13 +370,3 @@ const mapDispatchToProps = {
 // export default withNavigation(ErrorHandler);
 
 export default connect(mapStateToProps, mapDispatchToProps)(DrugOptimization);
-
-const styles = StyleSheet.create({
-  topTabText: {
-    fontSize: 8,
-    //fontWeight: 'bold',
-    textAlign: 'center',
-    color: 'black',
-    paddingTop: 2,
-  },
-});

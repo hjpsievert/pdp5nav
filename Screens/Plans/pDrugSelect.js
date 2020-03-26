@@ -6,10 +6,10 @@ import {
   TouchableHighlight,
   Dimensions,
   Platform,
-  StyleSheet
 } from 'react-native';
 import { Icon } from 'react-native-elements';
 import { loadDrugsByBaseId } from '../../Utils/Api';
+import { myStyles } from '../../Utils/Styles';
 import isEqual from 'lodash/isEqual';
 import capitalize from 'lodash/capitalize';
 import lowerCase from 'lodash/lowerCase';
@@ -368,7 +368,7 @@ export class pDrugSelect extends React.Component {
                     }}
                   />
                   <Text
-                    style={[styles.topTabText, { color: 'black' }]}
+                    style={[myStyles.topTabText, { color: 'black' }]}
                   >
                     {'CONTINUE'}
                   </Text>
@@ -409,13 +409,3 @@ const mapDispatchToProps = {
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(pDrugSelect);
-
-const styles = StyleSheet.create({
-  topTabText: {
-    fontSize: 8,
-    //fontWeight: 'bold',
-    textAlign: 'center',
-    color: 'black',
-    paddingTop: 2,
-  },
-});

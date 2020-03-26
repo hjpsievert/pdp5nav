@@ -2,7 +2,6 @@ import React from 'react'
 import {
   View,
   Text,
-  StyleSheet,
   TouchableHighlight,
   Platform,
   Dimensions,
@@ -17,6 +16,7 @@ import { usrMode } from '../../Utils/Constants';
 import { loadStates, loadStatePlans } from '../../Utils/Api';
 import { saveUserProfile } from '../../Utils/SaveData';
 import { defaultProfileSave } from '../../Utils/Constants';
+import { myStyles } from '../../Utils/Styles';
 import sortBy from 'lodash/sortBy';
 import size from 'lodash/size';
 
@@ -392,7 +392,7 @@ export class aUserMode extends React.Component {
                   }}
                 />
                 <Text
-                  style={[styles.topTabText, { color: 'black' }]}
+                  style={[myStyles.topTabText, { color: 'black' }]}
                 >
                   {'SAVE'}
                 </Text>
@@ -423,13 +423,3 @@ const mapDispatchToProps = {
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(aUserMode);
-
-const styles = StyleSheet.create({
-  topTabText: {
-    fontSize: 8,
-    //fontWeight: 'bold',
-    textAlign: 'center',
-    color: 'black',
-    paddingTop: 2,
-  },
-});

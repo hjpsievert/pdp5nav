@@ -15,6 +15,7 @@ import * as Dispatch from '../../Redux/Dispatches';
 import SlideInView from '../../Components/SlideInView';
 import AlertBox from '../../Components/AlertBox';
 import { loadDrugsByBaseName } from '../../Utils/Api';
+import { myStyles } from '../../Utils/Styles';
 import capitalize from 'lodash/capitalize';
 
 
@@ -485,7 +486,7 @@ export class DrugDosage extends Component {
                           }}
                         />
                         <Text
-                          style={styles.topTabText}
+                          style={myStyles.topTabText}
                         >
                           {'CANCEL'}
                         </Text>
@@ -507,7 +508,7 @@ export class DrugDosage extends Component {
                           }}
                         />
                         <Text
-                          style={[styles.topTabText, { color: !selectionMade ? 'grey' : 'black' }]}
+                          style={[myStyles.topTabText, { color: !selectionMade ? 'grey' : 'black' }]}
                         >
                           {'APPLY'}
                         </Text>
@@ -555,12 +556,5 @@ const styles = StyleSheet.create({
     color: 'black',
     textAlign: 'left',
     paddingLeft: 5
-  },
-  topTabText: {
-    fontSize: 8,
-    //fontWeight: 'bold',
-    textAlign: 'center',
-    color: 'black',
-    paddingTop: 2,
   },
 });

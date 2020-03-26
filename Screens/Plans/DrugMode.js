@@ -6,7 +6,6 @@ import { Icon, Slider } from 'react-native-elements'; // patched Slider.js in so
 import SlideInView from '../../Components/SlideInView';
 import {
   TouchableHighlight,
-  StyleSheet,
   Text,
   View,
   Dimensions,
@@ -14,6 +13,7 @@ import {
   ScrollView
 } from 'react-native';
 import capitalize from 'lodash/capitalize';
+import { myStyles } from '../../Utils/Styles';
 
 export class DrugMode extends Component {
   constructor(props, context) {
@@ -296,7 +296,7 @@ export class DrugMode extends Component {
                           }}
                         />
                         <Text
-                          style={styles.topTabText}
+                          style={myStyles.topTabText}
                         >
                           {'CANCEL'}
                         </Text>
@@ -318,7 +318,7 @@ export class DrugMode extends Component {
                           }}
                         />
                         <Text
-                          style={[styles.topTabText, { color: 'black' }]}
+                          style={[myStyles.topTabText, { color: 'black' }]}
                         >
                           {'APPLY'}
                         </Text>
@@ -357,13 +357,3 @@ const mapDispatchToProps = {
 // export default withNavigation(ErrorHandler);
 
 export default connect(mapStateToProps, mapDispatchToProps)(DrugMode);
-
-const styles = StyleSheet.create({
-  topTabText: {
-    fontSize: 8,
-    //fontWeight: 'bold',
-    textAlign: 'center',
-    color: 'black',
-    paddingTop: 2,
-  },
-});

@@ -5,7 +5,6 @@ import {
   Text,
   Dimensions,
   Platform,
-  StyleSheet,
   TouchableHighlight,
   Alert,
   Keyboard,
@@ -15,6 +14,7 @@ import {
 import { createUser, updateAnonymous } from '../../Utils/Api';
 import { saveUserProfile } from '../../Utils/SaveData';
 import { defaultProfileSave, usrMode } from '../../Utils/Constants';
+import { myStyles } from '../../Utils/Styles';
 import Constants from 'expo-constants';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
@@ -222,7 +222,7 @@ export class aRegCreate extends React.Component {
           <KeyboardAvoidingView
             behavior="padding"
             keyboardVerticalOffset={65}
-            style={styles.kb}
+            style={myStyles.kb}
           >
             {duplicateEmail &&
               <View>
@@ -258,7 +258,7 @@ export class aRegCreate extends React.Component {
                         }}
                       />
                       <Text
-                        style={[styles.topTabText, { color: 'black' }]}
+                        style={[myStyles.topTabText, { color: 'black' }]}
                       >
                         {'EXIT'}
                       </Text>
@@ -280,7 +280,7 @@ export class aRegCreate extends React.Component {
                         }}
                       />
                       <Text
-                        style={styles.topTabText}
+                        style={myStyles.topTabText}
                       >
                         {'LOGIN'}
                       </Text>
@@ -369,7 +369,7 @@ export class aRegCreate extends React.Component {
                         }}
                       />
                       <Text
-                        style={[styles.topTabText, { color: 'black' }]}
+                        style={[myStyles.topTabText, { color: 'black' }]}
                       >
                         {'CONTINUE'}
                       </Text>
@@ -403,17 +403,3 @@ const mapDispatchToProps = {
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(aRegCreate);
-
-const styles = StyleSheet.create({
-  topTabText: {
-    fontSize: 8,
-    //fontWeight: 'bold',
-    textAlign: 'center',
-    color: 'black',
-    paddingTop: 2,
-  },
-  kb: {
-    flex: 1,
-    justifyContent: 'space-between',
-  },
-});

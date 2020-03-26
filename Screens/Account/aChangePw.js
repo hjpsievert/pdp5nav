@@ -15,6 +15,7 @@ import { Input, Icon } from 'react-native-elements';
 import { changePassword } from '../../Utils/Api';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { myStyles } from '../../Utils/Styles';
 
 export class aChangePw extends React.Component {
   constructor(props, context) {
@@ -192,7 +193,7 @@ export class aChangePw extends React.Component {
         <KeyboardAvoidingView
           behavior="padding"
           keyboardVerticalOffset={65}
-          style={styles.kb}
+          style={myStyles.kb}
         >
           <View style={{
             flexDirection: 'column', paddingLeft: 15, paddingRight: 15, flex: 1
@@ -284,7 +285,7 @@ export class aChangePw extends React.Component {
                             }}
                           />
                           <Text
-                            style={[styles.topTabText, { color: 'black' }]}
+                            style={[myStyles.topTabText, { color: 'black' }]}
                           >
                             {'CONTINUE'}
                           </Text>
@@ -321,17 +322,3 @@ const mapDispatchToProps = {
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(aChangePw);
-
-const styles = StyleSheet.create({
-  topTabText: {
-    fontSize: 8,
-    //fontWeight: 'bold',
-    textAlign: 'center',
-    color: 'black',
-    paddingTop: 2,
-  },
-  kb: {
-    flex: 1,
-    justifyContent: 'space-between',
-  },
-});

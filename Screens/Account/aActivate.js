@@ -4,7 +4,6 @@ import {
   Text,
   Dimensions,
   Platform,
-  StyleSheet,
   TouchableHighlight
 } from 'react-native';
 import { Icon } from 'react-native-elements';
@@ -14,6 +13,7 @@ import { Input } from 'react-native-elements';
 import { loadDBProfile } from '../../Utils/Api';
 import { saveUserProfile } from '../../Utils/SaveData';
 import { defaultProfileSave, usrMode } from '../../Utils/Constants';
+import { myStyles } from '../../Utils/Styles';
 
 export class aActivate extends React.Component {
   constructor(props, context) {
@@ -170,7 +170,7 @@ export class aActivate extends React.Component {
                       }}
                     />
                     <Text
-                      style={styles.topTabText}
+                      style={myStyles.topTabText}
                     >
                       {'EXIT'}
                     </Text>
@@ -235,7 +235,7 @@ export class aActivate extends React.Component {
                       }}
                     />
                     <Text
-                      style={styles.topTabText}
+                      style={myStyles.topTabText}
                     >
                       {'ACTIVATE'}
                     </Text>
@@ -281,7 +281,7 @@ export class aActivate extends React.Component {
                       }}
                     />
                     <Text
-                      style={styles.topTabText}
+                      style={myStyles.topTabText}
                     >
                       {'EXIT'}
                     </Text>
@@ -313,14 +313,3 @@ const mapDispatchToProps = {
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(aActivate);
-
-
-const styles = StyleSheet.create({
-  topTabText: {
-    fontSize: 8,
-    //fontWeight: 'bold',
-    textAlign: 'center',
-    color: 'black',
-    paddingTop: 2,
-  },
-});

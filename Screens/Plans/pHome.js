@@ -19,13 +19,12 @@ import { findPlans } from '../../Utils/Api';
 import { usrMode, Defaults } from '../../Utils/Constants';
 import Constants from 'expo-constants';
 import { updateDevice, ContentInfo } from '../../Utils/Api';
+import { myStyles } from '../../Utils/Styles';
 import size from 'lodash/size';
 import flatMap from 'lodash/flatMap';
 import sortBy from 'lodash/sortBy';
 import lowerCase from 'lodash/lowerCase';
 import * as Localization from 'expo-localization';
-// import isEqual from 'lodash/isEqual';
-// import reduce from 'lodash/reduce';
 
 export class pHome extends React.Component {
   constructor(props, context) {
@@ -363,7 +362,7 @@ export class pHome extends React.Component {
             {userMode === usrMode.init &&
               <View style={{ flex: 1, flexDirection: 'column', justifyContent:'space-between'}}>
                 <View style={{ paddingBottom: 5, backgroundColor: '#a4c6fc' }}>
-                  <Text style={styles.body}>{'You are here because this is either the first time you are using EZPartD on this device or because you uninstalled and then reinstalled EZPartD. \n\nIf you have already registered EZPartD, please '}<Text style={styles.textBold}>{'Login'}</Text>{' to your account and your data will be recovered.\n\nIf you have not registered EZPartD before, you must first provide your state of residence. This is required since all prescription plan premiums and drug prices are state specific. Press '}<Text style={styles.textBold}>{'Register'}</Text>{' to procede.'}</Text>
+                  <Text style={styles.body}>{'You are here because this is either the first time you are using EZPartD on this device or because you uninstalled and then reinstalled EZPartD. \n\nIf you have already registered EZPartD, please '}<Text style={myStyles.textBold}>{'Login'}</Text>{' to your account and your data will be recovered.\n\nIf you have not registered EZPartD before, you must first provide your state of residence. This is required since all prescription plan premiums and drug prices are state specific. Press '}<Text style={myStyles.textBold}>{'Register'}</Text>{' to procede.'}</Text>
                 </View>
 
                 <View style={{
@@ -397,7 +396,7 @@ export class pHome extends React.Component {
                         }}
                       />
                       <Text
-                        style={styles.topTabText}
+                        style={myStyles.topTabText}
                       >
                         {'REGISTER'}
                       </Text>
@@ -420,7 +419,7 @@ export class pHome extends React.Component {
                         }}
                       />
                       <Text
-                        style={styles.topTabText}
+                        style={myStyles.topTabText}
                       >
                         {'LOGIN'}
                       </Text>
@@ -433,8 +432,8 @@ export class pHome extends React.Component {
             {showGreeting && userMode != usrMode.init &&
               <View style={{ paddingBottom: 5, backgroundColor: '#a4c6fc' }}>
                 <Text style={[styles.body, { textAlign: 'center', paddingBottom: 3 }]}>{(displayName ? displayName : 'Mode') + ': ' + userMode + ', last access ' + currDate.toLocaleString(Localization.locale)}</Text>
-                <Text style={styles.body}>{'You are currently not subscribed to any plan. You can use '}<Text style={styles.textBold}>{'Add Drug'}</Text>{' to ' + (drugCount > 0 ? 'extend your list' : 'build a list') + '. The plans available for your state will be updated as your drugs are updated.'}</Text>
-                <Text style={styles.body}>{'You can configure the list for various "what if" scenarios switching to '}<Text style={styles.textBold}>{'Drugs'}</Text>{' and analyze your plans to identify the most cost efficient choice for your needs from '}<Text style={styles.textBold}>{'Plans'}</Text>{'.'}</Text>
+                <Text style={styles.body}>{'You are currently not subscribed to any plan. You can use '}<Text style={myStyles.textBold}>{'Add Drug'}</Text>{' to ' + (drugCount > 0 ? 'extend your list' : 'build a list') + '. The plans available for your state will be updated as your drugs are updated.'}</Text>
+                <Text style={styles.body}>{'You can configure the list for various "what if" scenarios switching to '}<Text style={myStyles.textBold}>{'Drugs'}</Text>{' and analyze your plans to identify the most cost efficient choice for your needs from '}<Text style={myStyles.textBold}>{'Plans'}</Text>{'.'}</Text>
               </View>
             }
 
@@ -464,7 +463,7 @@ export class pHome extends React.Component {
                       onPress={this._handleAdd}
                     >
                       <View style={{ flexDirection: 'row', paddingRight: 10 }}>
-                        <Text style={styles.topTabText}>
+                        <Text style={myStyles.topTabText}>
                           {'Add Drug'}
                         </Text>
                         <Icon
@@ -597,9 +596,6 @@ const styles = StyleSheet.create({
     // borderWidth: 3,
     // borderColor: 'yellow',
   },
-  textBold: {
-    fontWeight: 'bold',
-  },
   planLoading: {
     fontSize: 10,
     textAlign: 'center',
@@ -607,12 +603,5 @@ const styles = StyleSheet.create({
   },
   progress: {
     height: 40,
-  },
-  topTabText: {
-    fontSize: 10,
-    //fontWeight: 'bold',
-    textAlign: 'center',
-    color: 'black',
-    paddingTop: 2,
   },
 })

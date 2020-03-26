@@ -2,13 +2,13 @@ import React from 'react'
 import {
   View,
   Text,
-  StyleSheet,
   TouchableHighlight,
   Dimensions,
   Platform
 } from 'react-native';
 import PropTypes from 'prop-types';
 import { Icon } from 'react-native-elements';
+import { myStyles } from '../../Utils/Styles';
 
 export default class aRegProvider extends React.Component {
   constructor(props, context) {
@@ -83,7 +83,7 @@ export default class aRegProvider extends React.Component {
                   }}
                 />
                 <Text
-                  style={[styles.topTabText, { color: 'black' }]}
+                  style={[myStyles.topTabText, { color: 'black' }]}
                 >
                   {'USE EMAIL'}
                 </Text>
@@ -105,7 +105,7 @@ export default class aRegProvider extends React.Component {
                   }}
                 />
                 <Text
-                  style={styles.topTabText}
+                  style={myStyles.topTabText}
                 >
                   {'USE PHONE'}
                 </Text>
@@ -121,13 +121,3 @@ export default class aRegProvider extends React.Component {
 aRegProvider.propTypes = {
   navigation: PropTypes.object.isRequired,
 };
-
-const styles = StyleSheet.create({
-  topTabText: {
-    fontSize: 8,
-    //fontWeight: 'bold',
-    textAlign: 'center',
-    color: 'black',
-    paddingTop: 2,
-  },
-});

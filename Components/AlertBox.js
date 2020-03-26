@@ -3,11 +3,11 @@ import {
   TouchableHighlight,
   View,
   Text,
-  StyleSheet,
   Platform,
   Dimensions
 } from 'react-native';
 import { Icon } from 'react-native-elements';
+import { myStyles } from './../Utils/Styles';
 
 export default class AlertBox extends Component {
   constructor(props, context) {
@@ -48,7 +48,7 @@ export default class AlertBox extends Component {
                 }}
               />
               <Text
-                style={styles.topTabText}
+                style={myStyles.topTabText}
               >
                 {cancelLabel}
               </Text>
@@ -69,7 +69,7 @@ export default class AlertBox extends Component {
                 }}
               />
               <Text
-                style={styles.topTabText}
+                style={myStyles.topTabText}
               >
                 {executeLabel}
               </Text>
@@ -82,13 +82,3 @@ export default class AlertBox extends Component {
     )
   }
 }
-
-const styles = StyleSheet.create({
-  topTabText: {
-    fontSize: 8,
-    //fontWeight: 'bold',
-    textAlign: 'center',
-    color: 'black',
-    paddingTop: 2,
-  },
-});

@@ -2,7 +2,6 @@ import React from 'react'
 import {
   View,
   Text,
-  StyleSheet,
   TouchableHighlight,
   Dimensions,
   Platform,
@@ -17,6 +16,7 @@ import Constants from 'expo-constants';
 import { loadStates, createAnonymous } from '../../Utils/Api';
 import { saveUserProfile } from '../../Utils/SaveData';
 import { defaultProfileSave, usrMode } from '../../Utils/Constants';
+import { myStyles } from '../../Utils/Styles';
 import sortBy from 'lodash/sortBy';
 
 export class aRegState extends React.Component {
@@ -185,14 +185,14 @@ export class aRegState extends React.Component {
           >
             {userMode === usrMode.anon &&
               <View style={{ marginTop: 10, marginBottom: 10, borderColor: '#bbb', borderWidth: 1, backgroundColor: 'linen', paddingTop: 10, paddingBottom: 10, paddingLeft: 20, paddingRight: 20 }}>
-                <Text style={{ paddingBottom: 3 }}>{'You are currently set up as anonymous user. If you want to change your state of registry, select the new state from the list and then press '}<Text style={styles.textBold}>{'Continue'}</Text>{' to save your selection.'}</Text>
-                <Text style={{ paddingBottom: 3 }}>{'If you would like to become a fully registered user which will allow you to save drug and plan information, press '}<Text style={styles.textBold}>{'Register'}</Text>{'.'}</Text>
+                <Text style={{ paddingBottom: 3 }}>{'You are currently set up as anonymous user. If you want to change your state of registry, select the new state from the list and then press '}<Text style={myStyles.textBold}>{'Continue'}</Text>{' to save your selection.'}</Text>
+                <Text style={{ paddingBottom: 3 }}>{'If you would like to become a fully registered user which will allow you to save drug and plan information, press '}<Text style={myStyles.textBold}>{'Register'}</Text>{'.'}</Text>
               </View>
             }
             {userMode === usrMode.init &&
               <View style={{ marginTop: 10, marginBottom: 10, borderColor: '#bbb', borderWidth: 1, backgroundColor: 'linen', paddingTop: 10, paddingBottom: 10, paddingLeft: 20, paddingRight: 20 }}>
-                <Text style={{ paddingBottom: 3 }}>{'If you have already registered EZPartD, please '}<Text style={styles.textBold}>{'Login'}</Text>{' to your account and your data will be recovered.'}</Text>
-                <Text style={{ paddingBottom: 3 }}>{'If you have not registered EZPartD before, you must first provide your state of residence. Once you have done that, you will be given the option to remain anonymous or to register with your eMail. Press '}<Text style={styles.textBold}>{'Continue'}</Text>{' to save your state.'}</Text>
+                <Text style={{ paddingBottom: 3 }}>{'If you have already registered EZPartD, please '}<Text style={myStyles.textBold}>{'Login'}</Text>{' to your account and your data will be recovered.'}</Text>
+                <Text style={{ paddingBottom: 3 }}>{'If you have not registered EZPartD before, you must first provide your state of residence. Once you have done that, you will be given the option to remain anonymous or to register with your eMail. Press '}<Text style={myStyles.textBold}>{'Continue'}</Text>{' to save your state.'}</Text>
               </View>
             }
 
@@ -268,7 +268,7 @@ export class aRegState extends React.Component {
                       }}
                     />
                     <Text
-                      style={styles.topTabText}
+                      style={myStyles.topTabText}
                     >
                       {'REGISTER'}
                     </Text>
@@ -292,7 +292,7 @@ export class aRegState extends React.Component {
                       }}
                     />
                     <Text
-                      style={styles.topTabText}
+                      style={myStyles.topTabText}
                     >
                       {'LOGIN'}
                     </Text>
@@ -317,7 +317,7 @@ export class aRegState extends React.Component {
                       }}
                     />
                     <Text
-                      style={[styles.topTabText, { color: stateSelected ? 'black' : 'grey' }]}
+                      style={[myStyles.topTabText, { color: stateSelected ? 'black' : 'grey' }]}
                     >
                       {'CONTINUE'}
                     </Text>
@@ -333,8 +333,8 @@ export class aRegState extends React.Component {
           <View>
             <View style={{ marginTop: 10, borderColor: '#bbb', borderWidth: 1, backgroundColor: 'linen', paddingTop: 10, paddingBottom: 10, paddingLeft: 20, paddingRight: 20 }}>
               <Text style={{ paddingBottom: 3 }}>{'Creation  of an anonymous user account was successful!'}</Text>
-              <Text style={{ paddingBottom: 3 }}>{'You can choose to continue to '}<Text style={styles.textBold}>{'REGISTER'}</Text>{' with your email and a password. This will allow you to securely store your drug selections and ensures that you are the only person able to access your data.'}</Text>
-              <Text>{'If you just want to do do a quick search for presscription plans you can continue in '}<Text style={styles.textBold}>{'ANONYMOUS'}</Text>{' mode. No further information will be required from you, but you will not be able to save your drug data.'}</Text>
+              <Text style={{ paddingBottom: 3 }}>{'You can choose to continue to '}<Text style={myStyles.textBold}>{'REGISTER'}</Text>{' with your email and a password. This will allow you to securely store your drug selections and ensures that you are the only person able to access your data.'}</Text>
+              <Text>{'If you just want to do do a quick search for presscription plans you can continue in '}<Text style={myStyles.textBold}>{'ANONYMOUS'}</Text>{' mode. No further information will be required from you, but you will not be able to save your drug data.'}</Text>
             </View>
 
             <View style={{
@@ -365,7 +365,7 @@ export class aRegState extends React.Component {
                     }}
                   />
                   <Text
-                    style={[styles.topTabText, { color: 'black' }]}
+                    style={[myStyles.topTabText, { color: 'black' }]}
                   >
                     {'REGISTER'}
                   </Text>
@@ -388,7 +388,7 @@ export class aRegState extends React.Component {
                     }}
                   />
                   <Text
-                    style={styles.topTabText}
+                    style={myStyles.topTabText}
                   >
                     {'ANONYMOUS'}
                   </Text>
@@ -424,16 +424,3 @@ const mapDispatchToProps = {
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(aRegState);
-
-const styles = StyleSheet.create({
-  topTabText: {
-    fontSize: 10,
-    //fontWeight: 'bold',
-    textAlign: 'center',
-    color: 'black',
-    paddingTop: 2,
-  },
-  textBold: {
-    fontWeight: 'bold',
-  },
-});
