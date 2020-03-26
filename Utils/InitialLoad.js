@@ -3,6 +3,8 @@ import { loadDBProfile, loadFromDB, refreshDrugs } from './Api';
 import Constants from 'expo-constants';
 import { defaultProfile, defaultProfileSave } from './Constants';
 import { saveUserProfile, saveDrugList } from './SaveData';
+import { store } from '../App';
+import { updateProfile } from '../Redux/Actions'
 import size from 'lodash/size';
 import flatMap from 'lodash/flatMap';
 import sortBy from 'lodash/sortBy';
@@ -27,6 +29,8 @@ const _handleLoadProfileDB = (callBack, response) => {
   else {
     console.log('InitialLoad _handleLoadProfileDB failed, exit with empty drug list and default profile');
     const finalDrugs = {};
+    store.dispatch(updateProfile(defaultProfile));
+    console.log('InitialLoad _handleLoadProfileDB saved default profile locally');
     callBack(defaultProfile, finalDrugs);
   }
 }
