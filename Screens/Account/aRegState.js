@@ -40,7 +40,7 @@ export class aRegState extends React.Component {
 
     loadStates((response) => {
       const { payLoad } = response;
-      // console.log('RegisterState componentDidMount stateList ', response);
+      console.log('aRegState componentDidMount');
       this.setState({
         stateData: sortBy(payLoad, 'stateName'),
 
@@ -55,6 +55,28 @@ export class aRegState extends React.Component {
       });
     }
   }
+
+  componentDidUpdate() {
+    const { doClean, updateFlowState, userProfile } = this.props;
+    const { userMode } = userProfile;
+    if (doClean) {
+      if (userMode === usrMode.anon)
+        this.setState({
+          registerState: 'anonymous'
+        })
+      else
+        this.setState({
+          stateId: 'AK',
+          stateName: 'Select your state ...',
+          stateSelected: false,
+          stateListVisible: true,
+          registerState: 'initial',
+        })
+      updateFlowState({ doClean: false });
+    }
+    console.log('aRegState componentDidUpdate, doClean = ', doClean);
+  }
+
 
   componentWillUnmount() {
     console.log('aRegState did unmount');
@@ -406,15 +428,15 @@ export class aRegState extends React.Component {
 }
 
 aRegState.propTypes = {
+  doClean: PropTypes.bool.isRequired,
   navigation: PropTypes.object.isRequired,
-  // tablet: PropTypes.bool.isRequired,
   updateFlowState: PropTypes.func.isRequired,
   userProfile: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = (state) => {
   return {
-    tablet: state.platform['Tablet'],
+    doClean: state.flowState['doClean'] ?? false,
     userProfile: state.profile,
   }
 }
