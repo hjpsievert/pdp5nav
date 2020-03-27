@@ -3,7 +3,7 @@ import { usrMode, errorCodes } from '../Utils/Constants';
 import Constants from 'expo-constants';
 import { updateProfile } from '../Redux/Actions'
 import { store } from '../App';
-import { saveProfile, saveDrugs, getIndex, saveIndex, saveErrorLocally, readKeys } from './Storage';
+import { saveProfile, saveDrugs, getIndex, saveIndex, saveErrorLocally } from './Storage';
 import find from 'lodash/find';
 
 export const saveUserProfile = (callBack, userProfile, doSave, component, installationId = null) => {
@@ -31,7 +31,7 @@ export const saveUserProfile = (callBack, userProfile, doSave, component, instal
 }
 
 const _handleSaveProfileDB = (response, component) => {
-  const { success, payLoad, code, err } = response;
+  const { success } = response;
   console.log(component, ': saveUserProfile to DB complete, success ' + success);
 }
 
@@ -134,7 +134,7 @@ const _processIndex = (response, callBack, userProfile, inputTitle, inputDescrip
 }
 
 const _handleSaveDrugsDB = (response) => {
-  const { success, payLoad, code, err } = response;
+  const { success } = response;
   console.log('saveDrugList to DB complete, success ' + success);
 }
 

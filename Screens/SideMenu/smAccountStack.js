@@ -28,7 +28,7 @@ function AccountStack() {
       <Stack.Screen
         name="aAccount"
         component={aAccount}
-        options={({ navigation, route }) => ({
+        options={({ navigation }) => ({
           title: 'Account Management',
           headerTitle: 'Account Management',
           headerStyle: { backgroundColor: '#405ce8' },
@@ -58,7 +58,7 @@ function AccountStack() {
       <Stack.Screen
         name="aLogin"
         component={aLogin}
-        options={({ navigation, route }) => ({
+        options={({ navigation }) => ({
           title: 'Login',
           headerTitle: 'Login',
           headerStyle: { backgroundColor: '#405ce8' },
@@ -91,7 +91,7 @@ function AccountStack() {
         name="aRegState"
         component={aRegState}
         // initialParams={{ doClean: false }}
-        options={({ navigation, route }) => ({
+        options={({ navigation }) => ({
           title: 'Select State',
           headerTitle: 'Select State',
           headerStyle: { backgroundColor: '#405ce8' },
@@ -124,7 +124,7 @@ function AccountStack() {
       <Stack.Screen
         name="aRegCreate"
         component={aRegCreate}
-        options={({ navigation, route }) => ({
+        options={({ navigation }) => ({
           title: 'Register',
           headerTitle: 'Register',
           headerStyle: { backgroundColor: '#405ce8' },

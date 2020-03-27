@@ -63,7 +63,7 @@ export class pHome extends React.Component {
     });
   }
 
-  componentDidUpdate(prevProps) {
+  componentDidUpdate() {
     console.log('pHome componentDidUpdate');
 
     const { stateSelectionChanged } = this.props;
