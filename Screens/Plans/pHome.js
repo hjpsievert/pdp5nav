@@ -64,19 +64,9 @@ export class pHome extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
-    // const { userProfile, navigation } = this.props;
-    // const { userMode } = userProfile;
     console.log('pHome componentDidUpdate');
-    // // if (prevProps.userProfile.userMode != userMode && userMode === usrMode.init) {
-    // //   navigation.navigate('Account', { screen: 'aRegState' });
-    // // }
-    // if (userMode === usrMode.init) {
-    //   console.log('pHome componentDidUpdate navigating to aRegState');
-    //   navigation.navigate('Account', { screen: 'aRegState' });
-    // }    
-    const { stateSelectionChanged } = this.props;
-    // this._handleRegister();
 
+    const { stateSelectionChanged } = this.props;
     if (stateSelectionChanged) {
       this._findPlans();
     }
@@ -90,7 +80,7 @@ export class pHome extends React.Component {
   _handleDimChange = ({ window }) => {
     let flag = window.width * 1000 + window.height;
     let adjust = window.width > window.height && Platform.OS !== 'web';
-    // console.log('pDrugs _handleDimChange event, new flag  = ', flag);
+    // console.log('pHome _handleDimChange event, new flag  = ', flag);
     this.setState({
       flag: flag,
       adjust: adjust
@@ -210,26 +200,7 @@ export class pHome extends React.Component {
         this.onFindPlansComplete(response);
       }, JSON.stringify(myConfigList), stateId, doMailState, startDate);
     }
-    else {
-      // this._handleRegister();
-    }
   }
-
-  // _handleRegister = () => {
-  //   const { navigation, userProfile } = this.props;
-  //   const { emailVerified, userMode } = userProfile;
-
-  //   if (userMode === usrMode.created) {
-  //     console.log('pHome _handleRegister navigating to aRegFinish');
-  //     navigation.navigate('Account', { screen: 'aRegFinish' });
-  //   }
-  //   else {
-  //     if (!emailVerified && userMode != usrMode.anon) {
-  //       console.log('pHome _handleRegister navigating to aRegState');
-  //       navigation.navigate('Account', { screen: 'aRegState' });
-  //     }
-  //   }
-  // }
 
   // ToDo: make this a utility function across components??
   onFindPlansComplete = (response) => {
