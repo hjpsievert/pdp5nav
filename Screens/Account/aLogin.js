@@ -228,7 +228,7 @@ export class aLogin extends React.Component {
       this.props.navigation.navigate('aRegFinish');
     }
     else {
-      if (userMode === usrMode.anonymous) {
+      if (userMode === usrMode.anon) {
         this.props.navigation.navigate('aRegCreate');
       }
       else {
