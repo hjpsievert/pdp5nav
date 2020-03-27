@@ -45,15 +45,13 @@ export class aProfile extends React.Component {
   render() {
     const { adjust } = this.state;
     const { userProfile } = this.props;
-    const { userEmail, displayName, emailVerified, appVerified, userMode, storageMode, userIsSubscribed, userStateId, provider, userContractId, userPlanId, userPlanName } = userProfile;
+    const { userEmail, displayName, userMode, storageMode, userIsSubscribed, userStateId, provider, userContractId, userPlanId, userPlanName } = userProfile;
 
     let profileInfo = [];
     let i = 0;
     profileInfo.push({ key: i++, title: 'EMail', subtitle: userEmail === '' ? 'not defined' : userEmail });
     profileInfo.push({ key: i++, title: 'State code', subtitle: userStateId === '' ? 'not defined' : userStateId});
     profileInfo.push({ key: i++, title: 'Display Name', subtitle: displayName === '' ? 'not defined'  :displayName });
-    profileInfo.push({ key: i++, title: 'EMail verified', subtitle: emailVerified ? 'yes' : 'no' });
-    profileInfo.push({ key: i++, title: 'EZPartD activated', subtitle: appVerified ? 'yes' : 'no' });
     profileInfo.push({ key: i++, title: 'Two-factor authentication', subtitle: provider ?? 'not defined' });
     profileInfo.push({ key: i++, title: 'User mode', subtitle: userMode ?? 'not defined'  });
     profileInfo.push({ key: i++, title: 'Store to cloud', subtitle: (storageMode ?? 'not defined') === 'cloud' ? 'yes' : 'no' });

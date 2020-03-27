@@ -39,9 +39,9 @@ export class aLogin extends React.Component {
   componentDidMount() {
     Dimensions.addEventListener('change', this._handleDimChange);
     const { userProfile } = this.props;
-    const { emailVerified } = userProfile;
+    const { userMode } = userProfile;
     // console.log('aLogin componentDidMount');
-    if (emailVerified) {
+    if (userMode===usrMode.activating || userMode===usrMode.reg) {
       this.setState({
         loginState: 'initial',
       });
@@ -187,8 +187,6 @@ export class aLogin extends React.Component {
 
     const { loginId } = this.state;
     let updatedUserProfile = {
-      // appVerified: true, // move to _finishActivateApp
-      emailVerified: true,
       verificationCode: 0,
       provider: provider,
       userEmail: loginId,
@@ -201,7 +199,6 @@ export class aLogin extends React.Component {
     const { success, payLoad } = response;
     console.log('_finishActivateApp success = ', success, ', payload = ', payLoad);
     if (success) {
-      updatedUserProfile.appVerified = true,
         loadAppData((profile, drugList) => { this._finishAppLoad(profile, drugList) }, updatedUserProfile);
     }
   }

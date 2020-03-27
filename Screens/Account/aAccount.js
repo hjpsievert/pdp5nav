@@ -34,24 +34,26 @@ export class aAccount extends React.Component {
 
   _buildList = () => {
     const { userProfile, updateFlowState } = this.props;
-    const { emailVerified, appVerified, userMode, userStateId } = userProfile;
+    const { userMode, userStateId } = userProfile;
     let listOptions = [];
     let i = 0;
 
+    const doState = userMode === usrMode.init || userMode=== usrMode.anon || userMode===usrMode.created || userMode=== usrMode.verifying
+    const appVerified = userMode === usrMode.reg;
     if (userMode === usrMode.init) {
       updateFlowState({
         doClean: true
       })
     }
 
-    listOptions.push({ key: i++, title: 'Select State', subtitle: 'Specify your state of residence', icon: 'select1', type: 'antdesign', active: !emailVerified, target: 'aRegState', paramName: 'doClean', param: true });
+    listOptions.push({ key: i++, title: 'Select State', subtitle: 'Specify your state of residence', icon: 'select1', type: 'antdesign', active: doState, target: 'aRegState', paramName: 'doClean', param: true });
     listOptions.push({ key: i++, title: 'Register', subtitle: 'Register for a new account', icon: 'user-plus', type: 'font-awesome', active: (userMode === usrMode.anon || userMode === usrMode.created) && userStateId, target: userMode === usrMode.created ? 'aRegFinish' : 'aRegCreate' });
     // listOptions.push({ key: i++, title: 'Register Create', subtitle: 'For test only', icon: 'user-plus', type: 'font-awesome', active: true, target: 'aRegCreate' });
     // listOptions.push({ key: i++, title: 'Register Provider', subtitle: 'For test only', icon: 'user-plus', type: 'font-awesome', active: true, target: 'aRegProvider' });
     // listOptions.push({ key: i++, title: 'Register Phone', subtitle: 'For test only', icon: 'user-plus', type: 'font-awesome', active: true, target: 'aRegPhone', paramName: 'provider', param: 'Phone' });
     // listOptions.push({ key: i++, title: 'Register Finish Phone', subtitle: 'For test only', icon: 'user-plus', type: 'font-awesome', active: true, target: 'aRegFinish', paramName: 'provider', param: 'Phone' });
     // listOptions.push({ key: i++, title: 'Register Finish Email', subtitle: 'For test only', icon: 'user-plus', type: 'font-awesome', active: true, target: 'aRegFinish', paramName: 'provider', param: 'Email' });
-    listOptions.push({ key: i++, title: 'Activate', subtitle: 'Unlock the EZPartD Application', icon: 'key', type: 'font-awesome', active: emailVerified && !appVerified, target: 'aActivate' });
+    listOptions.push({ key: i++, title: 'Activate', subtitle: 'Unlock the EZPartD Application', icon: 'key', type: 'font-awesome', active: userMode===usrMode.activating, target: 'aActivate' });
     listOptions.push({ key: i++, title: 'Login', subtitle: 'Login to your account', icon: 'login', type: 'material-community', active: true, target: 'aLogin' });
     listOptions.push({ key: i++, title: 'Change Password', subtitle: 'Change your password', icon: 'key-change', type: 'material-community', active: appVerified, target: 'aChangePw' });
     listOptions.push({ key: i++, title: 'Reset Password', subtitle: 'Reset your password', icon: 'redo-variant', type: 'material-community', active: appVerified, target: 'aResetPw' });

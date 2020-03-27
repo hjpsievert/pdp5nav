@@ -61,8 +61,6 @@ export class aRegFinish extends React.Component {
       const provider = route.params?.provider ?? '';
 
       newUserProfile = {
-        emailVerified: false,
-        appVerified: false,
         provider: provider,
         userMode: usrMode.verifying,
       }

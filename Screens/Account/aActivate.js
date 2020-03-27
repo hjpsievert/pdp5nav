@@ -103,7 +103,6 @@ export class aActivate extends React.Component {
     if (activated) {
       this.myInput.clear();
       const newUserProfile = {
-        appVerified: true,
         verificationCode: '',
         userMode: usrMode.reg,
       }
