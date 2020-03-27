@@ -27,10 +27,10 @@ export class aRegFinish extends React.Component {
 
   componentDidMount() {
     Dimensions.addEventListener('change', this._handleDimChange);
-    //console.log('aRegFinish componentDidMount');
     const { route, userProfile } = this.props;
     const { userMode } = userProfile;
-    if (userMode != usrMode.created) {
+    console.log('aRegFinish componentDidMount, userMode ', userMode);
+    if (userMode === usrMode.created) {
       const provider = route.params?.provider ?? '';
       registerUser((response) => { this._finishRegisterUser(response) }, userProfile.loginId, provider);
     }
