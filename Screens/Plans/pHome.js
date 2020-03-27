@@ -215,21 +215,21 @@ export class pHome extends React.Component {
     }
   }
 
-  _handleRegister = () => {
-    const { navigation, userProfile } = this.props;
-    const { emailVerified, userMode } = userProfile;
+  // _handleRegister = () => {
+  //   const { navigation, userProfile } = this.props;
+  //   const { emailVerified, userMode } = userProfile;
 
-    if (userMode === usrMode.created) {
-      console.log('pHome _handleRegister navigating to aRegFinish');
-      navigation.navigate('Account', { screen: 'aRegFinish' });
-    }
-    else {
-      if (!emailVerified && userMode != usrMode.anon) {
-        console.log('pHome _handleRegister navigating to aRegState');
-        navigation.navigate('Account', { screen: 'aRegState' });
-      }
-    }
-  }
+  //   if (userMode === usrMode.created) {
+  //     console.log('pHome _handleRegister navigating to aRegFinish');
+  //     navigation.navigate('Account', { screen: 'aRegFinish' });
+  //   }
+  //   else {
+  //     if (!emailVerified && userMode != usrMode.anon) {
+  //       console.log('pHome _handleRegister navigating to aRegState');
+  //       navigation.navigate('Account', { screen: 'aRegState' });
+  //     }
+  //   }
+  // }
 
   // ToDo: make this a utility function across components??
   onFindPlansComplete = (response) => {
@@ -362,7 +362,7 @@ export class pHome extends React.Component {
             {userMode === usrMode.init &&
               <View style={{ flex: 1, flexDirection: 'column', justifyContent:'space-between'}}>
                 <View style={{ paddingBottom: 5, backgroundColor: '#a4c6fc' }}>
-                  <Text style={styles.body}>{'You are here because this is either the first time you are using EZPartD on this device or because you uninstalled and then reinstalled EZPartD. \n\nIf you have already registered EZPartD, please '}<Text style={myStyles.textBold}>{'Login'}</Text>{' to your account and your data will be recovered.\n\nIf you have not registered EZPartD before, you must first provide your state of residence. This is required since all prescription plan premiums and drug prices are state specific. Press '}<Text style={myStyles.textBold}>{'Register'}</Text>{' to procede.'}</Text>
+                  <Text style={styles.body}>{'You are here because this is either the first time you are using EZPartD on this device or because you uninstalled and then reinstalled EZPartD. \n\nIf you are a registered EZPartD user, please '}<Text style={myStyles.textBold}>{'Login'}</Text>{' to your account and your data will be recovered.\n\nIf you have not registered EZPartD before, you must at least register your state of residence. This is required since all prescription plan premiums and drug prices are state specific. Press '}<Text style={myStyles.textBold}>{'Register'}</Text>{' to procede.'}</Text>
                 </View>
 
                 <View style={{

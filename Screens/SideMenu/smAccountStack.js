@@ -90,6 +90,7 @@ function AccountStack() {
       <Stack.Screen
         name="aRegState"
         component={aRegState}
+        // initialParams={{ doClean: false }}
         options={({ navigation, route }) => ({
           title: 'Select State',
           headerTitle: 'Select State',

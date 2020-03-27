@@ -330,7 +330,7 @@ export class aResetPw extends React.Component {
             <View>
               <View style={{ marginTop: 10, borderColor: '#bbb', borderWidth: 1, backgroundColor: 'linen', paddingTop: 10, paddingBottom: 10, paddingLeft: 20, paddingRight: 20 }}>
                 <Text style={{ paddingBottom: 3 }}>{'Password reset email has been requested.'}</Text>
-                <Text>{'If the email address you provided is associated with your account, a password request link has been sent which could take a few minutes to reach you. Click on the link in the email and then press Continue.'}</Text>
+                <Text>{'If the email address you provided is associated with your account, a password request link has been sent which could take a few minutes to reach you. Click on the link in the email and then return here and press Continue.'}</Text>
               </View>
 
               <View style={{

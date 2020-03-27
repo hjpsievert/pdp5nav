@@ -16,11 +16,11 @@ export const Defaults = {
 }
 export const usrMode = {
   init: 'initial',
-  reg: 'registered',
   anon: 'anonymous',
   created: 'created',
   verifying: 'verification pending',
   activating: 'activation pending',
+  reg: 'registered',
   resetting: 'password reset pending',
   reset: 'password reset validated',
 }
