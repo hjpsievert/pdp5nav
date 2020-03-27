@@ -231,7 +231,12 @@ export class aLogin extends React.Component {
       this.props.navigation.navigate('aRegFinish');
     }
     else {
-      this.props.navigation.navigate('aRegCreate');
+      if (userMode === usrMode.anonymous) {
+        this.props.navigation.navigate('aRegCreate');
+      }
+      else {
+        this.props.navigation.navigate('aRegState');
+      }
     }
   }
 
@@ -261,8 +266,8 @@ export class aLogin extends React.Component {
           {loginState === 'notAvailable' &&
             <View>
               <View style={{ marginTop: 10, borderColor: '#bbb', borderWidth: 1, backgroundColor: 'linen', paddingTop: 10, paddingBottom: 10, paddingLeft: 20, paddingRight: 20 }}>
-                <Text style={{ paddingBottom: 5 }}>{'EZPartD login is not available, you are not registered.'}</Text>
-                <Text>{'If you have logged in previously from a different device, you can continue with the '}
+                <Text style={{ paddingBottom: 5 }}>{'EZPartD login is not available, since you are not registered.'}</Text>
+                <Text>{'If you are a registered user and have logged in previously from a different device, you can continue with the '}
                   <Text style={{ fontWeight: 'bold' }}>{'Login'}</Text>
                   {' process to activate this device, otherwise please '}
                   <Text style={{ fontWeight: 'bold' }}>{'Register'}</Text>
