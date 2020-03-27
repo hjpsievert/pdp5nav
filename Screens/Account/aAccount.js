@@ -38,16 +38,16 @@ export class aAccount extends React.Component {
     let listOptions = [];
     let i = 0;
 
-    const doState = userMode === usrMode.init || userMode=== usrMode.anon || userMode===usrMode.created || userMode=== usrMode.verifying
-    const appVerified = userMode === usrMode.reg;
+    const doState = (userMode === usrMode.init || userMode=== usrMode.anon || userMode===usrMode.created || userMode=== usrMode.verifying);
+    const appVerified = (userMode === usrMode.reg);
     if (userMode === usrMode.init) {
       updateFlowState({
         doClean: true
-      })
+      });
     }
 
     listOptions.push({ key: i++, title: 'Select State', subtitle: 'Specify your state of residence', icon: 'select1', type: 'antdesign', active: doState, target: 'aRegState', paramName: 'doClean', param: true });
-    listOptions.push({ key: i++, title: 'Register', subtitle: 'Register for a new account', icon: 'user-plus', type: 'font-awesome', active: (userMode === usrMode.anon || userMode === usrMode.created) && userStateId, target: userMode === usrMode.created ? 'aRegFinish' : 'aRegCreate' });
+    listOptions.push({ key: i++, title: 'Register', subtitle: 'Register for a new account', icon: 'user-plus', type: 'font-awesome', active: userMode === usrMode.anon || userMode === usrMode.created, target: userMode === usrMode.created ? 'aRegFinish' : 'aRegCreate' });
     // listOptions.push({ key: i++, title: 'Register Create', subtitle: 'For test only', icon: 'user-plus', type: 'font-awesome', active: true, target: 'aRegCreate' });
     // listOptions.push({ key: i++, title: 'Register Provider', subtitle: 'For test only', icon: 'user-plus', type: 'font-awesome', active: true, target: 'aRegProvider' });
     // listOptions.push({ key: i++, title: 'Register Phone', subtitle: 'For test only', icon: 'user-plus', type: 'font-awesome', active: true, target: 'aRegPhone', paramName: 'provider', param: 'Phone' });
