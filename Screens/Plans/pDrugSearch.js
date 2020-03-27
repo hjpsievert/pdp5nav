@@ -131,7 +131,7 @@ export class pDrugSearch extends React.Component {
             >
               <TouchableHighlight
                 underlayColor={'#ccc'}
-                onPress={() => navigation.navigate('Account', { screen: 'aRegFinish' })}
+                onPress={() => navigation.navigate('Account', { screen: 'aRegState' })}
               >
                 <View style={{ flexDirection: 'column', justifyContent: 'space-between', paddingBottom: 5 }}>
                   <Icon
