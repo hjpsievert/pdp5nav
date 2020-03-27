@@ -62,7 +62,7 @@ export class aRegState extends React.Component {
     if (doClean) {
       if (userMode === usrMode.anon)
         this.setState({
-          registerState: 'anonymous'
+          registerState: usrMode.anon
         })
       else
         this.setState({
@@ -160,7 +160,7 @@ export class aRegState extends React.Component {
       userProfile.userMode = usrMode.anon;
       saveUserProfile(() => { this._finishSaveProfile() }, userProfile, defaultProfileSave, 'RegisterState', installationId);
       this.setState({
-        registerState: 'anonymous'
+        registerState: usrMode.anon
       })
     }
     else {
@@ -351,7 +351,7 @@ export class aRegState extends React.Component {
           </View>
         }
 
-        {registerState === 'anonymous' &&
+        {registerState === usrMode.anon &&
           <View>
             <View style={{ marginTop: 10, borderColor: '#bbb', borderWidth: 1, backgroundColor: 'linen', paddingTop: 10, paddingBottom: 10, paddingLeft: 20, paddingRight: 20 }}>
               <Text style={{ paddingBottom: 3 }}>{'Creation  of an anonymous user account was successful!'}</Text>
