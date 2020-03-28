@@ -4,14 +4,10 @@ import * as Dispatch from '../../Redux/Dispatches';
 import { connect } from 'react-redux';
 import SlideInView from '../../Components/SlideInView';
 import {
-  TouchableHighlight,
-  StyleSheet,
   Text,
   View,
-  FlatList,
   Dimensions,
   Platform,
-  ScrollView
 } from 'react-native';
 import { Button } from 'react-native-elements';
 import capitalize from 'lodash/capitalize';
@@ -123,7 +119,7 @@ DrugDelete.propTypes = {
   updateFlowState: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = (state) => {
+const mapStateToProps = () => {
   return {
 
   }

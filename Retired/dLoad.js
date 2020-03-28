@@ -2,17 +2,14 @@ import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import {
-  StyleSheet,
   Text,
   View,
   Dimensions,
   Platform,
-  FlatList,
   TouchableHighlight,
   Alert
 } from 'react-native';
-import { Icon, ListItem } from 'react-native-elements';
-import SlideInView from '../../Components/SlideInView';
+import { Icon } from 'react-native-elements';
 import { readKeys, loadObject, removeKey } from '../../Utils/Storage';
 import { saveDrugList } from '../../Utils/SaveData';
 import { loadFromDB, loadFromDbById, deleteFromDBById } from '../../Utils/Api';
@@ -62,7 +59,7 @@ export class dLoad extends Component {
 
   _handleLoadData = () => {
     const contentTypes = ['activePlanDrugs', 'savedPlanDrugs'];
-    const { userEmail, userIsSubscribed } = this.props.userProfile;
+    const { userEmail } = this.props.userProfile;
     readKeys(this._handleReadKeysResult, 'savedPlanDrugs');
     loadFromDB((response) => this._handleReadFromDB(response), userEmail, contentTypes);
   }
@@ -75,7 +72,7 @@ export class dLoad extends Component {
   }
 
   _handleReadFromDB = (response) => {
-    const { success, payLoad, code, err } = response;
+    const { success, payLoad, code } = response;
     console.log('dmLoadScreen _handleReadFromDB success = ', success);
     if (success) {
       this.setState({
@@ -124,7 +121,7 @@ export class dLoad extends Component {
   _handleDeleteResponse = (response, isDB) => {
     let result;
     if (isDB) {
-      const { success, payLoad, code, err } = response;
+      const { success } = response;
       result = success;
     }
     else {
@@ -162,7 +159,7 @@ export class dLoad extends Component {
     const { myDrugs } = this.props;
     let drugList
     if (isDB) {
-      const { success, payLoad, code, err } = response;
+      const { payLoad } = response;
       drugList = JSON.parse(payLoad);
     }
     else {
@@ -251,36 +248,33 @@ export class dLoad extends Component {
     return this._renderItem(showItem, title, items, newDate, description, category, 'rgb(204, 223, 255)', 'rgb(183, 211, 255)', true, deviceName, contentDescription);
   }
 
-  _renderSavedItem = ({ item, index }) => {
+  _renderSavedItem = ({ item }) => {
     const { title, items, timeStamp, comment, category } = item;
-    const { showIndex } = this.state;
     const shortTitle = (title + '@@@').split('@@@')[0];
     return this._renderItem(item, shortTitle, items, timeStamp, comment, category, 'rgb(204, 223, 255)', 'rgb(183, 211, 255)');
   }
 
-  _renderSavedDbItem = ({ item, index }) => {
+  _renderSavedDbItem = ({ item }) => {
     const { title, dateStamp, description, category, payload, deviceName, contentDescription } = item;
     const currDate = new Date(dateStamp);
     const newDate = (currDate.getMonth() + 1) + '/' + (currDate.getDate()) + '/' + currDate.getFullYear() + ' ' + (currDate.getHours()) + ':' + (currDate.getMinutes() + 1)
-    const { showDbIndex } = this.state;
     const items = JSON.parse(payload).length ? JSON.parse(payload).length : 1;
     return this._renderItem(item, title, items, newDate, description, category, 'rgb(204, 223, 255)', 'rgb(183, 211, 255)', true, deviceName, contentDescription);
   }
 
-render() {
-  const { adjust, numSaved, savedList, dbList, numDb, showOptions, upStart, upEnd, duration, isDB } = this.state;
+  render() {
 
-  let listOptions = [];
-  let i = 0;
-  listOptions.push({ key: i++, title: 'Load', subtitle: 'Load this saved item into the active list', icon: 'upload', type: 'font-awesome', onPress: this._loadSavedDrugList });
-  listOptions.push({ key: i++, title: 'Delete', subtitle: 'Delete this saved item', icon: 'delete', type: 'material', onPress: this._confirmDeleteSaved });
-  listOptions.push({ key: i++, title: 'Edit', subtitle: 'Edit title or comment for this saved item', icon: 'edit', type: 'material', onPress: this._handleEmpty });
-  // listOptions.push({ key: i++, title: 'Close', subtitle: '', icon: 'ios-exit-outline', type: 'ionicon', onPress: this._handleShowOptions });
-  listOptions.push({ key: i++, title: 'Close', subtitle: '', icon: 'exit-to-app', type: 'material', onPress: this._handleShowOptions });
+    let listOptions = [];
+    let i = 0;
+    listOptions.push({ key: i++, title: 'Load', subtitle: 'Load this saved item into the active list', icon: 'upload', type: 'font-awesome', onPress: this._loadSavedDrugList });
+    listOptions.push({ key: i++, title: 'Delete', subtitle: 'Delete this saved item', icon: 'delete', type: 'material', onPress: this._confirmDeleteSaved });
+    listOptions.push({ key: i++, title: 'Edit', subtitle: 'Edit title or comment for this saved item', icon: 'edit', type: 'material', onPress: this._handleEmpty });
+    // listOptions.push({ key: i++, title: 'Close', subtitle: '', icon: 'ios-exit-outline', type: 'ionicon', onPress: this._handleShowOptions });
+    listOptions.push({ key: i++, title: 'Close', subtitle: '', icon: 'exit-to-app', type: 'material', onPress: this._handleShowOptions });
 
     return (
       <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-        <Text>Load Data</Text>
+        <Text>{'Load Data'}</Text>
       </View>)
   }
 
@@ -291,7 +285,6 @@ dLoad.propTypes = {
   handleLoadMyDrugs: PropTypes.func.isRequired,
   myDrugs: PropTypes.array.isRequired,
   navigation: PropTypes.object.isRequired,
-  updateFlowState: PropTypes.func.isRequired,
   userProfile: PropTypes.object.isRequired,
 };
 
