@@ -31,7 +31,7 @@ export default function TopDrawer() {
         name="Top"
         component={TabStack}
         options={() => ({
-          drawerIcon: ({ focused, color, size }) => {
+          drawerIcon: ({ color, size }) => {
             return (
               <Icon name={'home'} type={'material-community'} size={size} color={color} />
             )
@@ -43,7 +43,7 @@ export default function TopDrawer() {
         component={AccountStack}
         options={() => ({
           unmountOnBlur: true,
-          drawerIcon: ({ focused, color, size }) => {
+          drawerIcon: ({ color, size }) => {
             return (
               <Icon name={'account-details'} type={'material-community'} size={size} color={color} />
             )
@@ -55,7 +55,7 @@ export default function TopDrawer() {
         component={SettingsStack}
         options={() => ({
           unmountOnBlur: true,
-          drawerIcon: ({ focused, color, size }) => {
+          drawerIcon: ({ color, size }) => {
             return (
               <Icon name={'settings'} type={'material'} size={size} color={color} />
             )
@@ -67,7 +67,7 @@ export default function TopDrawer() {
         component={DataStack}
         options={() => ({
           unmountOnBlur: true,
-          drawerIcon: ({ focused, color, size }) => {
+          drawerIcon: ({ color, size }) => {
             return (
               <Icon name={'database'} type={'material-community'} size={size} color={color} />
             )
@@ -79,7 +79,7 @@ export default function TopDrawer() {
         component={ContactStack}
         options={() => ({
           unmountOnBlur: true,
-          drawerIcon: ({ focused, color, size }) => {
+          drawerIcon: ({ color, size }) => {
             return (
               <Icon name={'email'} type={'material'} size={size} color={color} />
             )
@@ -92,7 +92,7 @@ export default function TopDrawer() {
         component={SysinfoStack}
         options={() => ({
           unmountOnBlur: true,
-          drawerIcon: ({ focused, color, size }) => {
+          drawerIcon: ({ color, size }) => {
             return (
               <Icon name={'devices'} type={'material'} size={size} color={color} />
             )

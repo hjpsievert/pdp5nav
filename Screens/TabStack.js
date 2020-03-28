@@ -20,7 +20,7 @@ export class TabStack extends React.Component {
 
   render() {
     let Tab = createBottomTabNavigator();
-    const { drugCount, planCount, route } = this.props;
+    const { drugCount, planCount } = this.props;
     // console.log('Tab Stack route = ', route);
 
     return (
@@ -45,7 +45,7 @@ export class TabStack extends React.Component {
           name="Home"
           component={pHomeStack}
           options={() => ({
-            tabBarIcon: ({ focused, color, size }) => {
+            tabBarIcon: ({ color, size }) => {
               return (
                 <Icon
                   name={'home'}
@@ -60,9 +60,9 @@ export class TabStack extends React.Component {
         <Tab.Screen
           name="Drugs"
           component={pDrugStack}
-          options={({ navigation }) => ({
+          options={() => ({
             // unmountOnBlur: true,
-            tabBarIcon: ({ focused, color, size }) => {
+            tabBarIcon: ({ color, size }) => {
               return (
                 <View style={{ width: 24, height: 24, margin: 5 }}>
                   <Icon
@@ -101,7 +101,7 @@ export class TabStack extends React.Component {
           component={pPlanStack}
           options={() => ({
             // unmountOnBlur: true,
-            tabBarIcon: ({ focused, color, size }) => {
+            tabBarIcon: ({ color, size }) => {
               return (
                 <View style={{ width: 24, height: 24, margin: 5 }}>
                   <Icon

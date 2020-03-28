@@ -49,7 +49,7 @@ export class pDrugs extends React.Component {
   }
 
   componentDidUpdate() {
-    const { drugCount, userProfile, myDrugs, activeListDirty, animating, route } = this.props;
+    const { drugCount, userProfile, myDrugs, activeListDirty, animating } = this.props;
     // console.log('pDrugs didUpdate route = '), route
     console.log('pDrugs did update, activeListDirty = ', activeListDirty, ', drugCount = ', drugCount);
 

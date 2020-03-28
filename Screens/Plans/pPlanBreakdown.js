@@ -1,5 +1,5 @@
 import React from 'react'
-import { StyleSheet, Text, View, TouchableHighlight, FlatList, Dimensions, ScrollView, Platform, Dimension } from 'react-native'
+import { StyleSheet, Text, View, TouchableHighlight, FlatList, Dimensions, ScrollView, Platform } from 'react-native'
 import PropTypes from 'prop-types';
 import { planBreakdown } from '../../Utils/Api';
 import { Icon } from 'react-native-elements';
@@ -9,7 +9,6 @@ import flatMap from 'lodash/flatMap';
 import map from 'lodash/map';
 import capitalize from 'lodash/capitalize';
 import sortBy from 'lodash/sortBy';
-import { SlideDots } from '../../Components/SlideDots';
 
 export class pPlanBreakdown extends React.Component {
   constructor(props, context) {
@@ -27,7 +26,6 @@ export class pPlanBreakdown extends React.Component {
       showMoreDrugDetail: false,
       showNDC: '',
       dotIndex: 0,
-      //monthNames: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
       monthNames: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
     };
   }
@@ -49,7 +47,7 @@ export class pPlanBreakdown extends React.Component {
     this.props.navigation.setParams({ handleRight: this._handleExit });
 
     planBreakdown((response) => {
-      const { success, payLoad, code, err } = response;
+      const { payLoad } = response;
       // console.log('pPlanBreakdown payLoad = ', payLoad);
       this.setState({
         drugDetail: map(payLoad, (r) => r.drugResults),
@@ -229,7 +227,10 @@ export class pPlanBreakdown extends React.Component {
               <Text
                 numberOfLines={1}
                 ellipsizeMode={'tail'}
-                style={{ flex: 1, paddingTop: 0, paddingBottom: 0, fontSize: 12, textAlign: 'left', paddingLeft: 2 }}              >{rowText1}</Text>
+                style={{ flex: 1, paddingTop: 0, paddingBottom: 0, fontSize: 12, textAlign: 'left', paddingLeft: 2 }}
+              >
+                {rowText1}
+              </Text>
             </View>
             <View style={{ flexDirection: 'row', flex: 1 }}>
               <Text style={[styles.mainRowTest, { backgroundColor: 'burlywood' }]}>{dedCost === 0 ? ' ' : '$' + dedCost.toFixed(2)}</Text>
@@ -472,7 +473,7 @@ export class pPlanBreakdown extends React.Component {
     //const { currPlan } = this.props;
     // console.log('pPlanBreakdown _renderContent index = ', index, ', currPlan = ', currPlan);
 
-    const { monthBreakdown, planDetail, showPlanInfo, drugDetail, showDrugInfo, dataSourceMonth, dataSourceDrug, flag, adjust } = this.state;
+    const { monthBreakdown, planDetail, showPlanInfo, drugDetail, showDrugInfo, dataSourceMonth, dataSourceDrug, flag } = this.state;
     const currplanDetail = planDetail[index];
     // console.log('pPlanBreakdown _renderContent currplanDetail = ', currplanDetail);
     const currdrugDetail = sortBy(drugDetail[index], 'dShort');
@@ -534,14 +535,14 @@ export class pPlanBreakdown extends React.Component {
           </ScrollView>
         }
         {showPlanInfo && Platform.OS === 'web' &&
-            <FlatList
-              data={planDetailArray}
-              initialNumToRender={20}
-              horizontal={false}
-              extraData={{ flag }}
-              keyExtractor={(item) => item.key.toString()}
-              renderItem={this._renderRowInfo}
-            />
+          <FlatList
+            data={planDetailArray}
+            initialNumToRender={20}
+            horizontal={false}
+            extraData={{ flag }}
+            keyExtractor={(item) => item.key.toString()}
+            renderItem={this._renderRowInfo}
+          />
         }
 
         {showDrugInfo &&
@@ -608,7 +609,7 @@ export class pPlanBreakdown extends React.Component {
   }
 
   render() {
-    const { adjust, monthBreakdown, showPlanInfo, planDetail, showDrugInfo, flag, dotIndex } = this.state;
+    const { adjust, monthBreakdown, showPlanInfo, planDetail, showDrugInfo, flag } = this.state;
     console.log('pPlanBreakdown render');
     const { route, myPlans } = this.props;
     const planSelected = route.params?.planSelected ?? [];

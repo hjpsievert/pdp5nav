@@ -98,7 +98,7 @@ export class pPlans extends React.Component {
 
   // ToDo: make this a utility function across components??
   onFindPlansComplete = (response) => {
-    const { success, payLoad, code, err } = response;
+    const { payLoad, code } = response;
     const { handleUpdatePlanList } = this.props;
     handleUpdatePlanList(payLoad);
     const { updateFlowState, myPlans } = this.props;
@@ -252,14 +252,11 @@ export class pPlans extends React.Component {
 
     const scale = scaleIn / 16 * 15;
     let rowText2;
-    let rowText2b;
     if (showPhases) {
       rowText2 = totalCost > 0 ? '$' + totalCost.toFixed(0) : ' ';
-      rowText2b = bestCost > 0 ? (' ($' + bestCost.toFixed(0) + ')') : ' ';
     }
     else {
       rowText2 = bestCost > 0 ? '$' + bestCost.toFixed(0) : ' ';
-      rowText2b = totalCost > 0 ? (' ($' + totalCost.toFixed(0) + ')') : ' ';
     }
     return (
       <View style={{ flexDirection: 'column', borderTopColor: '#999', borderTopWidth: 1 }}>
@@ -551,24 +548,6 @@ const mapDispatchToProps = {
 export default connect(mapStateToProps, mapDispatchToProps)(pPlans);
 
 const styles = StyleSheet.create({
-  container: {
-    backgroundColor: '#fff',
-    alignItems: 'flex-start',
-    justifyContent: 'center',
-    borderWidth: 3,
-    borderColor: 'red',
-  },
-  main: {
-    // flexDirection: 'column',
-    // justifyContent: 'flex-start',
-    // backgroundColor: '#FFFFFF',
-
-    // flex: 1,
-    //marginLeft: 10,
-    //marginRight: 10,
-    borderWidth: 3,
-    borderColor: 'black',
-  },
   tableView: {
     flexDirection: 'row',
     justifyContent: 'space-between',

@@ -86,7 +86,7 @@ const _handleLoadActiveStorage = (response, callBack, userStateId, userEmail, me
 }
 
 const _handleLoadActiveDB = (response, callBack, userStateId, userEmail, mergedProfile) => {
-  const { success, payLoad, code } = response;
+  const { success, payLoad } = response;
   if (success) {
     // console.log('InitialLoad _handleLoadActiveDB, response items ' + code);
     const drugList = JSON.parse(payLoad[0].payload); // pick first response in case multiple instances are returned

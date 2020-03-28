@@ -13,7 +13,7 @@ import pDrugPick from './pDrugPick';
 
 const Stack = createStackNavigator();
 
-function pDrugStack({route}) {
+function pDrugStack() {
   // console.log('pDrugStack route = ', route);
   return (
     <Stack.Navigator>
@@ -133,7 +133,7 @@ function pDrugStack({route}) {
         name="pDrugPick"
         component={pDrugPick}
         initialParams={{ doPick: true }}
-        options={({ navigation, route }) => ({
+        options={({ navigation }) => ({
           title: 'Pick Base Drug(s)',
           headerTitle: "Pick Base Drug(s)",
           headerStyle: { backgroundColor: '#405ce8' },

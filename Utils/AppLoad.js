@@ -2,7 +2,6 @@ import { loadObject } from './Storage';
 import { loadFromDB, refreshDrugs } from './Api';
 import Constants from 'expo-constants';
 import { saveDrugList } from './SaveData';
-import { Defaults } from './Constants';
 import size from 'lodash/size';
 import flatMap from 'lodash/flatMap';
 import orderBy from 'lodash/orderBy';
@@ -62,7 +61,7 @@ const _handleLoadActiveStorage = (response, callBack, userStateId, userEmail, me
 }
 
 const _handleLoadActiveDB = (response, callBack, userStateId, userEmail, mergedProfile) => {
-  const {success, payLoad, code, err} = response;
+  const {success, payLoad, code} = response;
   console.log('AppLoad _handleLoadActiveDB, response items ' + code);
   if (success) {
     const drugList = JSON.parse(payLoad[0].payload);
@@ -78,7 +77,7 @@ const _handleLoadActiveDB = (response, callBack, userStateId, userEmail, mergedP
 }
 
 const _handleRefresh = (response, callBack, drugListOld, userEmail, mergedProfile) => {
-  const {success, payLoad, code, err} = response;
+  const {payLoad} = response;
   const drugListNew = payLoad;
   console.log('AppLoad _handleRefresh drugListOld length ', flatMap(drugListOld, (d) => d.drugId + ', ' + d.planDetail.avePrice90 * 30), ', druglistNew = ', flatMap(drugListNew, (d) => d.drugId + ', ' + d.planDetail.avePrice90 * 30));
   let drugList = [];

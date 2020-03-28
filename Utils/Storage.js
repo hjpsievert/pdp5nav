@@ -1,8 +1,7 @@
 import {
     AsyncStorage
 } from 'react-native';
-import size from 'lodash/size';
-import flatMap from 'lodash/flatMap';
+
 
 export const readKeys = async (cb, contentType) => {
     let newKeys = [];

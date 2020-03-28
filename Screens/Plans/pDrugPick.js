@@ -32,7 +32,7 @@ export class pDrugPick extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
-    const { navigation, selectionCount, searchResults, route } = this.props;
+    const { searchResults } = this.props;
     // console.log('pDrugPick didUpdate route = ', route);
     if (prevProps.searchResults != searchResults) {
       this.setState({

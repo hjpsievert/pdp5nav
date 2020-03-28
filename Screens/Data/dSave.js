@@ -2,17 +2,16 @@ import React, { Component } from 'react';
 import {
   View,
   Text,
-  StyleSheet,
   TouchableHighlight,
   Dimensions,
   Platform,
   Keyboard
 } from 'react-native';
 import { saveDrugList } from '../../Utils/SaveData';
+import { myStyles } from '../../Utils/Styles';
 import { Icon, Input } from 'react-native-elements';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import * as Dispatch from '../../Redux/Dispatches';
 import flatMap from 'lodash/flatMap';
 
 export class dSave extends Component {
@@ -32,7 +31,7 @@ export class dSave extends Component {
 
   }
 
-  componentDidUpdate(prevProps, prevState) {
+  componentDidUpdate() {
     console.log('dSave didUpdate');
   }
 
@@ -130,7 +129,7 @@ export class dSave extends Component {
             borderTopColor: 'black'
           }}
           >
-<TouchableHighlight
+            <TouchableHighlight
               onPress={this._savePlanDrugList}
             >
               <View style={{ flexDirection: 'column', justifyContent: 'space-between' }}>
@@ -177,10 +176,3 @@ const mapDispatchToProps = {
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(dSave);
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-  },
-});

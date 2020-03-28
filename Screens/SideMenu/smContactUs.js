@@ -14,7 +14,7 @@ export default class ContactUs extends React.Component {
   render() {
     return (
       <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-        <Text>Contact Us</Text>
+        <Text>{'Contact Us'}</Text>
       </View>)
   }
 }

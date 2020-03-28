@@ -35,7 +35,7 @@ export class pDrugSelect extends React.Component {
 
   componentDidMount() {
     Dimensions.addEventListener('change', this._handleDimChange);
-    const { baseList, userStateId, navigation } = this.props;
+    const { baseList, userStateId } = this.props;
     console.log('pDrugSelect componentDidMount');
     loadDrugsByBaseId((response) => {
       this._handleLoadDrugs(response)
@@ -43,7 +43,7 @@ export class pDrugSelect extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
-    const { baseList, userStateId, searchResultCount, navigation, route } = this.props;
+    const { baseList, userStateId, searchResultCount, navigation } = this.props;
     const { drugsLoaded } = this.state;
     console.log('pDrugSelect didUpdate');
 
@@ -128,7 +128,6 @@ export class pDrugSelect extends React.Component {
   _handleDrugClick = (drug) => {
     //console.log('DrugSearcher _handleDrugClick');
     const { mainDrugs, doCombo, showAll, showBrand } = this.state;
-    const { navigation } = this.props;
     const drugIndex = mainDrugs.indexOf(drug);
     const comboLimit = (doCombo ? 99 : 2);
     let checked = [...mainDrugs];

@@ -96,7 +96,7 @@ export const refreshDrugs = function (cb, NDCIds, stateCode) {
 // return processRequest(cb, mode, `prescdrug?planId=${planId}&${baseDrugSearchString}`);
 // }
 
-export const findPlans = function (cb, myDrugs, stateCode, doMail, startDate, doTest = false) {
+export const findPlans = function (cb, myDrugs, stateCode, doMail, startDate) {
   //console.log('findPlans myDrugs ', myDrugs, ' stateCode ', stateCode, ', doMail ', doMail, ', startDate ', startDate);
   const mode = 'POST';
   return processRequest(cb, mode, `ManagePlans?code=HfUY50gafaoHk6UfXgka7n0IA/wpZyrM6ZWt8p1vl8TTuXA7fy2Lbw==&FunctionType=Find&stateId=${stateCode}&doMail=${doMail}&startDate=${startDate}`, myDrugs);
