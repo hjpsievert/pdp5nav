@@ -183,7 +183,6 @@ export class aRegCreate extends React.Component {
     const { success, payLoad } = response;
     if (success) {
       saveUserProfile(() => { this._finishSaveProfile() }, userProfile, defaultProfileSave, 'RegisterCreate');
-      navigation.navigate('aRegProvider')
     }
     else {
       if (Platform.OS === 'web') {
@@ -204,7 +203,9 @@ export class aRegCreate extends React.Component {
   }
 
   _finishSaveProfile = () => {
+    const { navigation } = this.props;
     console.log('RegisterCreate _finishSaveProfile completed');
+    navigation.navigate('aRegProvider');
   }
 
   render() {
