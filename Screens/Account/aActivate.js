@@ -29,15 +29,24 @@ export class aActivate extends React.Component {
   }
 
   componentDidMount() {
+    console.log('aActivate did mount');
     Dimensions.addEventListener('change', this._handleDimChange);
     const { userProfile } = this.props;
     const { userEmail, userIsSubscribed } = userProfile;
-    loadDBProfile((response) => { this._processProfile(response, userIsSubscribed) }, userEmail);
+    const retry = false;
+    loadDBProfile((response) => { this._processProfile(response, retry, userIsSubscribed) }, userEmail);
   }
 
   componentWillUnmount() {
-    console.log('pDrugSearch did unmount');
+    console.log('aActivate did unmount');
     Dimensions.removeEventListener('change', this._handleDimChange);
+  }
+
+  _handleRetry = () => {
+    const retry = true;
+    const { userProfile } = this.props;
+    const { userEmail, userIsSubscribed } = userProfile;
+    loadDBProfile((response) => { this._processProfile(response, retry, userIsSubscribed) }, userEmail);
   }
 
   _handleDimChange = ({ window }) => {
@@ -50,11 +59,11 @@ export class aActivate extends React.Component {
     })
   }
 
-  _processProfile = (response, userIsSubscribed) => {
+  _processProfile = (response, retry, userIsSubscribed) => {
     const { navigation } = this.props;
     const { success, payLoad } = response;
 
-    if (!success) {
+    if (!success && !retry) {
       // Alert.alert(
       //   'EZPartD Activation Error',
       //   'An error occurred: ' + payLoad,
@@ -67,10 +76,11 @@ export class aActivate extends React.Component {
       navigation.navigate(userIsSubscribed ? 'fdHomeScreen' : 'Home');
     }
     else {
-      const { userMode } = payLoad;
+      const { userMode, verificationCode } = payLoad;
 
       if (userMode === usrMode.activating) {
         this.setState({
+          verificationCode: verificationCode,
           activationPending: true,
         });
       }
@@ -84,7 +94,7 @@ export class aActivate extends React.Component {
   }
 
   _validationOK = (validation) => {
-    let { verificationCode } = this.props.userProfile;
+    let { verificationCode } = this.state;
     verificationCode = parseInt(verificationCode);
     // console.log('aActivate _validationOK validation = "', validation, '", verificationCode "', verificationCode, '", OK = ', validation === verificationCode);
     return validation === verificationCode;
@@ -100,13 +110,12 @@ export class aActivate extends React.Component {
   }
 
   _finishActivateApp = (activated) => {
+    const {userProfile} = this.props;
     if (activated) {
       this.myInput.clear();
-      const newUserProfile = {
-        verificationCode: '',
-        userMode: usrMode.reg,
-      }
-      saveUserProfile((newUserProfile) => { this._finishSaveProfile(newUserProfile) }, newUserProfile, defaultProfileSave, 'aActivate');
+      userProfile.verificationCode = '',
+      userProfile.userMode = usrMode.reg,
+      saveUserProfile((newUserProfile) => { this._finishSaveProfile(newUserProfile) }, userProfile, defaultProfileSave, 'aActivate');
     }
     else {
       this.setState({
@@ -127,7 +136,7 @@ export class aActivate extends React.Component {
     const { adjust, activationComplete, activationPending, validationError } = this.state;
     const { userProfile, navigation } = this.props;
     const { userMode } = userProfile;
-    // console.log('aActivate render userProfile ' + JSON.stringify(this.props.userProfile));
+    console.log('aActivate render, userMode = ', userMode); // userProfile ' + JSON.stringify(this.props.userProfile));
 
     return (
       <View style={{ height: Dimensions.get('window').height - 75 - (adjust ? 0 : 35) }} >
@@ -139,7 +148,7 @@ export class aActivate extends React.Component {
             <View>
               <View style={{ marginTop: 10, borderColor: '#bbb', borderWidth: 1, backgroundColor: 'linen', paddingTop: 10, paddingBottom: 10, paddingLeft: 20, paddingRight: 20 }}>
                 <Text style={{ paddingBottom: 3 }}>{'EMail Verification incomplete.'}</Text>
-                <Text>{'The verification email was sent, but you either have not received it yet or you have not clicked on the link that will generate and transmit your final activation code. Come back here once you are ready to enter the code.'}</Text>
+                <Text>{'The verification email was sent, but you either have not received it yet or have not clicked on the link that will generate and transmit your final activation code. Retry once you are ready to enter the code or Exit and come back later.'}</Text>
               </View>
 
               <View style={{
@@ -153,9 +162,33 @@ export class aActivate extends React.Component {
                 borderTopColor: 'black'
               }}
               >
+
                 <TouchableHighlight
                   underlayColor={'#ccc'}
-                  onPress={navigation.navigate('aAccount')}
+                  onPress={this._handleRetry}
+                >
+                  <View style={{ flexDirection: 'column', justifyContent: 'space-between', paddingBottom: 5 }}>
+                    <Icon
+                      name={'user-plus'}
+                      type={'feather'}
+                      color={'black'}
+                      size={25}
+                      containerStyle={{
+                        paddingLeft: 10,
+                        paddingRight: 10,
+                      }}
+                    />
+                    <Text
+                      style={myStyles.topTabText}
+                    >
+                      {'RETRY'}
+                    </Text>
+                  </View>
+                </TouchableHighlight>
+
+                <TouchableHighlight
+                  underlayColor={'#ccc'}
+                  onPress={() => navigation.navigate('aAccount')}
                 >
                   <View style={{ flexDirection: 'column', justifyContent: 'space-between', paddingBottom: 5 }}>
                     <Icon
