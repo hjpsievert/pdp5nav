@@ -55,16 +55,14 @@ export class aRegFinish extends React.Component {
     const { success, payLoad } = response;
     console.log('_finishRegisterUser success = ', success, ', response = ', payLoad);
     if (success) {
-      let newUserProfile;
 
-      const { route } = this.props;
+      const { route, userProfile } = this.props;
       const provider = route.params?.provider ?? '';
 
-      newUserProfile = {
-        provider: provider,
-        userMode: usrMode.verifying,
-      }
-      saveUserProfile(() => { this._finishSaveProfile() }, newUserProfile, defaultProfileSave, 'RegisterFinish');
+      userProfile.provider = provider;
+      userProfile.userMode = usrMode.verifying;
+
+      saveUserProfile(() => { this._finishSaveProfile() }, userProfile, defaultProfileSave, 'RegisterFinish');
     }
     else {
       if (Platform.OS === 'web') {
