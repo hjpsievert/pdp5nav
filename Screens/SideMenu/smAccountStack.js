@@ -52,6 +52,23 @@ function AccountStack() {
               </TouchableHighlight>
             </View>
           ),
+          headerRight: () => (
+            <View style={styles.innerContainer}>
+              <TouchableHighlight
+                onPress={() => navigation.navigate('Home')}
+              >
+                <View style={[styles.touch, { justifyContent: 'flex-end' }]}>
+                  <Icon
+                    name={'home'}
+                    type={'material-community'}
+                    color={'white'}
+                    size={24}
+                    style={{ padding: 5 }}
+                  />
+                </View>
+              </TouchableHighlight>
+            </View>
+          ),
         })}
       />
 
@@ -82,6 +99,23 @@ function AccountStack() {
                 </View>
               </TouchableHighlight>
 
+            </View>
+          ),
+          headerRight: () => (
+            <View style={styles.innerContainer}>
+              <TouchableHighlight
+                onPress={() => navigation.navigate('Home')}
+              >
+                <View style={[styles.touch, { justifyContent: 'flex-end' }]}>
+                  <Icon
+                    name={'home'}
+                    type={'material-community'}
+                    color={'white'}
+                    size={24}
+                    style={{ padding: 5 }}
+                  />
+                </View>
+              </TouchableHighlight>
             </View>
           ),
         })}
@@ -118,6 +152,23 @@ function AccountStack() {
 
             </View>
           ),
+          headerRight: () => (
+            <View style={styles.innerContainer}>
+              <TouchableHighlight
+                onPress={() => navigation.navigate('Home')}
+              >
+                <View style={[styles.touch, { justifyContent: 'flex-end' }]}>
+                  <Icon
+                    name={'home'}
+                    type={'material-community'}
+                    color={'white'}
+                    size={24}
+                    style={{ padding: 5 }}
+                  />
+                </View>
+              </TouchableHighlight>
+            </View>
+          ),
         })}
       />
 
@@ -150,6 +201,23 @@ function AccountStack() {
 
             </View>
           ),
+          headerRight: () => (
+            <View style={styles.innerContainer}>
+              <TouchableHighlight
+                onPress={() => navigation.navigate('Home')}
+              >
+                <View style={[styles.touch, { justifyContent: 'flex-end' }]}>
+                  <Icon
+                    name={'home'}
+                    type={'material-community'}
+                    color={'white'}
+                    size={24}
+                    style={{ padding: 5 }}
+                  />
+                </View>
+              </TouchableHighlight>
+            </View>
+          ),
         })}
       />
 
@@ -172,6 +240,23 @@ function AccountStack() {
                   <Icon
                     name={'ios-arrow-back'}
                     type={'ionicon'}
+                    color={'white'}
+                    size={24}
+                    style={{ padding: 5 }}
+                  />
+                </View>
+              </TouchableHighlight>
+            </View>
+          ),
+          headerRight: () => (
+            <View style={styles.innerContainer}>
+              <TouchableHighlight
+                onPress={() => navigation.navigate('Home')}
+              >
+                <View style={[styles.touch, { justifyContent: 'flex-end' }]}>
+                  <Icon
+                    name={'home'}
+                    type={'material-community'}
                     color={'white'}
                     size={24}
                     style={{ padding: 5 }}
@@ -210,6 +295,23 @@ function AccountStack() {
               </TouchableHighlight>
             </View>
           ),
+          headerRight: () => (
+            <View style={styles.innerContainer}>
+              <TouchableHighlight
+                onPress={() => navigation.navigate('Home')}
+              >
+                <View style={[styles.touch, { justifyContent: 'flex-end' }]}>
+                  <Icon
+                    name={'home'}
+                    type={'material-community'}
+                    color={'white'}
+                    size={24}
+                    style={{ padding: 5 }}
+                  />
+                </View>
+              </TouchableHighlight>
+            </View>
+          ),
         })}
       />
 
@@ -232,6 +334,23 @@ function AccountStack() {
                   <Icon
                     name={'ios-arrow-back'}
                     type={'ionicon'}
+                    color={'white'}
+                    size={24}
+                    style={{ padding: 5 }}
+                  />
+                </View>
+              </TouchableHighlight>
+            </View>
+          ),
+          headerRight: () => (
+            <View style={styles.innerContainer}>
+              <TouchableHighlight
+                onPress={() => navigation.navigate('Home')}
+              >
+                <View style={[styles.touch, { justifyContent: 'flex-end' }]}>
+                  <Icon
+                    name={'home'}
+                    type={'material-community'}
                     color={'white'}
                     size={24}
                     style={{ padding: 5 }}
@@ -270,6 +389,23 @@ function AccountStack() {
               </TouchableHighlight>
             </View>
           ),
+          headerRight: () => (
+            <View style={styles.innerContainer}>
+              <TouchableHighlight
+                onPress={() => navigation.navigate('Home')}
+              >
+                <View style={[styles.touch, { justifyContent: 'flex-end' }]}>
+                  <Icon
+                    name={'home'}
+                    type={'material-community'}
+                    color={'white'}
+                    size={24}
+                    style={{ padding: 5 }}
+                  />
+                </View>
+              </TouchableHighlight>
+            </View>
+          ),
         })}
       />
 
@@ -292,6 +428,23 @@ function AccountStack() {
                   <Icon
                     name={'ios-arrow-back'}
                     type={'ionicon'}
+                    color={'white'}
+                    size={24}
+                    style={{ padding: 5 }}
+                  />
+                </View>
+              </TouchableHighlight>
+            </View>
+          ),
+          headerRight: () => (
+            <View style={styles.innerContainer}>
+              <TouchableHighlight
+                onPress={() => navigation.navigate('Home')}
+              >
+                <View style={[styles.touch, { justifyContent: 'flex-end' }]}>
+                  <Icon
+                    name={'home'}
+                    type={'material-community'}
                     color={'white'}
                     size={24}
                     style={{ padding: 5 }}
@@ -330,6 +483,23 @@ function AccountStack() {
               </TouchableHighlight>
             </View>
           ),
+          headerRight: () => (
+            <View style={styles.innerContainer}>
+              <TouchableHighlight
+                onPress={() => navigation.navigate('Home')}
+              >
+                <View style={[styles.touch, { justifyContent: 'flex-end' }]}>
+                  <Icon
+                    name={'home'}
+                    type={'material-community'}
+                    color={'white'}
+                    size={24}
+                    style={{ padding: 5 }}
+                  />
+                </View>
+              </TouchableHighlight>
+            </View>
+          ),
         })}
       />
 
@@ -360,6 +530,23 @@ function AccountStack() {
               </TouchableHighlight>
             </View>
           ),
+          headerRight: () => (
+            <View style={styles.innerContainer}>
+              <TouchableHighlight
+                onPress={() => navigation.navigate('Home')}
+              >
+                <View style={[styles.touch, { justifyContent: 'flex-end' }]}>
+                  <Icon
+                    name={'home'}
+                    type={'material-community'}
+                    color={'white'}
+                    size={24}
+                    style={{ padding: 5 }}
+                  />
+                </View>
+              </TouchableHighlight>
+            </View>
+          ),
         })}
       />
 
@@ -382,6 +569,23 @@ function AccountStack() {
                   <Icon
                     name={'ios-arrow-back'}
                     type={'ionicon'}
+                    color={'white'}
+                    size={24}
+                    style={{ padding: 5 }}
+                  />
+                </View>
+              </TouchableHighlight>
+            </View>
+          ),
+          headerRight: () => (
+            <View style={styles.innerContainer}>
+              <TouchableHighlight
+                onPress={() => navigation.navigate('Home')}
+              >
+                <View style={[styles.touch, { justifyContent: 'flex-end' }]}>
+                  <Icon
+                    name={'home'}
+                    type={'material-community'}
                     color={'white'}
                     size={24}
                     style={{ padding: 5 }}
