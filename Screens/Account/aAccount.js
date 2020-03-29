@@ -48,7 +48,7 @@ export class aAccount extends React.Component {
 
     listOptions.push({ key: i++, title: 'Select State', subtitle: 'Specify your state of residence', icon: 'select1', type: 'antdesign', active: doState, target: 'aRegState', paramName: 'doClean', param: true });
     listOptions.push({ key: i++, title: 'Register', subtitle: 'Register for a new account', icon: 'user-plus', type: 'font-awesome', active: userMode === usrMode.anon || userMode === usrMode.created, target: userMode === usrMode.created ? 'aRegFinish' : 'aRegCreate' });
-    listOptions.push({ key: i++, title: 'Activate', subtitle: 'Unlock the EZPartD Application', icon: 'key', type: 'font-awesome', active: userMode===usrMode.activating, target: 'aActivate' });
+    listOptions.push({ key: i++, title: 'Activate', subtitle: 'Unlock the EZPartD Application', icon: 'key', type: 'font-awesome', active: userMode===usrMode.verifying || userMode===usrMode.activating, target: 'aActivate' });
     listOptions.push({ key: i++, title: 'Login', subtitle: 'Login to your account', icon: 'login', type: 'material-community', active: true, target: 'aLogin' });
     listOptions.push({ key: i++, title: 'Change Password', subtitle: 'Change your password', icon: 'key-change', type: 'material-community', active: appVerified, target: 'aChangePw' });
     listOptions.push({ key: i++, title: 'Reset Password', subtitle: 'Reset your password', icon: 'redo-variant', type: 'material-community', active: appVerified, target: 'aResetPw' });
@@ -86,10 +86,10 @@ export class aAccount extends React.Component {
                 // eslint-disable-next-line react/no-array-index-key
                 key={i}
                 title={l.title}
-                titleStyle={{ paddingLeft: 20, fontSize: 16, color: l.active ? 'black' : '#86939e' }}
+                titleStyle={{ paddingLeft: 20, fontSize: 16, fontWeight: 'bold', color: l.active ? 'black' : '#86939e' }}
                 subtitle={l.subtitle.length ? l.subtitle : null}
                 subtitleNumberOfLines={2}
-                subtitleStyle={{ paddingLeft: 20, fontSize: 14, color: l.active ? '#86939e' : '#bdc6cf' }}
+                subtitleStyle={{ paddingLeft: 20, fontSize: 14, color: l.active ? 'black' : '#86939e' }}
                 onPress={() => this._handlePress(l.active, navigation, l.target, l.paramName, l.param)}
                 hideChevron={!l.active}
               />
