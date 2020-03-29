@@ -131,7 +131,7 @@ export class aRegPhone extends React.Component {
   }
 
   _validationOK = (validationCode) => {
-    console.log('Login _validationOK validationCode = "', validationCode, '", passed ', (/^[0-9]{6}$/).test(validationCode));
+    console.log('aRegPhone _validationOK validationCode = "', validationCode, '", passed ', (/^[0-9]{6}$/).test(validationCode));
     return (/^[0-9]{6}$/).test(validationCode);
   }
 

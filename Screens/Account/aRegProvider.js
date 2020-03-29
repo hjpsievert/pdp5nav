@@ -49,7 +49,7 @@ export default class aRegProvider extends React.Component {
         }}
         >
           <View style={{ marginTop: 10, borderColor: '#bbb', borderWidth: 1, backgroundColor: 'linen', paddingTop: 10, paddingBottom: 10, paddingLeft: 20, paddingRight: 20 }}>
-            <Text style={{ paddingBottom: 3 }}>{'Your account has been created, an email will be sent to the address you provded to complete validation. Following email verification, you have to activate the EZPartD app to get access to all features.'}</Text>
+            <Text style={{ paddingBottom: 3 }}>{'Your account has been created and an email will be sent to the address you provided to complete validation. \n\nFollowing email verification, you have to two ways to activate the EZPartD app to get access to all features.'}</Text>
             <Text style={{ paddingBottom: 3 }}>{'You can provide a mobile phone number to receive your activation code or you can choose to use your verified email address.'}</Text>
           </View>
 

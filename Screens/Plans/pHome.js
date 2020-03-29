@@ -66,7 +66,7 @@ export class pHome extends React.Component {
   componentDidUpdate() {
 
     const { stateSelectionChanged } = this.props;
-    console.log('pHome componentDidUpdate'); //, route = ', route);
+    // console.log('pHome componentDidUpdate'); //, route = ', route);
 
     if (stateSelectionChanged) {
       this._findPlans();

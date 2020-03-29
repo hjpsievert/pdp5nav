@@ -106,8 +106,6 @@ export default function TopDrawer() {
 }
 
 function CustomDrawerContent(props) {
-  console.log('Drawer history ', props.state.history);
-  console.log('Drawer routes ', props.state.routes);
   return (
     <DrawerContentScrollView {...props}>
       {/* <DrawerItemList {...props} /> */}
