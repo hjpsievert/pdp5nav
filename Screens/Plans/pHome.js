@@ -64,9 +64,10 @@ export class pHome extends React.Component {
   }
 
   componentDidUpdate() {
-    console.log('pHome componentDidUpdate');
 
     const { stateSelectionChanged } = this.props;
+    console.log('pHome componentDidUpdate'); //, route = ', route);
+
     if (stateSelectionChanged) {
       this._findPlans();
     }
@@ -181,7 +182,7 @@ export class pHome extends React.Component {
     const { planListDirty } = this.state;
     const { userStateId } = userProfile;
     const stateId = userStateId;
-    console.log('pHome _findPlans, drugCount ', drugCount, ', planListDirty = ', planListDirty, ', stateChenged = ', stateSelectionChanged); //, 'userProfile = ' , JSON.stringify(userProfile));
+    console.log('pHome _findPlans, drugCount ', drugCount, ', planListDirty = ', planListDirty, ', stateChanged = ', stateSelectionChanged); //, 'userProfile = ' , JSON.stringify(userProfile));
 
     if (stateSelectionChanged) {
       this.setState({
@@ -277,7 +278,7 @@ export class pHome extends React.Component {
   render() {
     const { showActive, showPlans, showGreeting, adjust, drugsLoaded, animating } = this.state;
     const { drugCount, planCount, myPlans, activeDrugs, userProfile, previousLogin, navigation } = this.props;
-    console.log('pHome render, user profile = ', JSON.stringify(userProfile));
+    console.log('pHome render'); //, user profile = ', JSON.stringify(userProfile));
 
     let currDate;
     if (previousLogin) {
@@ -331,9 +332,9 @@ export class pHome extends React.Component {
             </TouchableHighlight>
 
             {userMode === usrMode.init &&
-              <View style={{ flex: 1, flexDirection: 'column', justifyContent:'space-between'}}>
+              <View style={{ flex: 1, flexDirection: 'column', justifyContent: 'space-between' }}>
                 <View style={{ paddingBottom: 5, backgroundColor: '#a4c6fc' }}>
-                  <Text style={styles.body}>{'You are here because this is either the first time you are using EZPartD on this device or because you uninstalled and then reinstalled EZPartD. \n\nIf you are a registered EZPartD user, please '}<Text style={myStyles.textBold}>{'Login'}</Text>{' to your account and your data will be recovered.\n\nIf you have not registered EZPartD before, you must at least register your state of residence. This is required since all prescription plan premiums and drug prices are state specific. Press '}<Text style={myStyles.textBold}>{'Register'}</Text>{' to procede.'}</Text>
+                  <Text style={styles.body}>{'This is either the first time you are using EZPartD on this device or you uninstalled and then reinstalled EZPartD. \n\nIf you are a registered EZPartD user, please '}<Text style={myStyles.textBold}>{'Login'}</Text>{' to your account and your data will be recovered.\n\nIf you have not registered EZPartD before, you must at least register your state of residence. This is required since all prescription plan premiums and drug prices are state specific. Press '}<Text style={myStyles.textBold}>{'Register'}</Text>{' to procede.'}</Text>
                 </View>
 
                 <View style={{

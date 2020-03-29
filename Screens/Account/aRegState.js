@@ -25,7 +25,7 @@ export class aRegState extends React.Component {
     this.state = {
       flag: Dimensions.get('window').width * 1000 + Dimensions.get('window').height,
       adjust: Dimensions.get('window').width > Dimensions.get('window').height && Platform.OS !== 'web',
-      stateId: 'AK',
+      stateId: '',
       stateName: 'Select your state ...',
       stateSelected: false,
       stateListVisible: true,
@@ -66,7 +66,7 @@ export class aRegState extends React.Component {
         })
       else
         this.setState({
-          stateId: 'AK',
+          stateId: '',
           stateName: 'Select your state ...',
           stateSelected: false,
           stateListVisible: true,
@@ -79,8 +79,8 @@ export class aRegState extends React.Component {
 
 
   componentWillUnmount() {
-    console.log('aRegState did unmount');
     Dimensions.removeEventListener('change', this._handleDimChange);
+    console.log('aRegState did unmount');
   }
 
   _handleDimChange = ({ window }) => {
@@ -133,7 +133,7 @@ export class aRegState extends React.Component {
   _exitCreateAnonymous = () => {
     const { updateFlowState, navigation } = this.props;
     updateFlowState({
-      stateSelectionChanged: true
+      stateSelectionChanged: true,
     });
     navigation.navigate('Home');
   }
@@ -256,6 +256,7 @@ export class aRegState extends React.Component {
                 </Picker>
               </View>
             }
+
             <View style={{ flexGrow: 1 }}>
               <Text>{' '}</Text>
             </View>
@@ -300,13 +301,13 @@ export class aRegState extends React.Component {
               {userMode === usrMode.init &&
                 <TouchableHighlight
                   underlayColor={'#ccc'}
-                  onPress={() => navigation.navigate('aLogin')}
+                  onPress={!stateSelected ? () => navigation.navigate('aLogin') : () => { }}
                 >
                   <View style={{ flexDirection: 'column', justifyContent: 'space-between', paddingBottom: 5 }}>
                     <Icon
                       name={'login'}
                       type={'material-community'}
-                      color={'black'}
+                      color={!stateSelected ? 'black' : 'grey'}
                       size={25}
                       containerStyle={{
                         paddingLeft: 10,
@@ -352,14 +353,18 @@ export class aRegState extends React.Component {
         }
 
         {registerState === usrMode.anon &&
-          <View>
+          <View style={{
+            flexDirection: 'column', paddingLeft: 15, paddingRight: 15, flex: 1, justifyContent: 'space-between'
+          }}
+          >
             <View style={{ marginTop: 10, borderColor: '#bbb', borderWidth: 1, backgroundColor: 'linen', paddingTop: 10, paddingBottom: 10, paddingLeft: 20, paddingRight: 20 }}>
-              <Text style={{ paddingBottom: 3 }}>{'Creation  of an anonymous user account was successful!'}</Text>
+              <Text style={{ paddingBottom: 3, textAlign: 'center' }}>{'Anonymous user account creation successful!'}</Text>
               <Text style={{ paddingBottom: 3 }}>{'You can choose to continue to '}<Text style={myStyles.textBold}>{'REGISTER'}</Text>{' with your email and a password. This will allow you to securely store your drug selections and ensures that you are the only person able to access your data.'}</Text>
               <Text>{'If you just want to do do a quick search for presscription plans you can continue in '}<Text style={myStyles.textBold}>{'ANONYMOUS'}</Text>{' mode. No further information will be required from you, but you will not be able to save your drug data.'}</Text>
             </View>
 
             <View style={{
+              flexShrink: 1,
               marginTop: 10,
               flexDirection: 'row',
               justifyContent: 'space-around',

@@ -26,7 +26,7 @@ function ContactStack() {
           headerLeft: () => (
             <View style={styles.innerContainer}>
               <TouchableHighlight
-                onPress={() => navigation.navigate('Home')}
+                onPress={() => navigation.openDrawer()} //navigate('Home')}
               >
                 <View style={[styles.touch, { justifyContent: 'flex-start' }]}>
                   <Icon

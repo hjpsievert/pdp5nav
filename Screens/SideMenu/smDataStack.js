@@ -8,7 +8,6 @@ import { Icon } from 'react-native-elements';
 import { createStackNavigator } from '@react-navigation/stack';
 import dManager from '../Data/dManager';
 import dSave from '../Data/dSave';
-import dLoad from '../Data/dLoad';
 import dStorage from '../Data/dStorage';
 import dClear from '../Data/dClear';
 
@@ -52,36 +51,6 @@ function DataStack() {
         options={({ navigation }) => ({
           title: 'Save Data',
           headerTitle: 'Save Data',
-          headerStyle: { backgroundColor: '#405ce8' },
-          headerTitleStyle: { fontWeight: 'normal' },
-          headerTintColor: 'white',
-          headerTitleAlign: 'center',
-          headerLeft: () => (
-            <View style={styles.innerContainer}>
-              <TouchableHighlight
-                onPress={() => navigation.navigate('dManager')}
-              >
-                <View style={[styles.touch, { justifyContent: 'flex-start' }]}>
-                  <Icon
-                    name={'ios-arrow-back'}
-                    type={'ionicon'}
-                    color={'white'}
-                    size={24}
-                    style={{ padding: 5 }}
-                  />
-                </View>
-              </TouchableHighlight>
-            </View>
-          ),
-        })}
-      />
-
-      <Stack.Screen
-        name="dLoad"
-        component={dLoad}
-        options={({ navigation }) => ({
-          title: 'Load Data',
-          headerTitle: 'Load Data',
           headerStyle: { backgroundColor: '#405ce8' },
           headerTitleStyle: { fontWeight: 'normal' },
           headerTintColor: 'white',

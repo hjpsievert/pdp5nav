@@ -4,7 +4,7 @@ import {
   Text,
 } from 'react-native';
 
-export default class SettingsScreen extends React.Component {
+export default class settings extends React.Component {
   constructor(props, context) {
     super(props, context);
     this.state = {

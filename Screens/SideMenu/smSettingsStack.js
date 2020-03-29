@@ -6,16 +6,16 @@ import {
 } from 'react-native';
 import { Icon } from 'react-native-elements';
 import { createStackNavigator } from '@react-navigation/stack';
-import Settings from './smSettings';
+import settings from './smSettings';
 
 const Stack = createStackNavigator();
 
 function SettingsStack() {
   return (
-    <Stack.Navigator initialRouteName="Settings">
+    <Stack.Navigator initialRouteName="settings">
       <Stack.Screen
-        name="SettingsScreen"
-        component={Settings}
+        name="settings"
+        component={settings}
         options={({ navigation }) => ({
           title: 'Settings',
           headerTitle: 'Settings',
