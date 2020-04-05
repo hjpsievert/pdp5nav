@@ -4,7 +4,6 @@
     "description": "EZPartD Beta Version based on Azure Functions 3 and React Navigation 5",
     "slug": "ezpdfun3beta5",
     "privacy": "public",
-    "sdkVersion": "36.0.0",
     "platforms": [
       "ios",
       "android",
