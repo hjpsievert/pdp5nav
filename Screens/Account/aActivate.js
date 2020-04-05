@@ -144,11 +144,11 @@ export class aActivate extends React.Component {
           flexDirection: 'column', paddingHorizontal: 15, flex: 1
         }}
         >
-          {userMode === usrMode.verifying &&
+          {(userMode === usrMode.verifying && !activationPending) &&
             <View>
               <View style={{ marginTop: 10, borderColor: '#bbb', borderWidth: 1, backgroundColor: 'linen', paddingTop: 10, paddingBottom: 10, paddingLeft: 20, paddingRight: 20 }}>
                 <Text style={{ paddingBottom: 3 }}>{'EMail Verification incomplete.'}</Text>
-                <Text>{'The verification email was sent, but you either have not received it yet or have not clicked on the link that will generate and transmit your final activation code. Retry once you are ready to enter the code or Exit and come back later.'}</Text>
+                <Text>{'The verification email was sent, but you either have not received it yet or have not clicked on the link that will generate and transmit your final activation code. Click Retry once you are ready to enter the code or Exit and come back later.'}</Text>
               </View>
 
               <View style={{
