@@ -373,7 +373,7 @@ export class pPlanBreakdown extends React.Component {
 
   _renderMoreDrugDetail = (item) => {
     return (
-      <View style={{ flexDirection: 'row', justifyContent: 'flexStart', borderBottomColor: '#bbb', borderBottomWidth: 1 }}>
+      <View style={{ flexDirection: 'row', justifyContent: 'flex-start', borderBottomColor: '#bbb', borderBottomWidth: 1 }}>
         <Text style={{ width: 200, fontSize: 12, paddingTop: 5, paddingBottom: 5, paddingLeft: 15, paddingRight: 5, color: '#777', backgroundColor: 'rgb(204, 223, 255)', textAlign: 'right' }}>
           {item.label + ':'}
         </Text>
