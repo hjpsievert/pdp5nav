@@ -4,7 +4,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import TopDrawer from './Screens/TopDrawer';
 import { Provider } from 'react-redux'
 import configureStore from './Redux/Store';
-import { ScreenOrientation } from 'expo';
+import * as  ScreenOrientation from 'expo-screen-orientation';
 
 import { YellowBox } from 'react-native'
 YellowBox.ignoreWarnings([
@@ -41,11 +41,15 @@ export default class App extends React.Component {
     })
   }
 
+  _changeScreenOrientation = async () => {
+    await ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.DEFAULT);
+  }
+
   render() {
     if (Platform.OS !== 'web') {
-      ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.ALL_BUT_UPSIDE_DOWN);
+      ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.DEFAULT);
     }
-    const { windowWidth, windowHeight} = this.state;
+    const { windowWidth, windowHeight } = this.state;
     // console.log('App render dim = ', windowWidth, 'x', windowHeight);
 
     return (
