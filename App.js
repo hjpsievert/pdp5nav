@@ -41,10 +41,6 @@ export default class App extends React.Component {
     })
   }
 
-  _changeScreenOrientation = async () => {
-    await ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.DEFAULT);
-  }
-
   render() {
     if (Platform.OS !== 'web') {
       ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.DEFAULT);
